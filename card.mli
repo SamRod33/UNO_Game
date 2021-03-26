@@ -4,7 +4,7 @@
     It handles loading of that data from JSON as well as 
     querying the data. 
 
-    Author: Samuel Rodriguez (sar325)
+    @author: Samuel Rodriguez (sar325)
     Date: 03/26/21
     
 *)
