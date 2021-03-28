@@ -1,5 +1,4 @@
 (** Representation of the game state.
-
     This module represents the data stored in game state.
     @author Yohanes K. (ysk27), Tise Alatise (ofa2)
     Date: 03/25/21
@@ -38,4 +37,4 @@ val init_state : Card.t list -> Player.t list -> t
 
 (** [play p c g] is the result of an attempted play by player [p] with card [c] 
     in game [g]: whether it's legal state or illegal state *)
-val play : Player.t -> Card.t option -> t -> result 
+val play : Player.t -> Card.t option -> t -> result
