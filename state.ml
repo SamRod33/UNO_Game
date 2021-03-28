@@ -54,13 +54,25 @@
     | [] -> raise NoPlayersFound
     | h :: _ -> h
 
+  (** [shuffle lst] is the same as [lst] except its 
+      elements are in a different order. The new order is randomized. *)
+  let shuffle lst = 
+    List.map (fun x -> (Random.bits (), x)) lst
+    |> List.fast_sort compare |> List.map snd
+
   (** [init_deck cards] is the initial deck comprised of [cards] for 
       an UNO game such that the first card in it is a non-action card.*)
-  let init_deck cards = failwith("TODO")
+  let rec init_deck cards = 
+    match cards with
+    | [] -> raise NoMoreCards
+    | h :: _ -> begin
+      match h with 
+      | None -> cards
+      | _ -> init_deck (shuffle cards)
+    end
 
   (** [remove_card deck] is [deck] without its top card. If doing so results
     in an empty [deck], then this will be an entirely new reshuffled deck. 
-    
     EDIT: Might need to have access to the initial
     collection of cards for the entire game? *)
   let remove_card deck = failwith("TODO")
