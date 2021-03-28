@@ -38,4 +38,4 @@ val init_state : Card.t list -> Player.t list -> t
 
 (** [play p c g] is the result of an attempted play by player [p] with card [c] 
     in game [g]: whether it's legal state or illegal state *)
-val play : Player.t -> Card.t option -> t -> result
+val play : Player.t -> Card.t option -> t -> result 

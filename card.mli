@@ -36,5 +36,3 @@ val color : t -> color
 (** [action c] is the identifier of the action of card
     [c]. *)
 val action : t -> action
-
-
