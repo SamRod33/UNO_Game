@@ -1,6 +1,5 @@
 open Yojson.Basic.Util
 
-(**************************************************************************)
 type color =
   | R
   | G
@@ -24,8 +23,12 @@ type t = {
 }
 
 (**************************************************************************)
+
+(* [j json] is the Yoson Basic representation of type t from the json
+   file [j] *)
 let j json = Yojson.Basic.from_file json
 
+(* [to_color s] is [s] as a color. *)
 let to_color s =
   match String.lowercase_ascii s with
   | "red" -> R
@@ -35,6 +38,7 @@ let to_color s =
   | "any" -> ANY
   | _ -> raise (Invalid_argument s)
 
+(* [to_color j] is [j] as an actions. *)
 let to_actions j =
   {
     skip = j |> member "skip" |> to_bool;
@@ -51,10 +55,9 @@ let create j =
   }
 
 (**************************************************************************)
+
 let draw_penalty c = c.penalty
 
 let color c = c.color
 
 let actions c = c.actions
-
-(**************************************************************************)
