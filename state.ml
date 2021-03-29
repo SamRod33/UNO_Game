@@ -1,6 +1,6 @@
 (** Implementation of State in UNO
 
-    @author Samuel Rodriguez (sar325)
+    @author Samuel Rodriguez, Yohanes Kidane (sar325, ysk27)
     Date: 03/28/21
 *)
 
@@ -30,29 +30,32 @@
     accessing a card in [deck] when [deck] is empty. *)
  exception NoMoreCards
 
+ open Queue
+
  type deck = Card.t list
+
 
  type t = {
   deck : deck;
   stack_penalty : int;
-  players : Player.t list;
+  top_card : Card.t;
+  players : Player.t Queue.t;
 }
 
  type result = 
   | Legal of t
   | Illegal
 
-  let top_card g = 
-    match g.deck with
-    | [] -> raise NoMoreCards
-    | h :: _ -> h
+  (** [top_card g] is the top card of the played pile.*)
+  let top_card g = g.top_card
 
+  (** [stack_penalty g] is the current draw penalty from action cards.*)
   let stack_penalty g = g.stack_penalty
 
+  (** [current_player g] is the player who's turn is next in game [g].*)
   let current_player g = 
-    match g.players with 
-    | [] -> raise NoPlayersFound
-    | h :: _ -> h
+    if is_empty g.players then raise NoPlayersFound
+    else peek g.players
 
   (** [shuffle lst] is the same as [lst] except its 
       elements are in a different order. The new order is randomized. *)
@@ -76,7 +79,7 @@
     EDIT: Might need to have access to the initial
     collection of cards for the entire game? *)
   let remove_card deck = failwith("TODO")
-
+ 
   let init_state c p_list = 
     { 
       deck = init_deck c; 
@@ -84,4 +87,11 @@
       players = p_list
     }
 
-  let play p c g = failwith("TODO")
+  (** [play p c g] is the state of the game after player [p] plays card [c] in 
+    game state [g]. If a legal move is played, a legal game state is returned.
+    Otherwise, Illegal is returned. *)
+  let play p c g = 
+    match c with
+    | Some card -> begin
+    end
+    | None ->
