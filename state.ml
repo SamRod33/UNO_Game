@@ -30,16 +30,13 @@
     accessing a card in [deck] when [deck] is empty. *)
  exception NoMoreCards
 
- open Queue
-
  type deck = Card.t list
-
 
  type t = {
   deck : deck;
   stack_penalty : int;
   top_card : Card.t;
-  players : Player.t Queue.t;
+  players : Player.t list;
 }
 
  type result = 
@@ -52,10 +49,12 @@
   (** [stack_penalty g] is the current draw penalty from action cards.*)
   let stack_penalty g = g.stack_penalty
 
-  (** [current_player g] is the player who's turn is next in game [g].*)
-  let current_player g = 
-    if is_empty g.players then raise NoPlayersFound
-    else peek g.players
+  (** [current_player g] is the player who's turn is next in game [g]. Raises
+  NoPlayersFound if [g.players] is empty.*)
+  let current_player g =
+    match g.players with
+    | [] -> raise NoPlayersFound
+    | h :: t -> h
 
   (** [shuffle lst] is the same as [lst] except its 
       elements are in a different order. The new order is randomized. *)
@@ -64,8 +63,9 @@
     |> List.fast_sort compare |> List.map snd
 
   (** [init_deck cards] is the initial deck comprised of [cards] for 
-      an UNO game such that the first card in it is a non-action card.*)
-  let rec init_deck cards = 
+      an UNO game such that the first card in it is a non-action card. Raises
+      NoMoreCards if [cards] is empty.*)
+  let rec init_deck (cards : Card.t List) = 
     match cards with
     | [] -> raise NoMoreCards
     | h :: _ -> begin
@@ -80,18 +80,33 @@
     collection of cards for the entire game? *)
   let remove_card deck = failwith("TODO")
  
-  let init_state c p_list = 
+  (** [init_state c p_list] is the inital state of the game with cards [cards] 
+  and players [players] *)
+  let init_state (cards : Card.t list) (players : Player.t list) = 
     { 
-      deck = init_deck c; 
+      deck = init_deck cards; 
       stack_penalty = 0;
-      players = p_list
+      players = players
     }
 
-  (** [play p c g] is the state of the game after player [p] plays card [c] in 
-    game state [g]. If a legal move is played, a legal game state is returned.
-    Otherwise, Illegal is returned. *)
-  let play p c g = 
+  (** [rotate_players p] is [p] with the player at the front of [p] moved to 
+  the end of the list. Raises NoPlayersFound if [p] is empty.*)
+  let rotate_players = function
+  | [] -> NoPlayersFound
+  | h :: t -> t @ [h]
+
+  (** [play c g] is the state of the game after the current player plays 
+  card option [c] in game state [g]. If [c] is None, then the player will draw 
+  cards. If a legal move is played, a legal game state is returned. Otherwise, 
+  Illegal is returned. *)
+  let play (c : Card.t option) (g : t) = 
     match c with
+    (** If [c] is Some card, then check if playing the card is legal. If playing
+      the card is legal, then the card will be placed as the new top_card and
+      the effects of the card will be applied. Then the player order will be
+      rotated.*)
     | Some card -> begin
     end
+    (** if [c] is None, then the current player will draw cards according to
+      the current draw penalty. Then the player order will be rotated.*)
     | None ->
