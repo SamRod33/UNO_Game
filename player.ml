@@ -20,10 +20,9 @@ let is_uno cards =
 let add_card player card = 
   {player with hand = card::hand}
 
-(** [remove_first_of_dup hand card acc] is the player's hand after removing the
+(* [remove_first_of_dup hand card acc] is the player's hand after removing the
     first of any given card form the player's original hand [hand] if the card
-    [card] is in the hand. The accumulator [acc] stores the cards checked and
-    unequal to the card to be removed. *)
+    [card] is in the hand.*)
 let rec remove_first_of_dup hand card (acc : Card.t list) = 
   match hand with
   | [] -> hand
