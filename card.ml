@@ -24,6 +24,7 @@ type t = {
   color : color;
   actions : actions;
   penalty : draw_penalty;
+  amount : int;
 }
 
 (********************************************************************)
@@ -58,6 +59,7 @@ let create j =
     color = j |> member "color" |> to_string |> to_color;
     actions = j |> member "actions" |> to_actions;
     penalty = j |> member "draw penalty" |> to_int;
+    amount = j |> member "amount" |> to_int;
   }
 
 (********************************************************************)
@@ -69,3 +71,5 @@ let draw_penalty c = c.penalty
 let color c = c.color
 
 let actions c = c.actions
+
+let amount c = c.amount

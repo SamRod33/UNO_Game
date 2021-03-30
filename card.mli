@@ -39,3 +39,6 @@ val color : t -> color
 
 (** [action c] is the identifier of the action of card [c]. *)
 val actions : t -> actions
+
+(** [amount c] is the amount of card [c] in the standard deck of a game. *)
+val amount : t -> int

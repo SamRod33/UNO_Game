@@ -6,5 +6,6 @@
     "swap": true,
     "change color": true
   },
-  "draw penalty": 2
+  "draw penalty": 2,
+  "amount": 1
 }
