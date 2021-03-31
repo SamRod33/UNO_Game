@@ -1,0 +1,11 @@
+{
+  "color": "red",
+  "actions": {
+    "skip": true,
+    "reverse": true,
+    "swap": true,
+    "change color": true
+  },
+  "draw penalty": 2,
+  "amount": 1
+}
