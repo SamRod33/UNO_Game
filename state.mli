@@ -1,5 +1,4 @@
 (** Representation of the game state.
-
     This module represents the data stored in game state.
     @author Yohanes K. (ysk27), Tise Alatise (ofa2)
     Date: 03/25/21
