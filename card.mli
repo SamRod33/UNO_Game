@@ -42,3 +42,8 @@ val actions : t -> actions
 
 (** [amount c] is the amount of card [c] in the standard deck of a game. *)
 val amount : t -> int
+
+(** [digit c] is the number on the face of the card. *)
+val digit : t -> int option
+
+val standard_cards : t list

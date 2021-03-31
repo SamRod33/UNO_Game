@@ -11,7 +11,7 @@
 type t
 
 (** Raised when player does not have the card in its hand. *)
-exception CardNotInHand
+exception CardNotInHand of Card.t
 
 (** [name p] is the name of player [p] *)
 val name : t -> string
@@ -21,7 +21,7 @@ val player_hand : t -> Card.t list
 
 (** [is_uno p] is true when a player's hand has 1 card or less, 
     false otherwise. *)
-val is_uno : t -> bool
+val is_uno : Card.t list -> bool
 
 (** [add_card p c] is the player [p] after drawing the card [c]. *)
 val add_card : t -> Card.t -> t

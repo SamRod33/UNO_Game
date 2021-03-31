@@ -7,5 +7,6 @@
     "change color": true
   },
   "draw penalty": 2,
-  "amount": 1
+  "amount": 1,
+  "digit": 0
 }

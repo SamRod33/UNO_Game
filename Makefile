@@ -1,4 +1,4 @@
-MODULES=card
+MODULES=card player state
 BYTES=$(MODULES:=.byte)
 OCAMLBUILD=ocamlbuild -use-ocamlfind -plugin-tag 'package(bisect_ppx-ocamlbuild)'
 TEST=card_test.byte 
@@ -25,6 +25,9 @@ bisect: clean test
 finished-bisect: clean finished-test
 	bisect-ppx-report html
 
+play:
+	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)
+	
 clean:
 	ocamlbuild -clean
 	rm -rf _coverage bisect*.coverage
