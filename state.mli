@@ -39,5 +39,5 @@ val init_state : Card.t list -> Player.t list -> t
     will draw cards. If c is Some card, then [color card] must not be
     ANY (the color that the card will take must already be decided. If a
     legal move is played, a legal game state is returned. Otherwise,
-    Illegal is returned. Please define Gamover as well... *)
+    Illegal is returned. *)
 val play : Player.t -> Card.t option -> t -> result
