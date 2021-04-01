@@ -11,7 +11,7 @@
 type t
 
 (** Raised when player does not have the card in its hand. *)
-exception CardNotInHand of Card.t
+exception CardNotInHand of Card.
 
 (** [name p] is the name of player [p] *)
 val name : t -> string
@@ -29,4 +29,6 @@ val add_card : t -> Card.t -> t
 (** [remove_card p c] is the player [p]'s hand after remvoing card [c] 
     from player [p]'s hand.
     Throws [CardNotInHand] if the card is not in the hand. *)
+
 val remove_card : t -> Card.t -> t
+

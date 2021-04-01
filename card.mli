@@ -1,10 +1,9 @@
 (** Representation of static card data.
-
-    This module represents the data stored in card files. It handles
+This module represents the data stored in card files. It handles
     loading of that data from JSON as well as querying the data.
 
     @author: Samuel Rodriguez (sar325) Date: 03/26/21 *)
-
+    
 (** The abstract type of values representing a card. *)
 type t
 
