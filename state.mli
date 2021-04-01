@@ -38,6 +38,7 @@ val init_state : Card.t list -> Player.t list -> t
     card option [c] in game state [g]. If [c] is None, then the player
     will draw cards. If c is Some card, then [color card] must not be
     ANY (the color that the card will take must already be decided. If a
-    legal move is played, a legal game state is returned. Otherwise,
-    Illegal is returned. *)
-val play : Player.t -> Card.t option -> t -> result
+    legal move is played, a legal game state is returned. If the current
+    player in [g] has an empty player hand then Gameover player is
+    returned. If Otherwise, Illegal is returned. *)
+val play : Card.t option -> t -> result

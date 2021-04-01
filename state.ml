@@ -147,7 +147,7 @@ let penalize g =
 (** [play_card c g] is the result of attempting to play card [c] in the
     state [g]. Legal st' where st' is the state after playing the [c],
     Gameover player' if player' has no more cards left, and Illegal
-    otherwise. *)
+    otherwise . *)
 let play_card c g =
   if
     List.mem c (Player.player_hand (current_player g))
