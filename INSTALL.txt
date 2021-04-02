@@ -1,0 +1,9 @@
+You should the following packages installed from A2 (ounit2, yojson, ANSITerminal) and recitation 8 (bisect_ppx).
+
+Instructions:
+1. Run make build
+2. Run make play
+3. Type "start"
+4. Hit enter
+
+You should see the cards of the game load onto your screen!

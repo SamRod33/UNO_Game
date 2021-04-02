@@ -28,3 +28,6 @@ finished-bisect: clean finished-test
 clean:
 	ocamlbuild -clean
 	rm -rf _coverage bisect*.coverage
+
+zip:
+	zip uno-game.zip *.ml* *.json *.sh _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	
