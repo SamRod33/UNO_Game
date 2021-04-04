@@ -1,4 +1,6 @@
 open OUnit2
 open Card
 
-(* To be written *)
+let suite = "test suite for Card" >::: List.flatten []
+
+let _ = run_test_tt_main suite
