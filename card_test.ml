@@ -66,12 +66,12 @@ let amounts = [ 1; 2; 4; 1; 3 ]
     [expected], where [expected] is an expected value in [expecteds].
     Assumes [cards] is in the same order as [expecteds]. *)
 let rec f_tests f name cards expecteds =
-  match cards with
+  match expecteds with
   | [] -> []
-  | h :: t1 -> (
-      match expecteds with
-      | [] -> failwith "No more expecteds"
-      | expected :: t2 -> f name h expected :: f_tests f name t1 t2)
+  | expected :: t2 -> (
+      match cards with
+      | [] -> failwith "No more cards"
+      | h :: t1 -> f name h expected :: f_tests f name t1 t2)
 
 (** [make_action skip reverse swap change_color] is a created action of
     a Card*)
