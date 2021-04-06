@@ -1,11 +1,59 @@
 {
-  "color": "red",
-  "actions": {
-    "skip": true,
-    "reverse": true,
-    "swap": true,
-    "change color": true
-  },
-  "draw penalty": 2,
-  "amount": 1
+  "standard deck": [
+    {
+      "color": "red",
+      "actions": {
+        "skip": false,
+        "reverse": false,
+        "swap": false,
+        "change color": false
+      },
+      "draw penalty": 2,
+      "amount": 1
+    },
+    {
+      "color": "green",
+      "actions": {
+        "skip": true,
+        "reverse": false,
+        "swap": true,
+        "change color": false
+      },
+      "draw penalty": 0,
+      "amount": 2
+    },
+    {
+      "color": "any",
+      "actions": {
+        "skip": false,
+        "reverse": false,
+        "swap": false,
+        "change color": true
+      },
+      "draw penalty": 0,
+      "amount": 4
+    },
+    {
+      "color": "any",
+      "actions": {
+        "skip": true,
+        "reverse": false,
+        "swap": false,
+        "change color": true
+      },
+      "draw penalty": 4,
+      "amount": 1
+    },
+    {
+      "color": "blue",
+      "actions": {
+        "skip": true,
+        "reverse": false,
+        "swap": false,
+        "change color": false
+      },
+      "draw penalty": 0,
+      "amount": 3
+    }
+  ]
 }

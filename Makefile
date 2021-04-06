@@ -1,9 +1,10 @@
 MODULES=card
+OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
-OCAMLBUILD=ocamlbuild -use-ocamlfind -plugin-tag 'package(bisect_ppx-ocamlbuild)'
-TEST=card_test.byte 
-FINISHED_TEST=card_test_finished.byte
-PKGS=ounit2
+MLS=$(MODULES:=.ml)
+MLIS=$(MODULES:=.mli)
+OCAMLBUILD=ocamlbuild -use-ocamlfind
+CARDTEST=card_test.byte
 
 default: build
 
@@ -11,23 +12,27 @@ utop: build
 	OCAMLRUNPARAM=b utop
 
 build:
-	$(OCAMLBUILD) $(BYTES)
+	$(OCAMLBUILD) $(OBJECTS)
 
-test:
-	BISECT_COVERAGE=YES $(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
+card-test:
+	$(OCAMLBUILD) -tag 'debug' $(CARDTEST) && ./$(CARDTEST) -runner sequential
 
-finished-test:
-	BISECT_COVERAGE=YES $(OCAMLBUILD) -tag 'debug' $(FINISHED_TEST) && ./$(FINISHED_TEST) -runner sequential
+docs: docs-public docs-private
+	
+docs-public: build
+	mkdir -p _doc.public
+	ocamlfind ocamldoc -I _build -package yojson,ANSITerminal \
+		-html -stars -d _doc.public $(MLIS)
 
-bisect: clean test
-	bisect-ppx-report html
-
-finished-bisect: clean finished-test
-	bisect-ppx-report html
+docs-private: build
+	mkdir -p _doc.private
+	ocamlfind ocamldoc -I _build -package yojson,ANSITerminal \
+		-html -stars -d _doc.private \
+		-inv-merge-ml-mli -m A $(MLIS) $(MLS)
 
 clean:
 	ocamlbuild -clean
-	rm -rf _coverage bisect*.coverage
+	rm -rf _coverage bisect*.coverage _doc.public _doc.private uno-game.zip
 
 zip:
-	zip uno-game.zip *.ml* *.json *.sh _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	
+	zip uno-game.zip *.ml* *.json *.sh INSTALL.txt _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	
