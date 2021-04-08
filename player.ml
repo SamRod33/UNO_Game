@@ -5,14 +5,15 @@ exception CardNotInHand of Card.t
 type t = {
   name : string;
   hand : Card.t list;
+  id : int;
 }
 
 let name p = p.name
 
 let player_hand p = p.hand
 
-let is_uno cards =
-  match cards with [] -> true | [ h ] -> true | _ -> false
+let is_uno p =
+  match p.hand with [] -> true | [ h ] -> true | _ -> false
 
 let add_card player card = { player with hand = card :: player.hand }
 

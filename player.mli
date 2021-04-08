@@ -11,7 +11,7 @@
 type t
 
 (** Raised when player does not have the card in its hand. *)
-exception CardNotInHand
+exception CardNotInHand of Card.t
 
 (** [name p] is the name of player [p] *)
 val name : t -> string
