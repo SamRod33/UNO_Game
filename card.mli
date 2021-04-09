@@ -1,9 +1,9 @@
-(** Representation of static card data.
-This module represents the data stored in card files. It handles
-    loading of that data from JSON as well as querying the data.
+(** Representation of static card data. This module represents the data
+    stored in card files. It handles loading of that data from JSON as
+    well as querying the data.
 
     @author: Samuel Rodriguez (sar325) Date: 03/26/21 *)
-    
+
 (** The abstract type of values representing a card. *)
 type t
 
@@ -41,3 +41,9 @@ val actions : t -> actions
 
 (** [amount c] is the amount of card [c] in the standard deck of a game. *)
 val amount : t -> int
+
+(** [digit c] is the number on the face of the card. *)
+val digit : t -> int option
+
+(** [standard_cards] is the Card.t list of cards in a standard UNO deck. *)
+val standard_cards : t list
