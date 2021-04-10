@@ -1,4 +1,4 @@
-MODULES=card
+MODULES=card player state
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
