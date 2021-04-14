@@ -99,16 +99,16 @@ let init_state (cards : Card.t list) (players : Player.t list) =
 (** [rotate_players p players] is [players] with the player p' at the
     front of [players] removed and [p] is the updated p' put at the end
     of [players] Raises NoPlayersFound if [players] is empty.*)
-let rotate_players p = function
+let rotate_players p reverse = function
   | [] -> raise NoPlayersFound
-  | h :: t -> t @ [ p ]
+  | h :: t -> if reverse then List.rev t @ [ p ] else t @ [ p ]
 
 (** [legal_play c1 c2] is true if playing c1 is valid on c2.*)
 let legal_play (c1 : Card.t) (c2 : Card.t) =
   color c1 = color c2
   || (actions c1).change_color
-  || draw_penalty c1 = draw_penalty c2
-  (*|| amount c1 = amount c2 -> WRONG, should be digit *)
+  || (draw_penalty c1 = draw_penalty c2 && draw_penalty c1 > 0)
+  || (digit c1 = digit c2 && digit c1 <> None)
   || actions c1 = actions c2
 
 (** [draw_cards deck starting_deck acc n] is a tuple where the first
@@ -141,7 +141,7 @@ let penalize g =
     players =
       rotate_players
         (add_to_hand (current_player g) (fst card_split))
-        g.players;
+        false g.players;
   }
 
 (** [play_card c g] is the result of attempting to play card [c] in the
@@ -156,13 +156,26 @@ let play_card c g =
     let player' = Player.remove_card (current_player g) c in
     if List.length (player_hand player') <> 0 then
       let stack_penalty' = g.stack_penalty + draw_penalty c in
-      Legal
+      let new_state =
         {
           g with
           stack_penalty = stack_penalty';
           top_card = c;
-          players = rotate_players player' g.players;
+          players = rotate_players player' (actions c).reverse g.players;
         }
+      in
+      let apply_skip =
+        if (actions c).skip then
+          {
+            new_state with
+            players =
+              rotate_players
+                (current_player new_state)
+                false new_state.players;
+          }
+        else new_state
+      in
+      Legal apply_skip
     else GameOver player'
   else Illegal
 
