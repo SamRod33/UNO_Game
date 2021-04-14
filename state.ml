@@ -103,6 +103,16 @@ let rotate_players p reverse = function
   | [] -> raise NoPlayersFound
   | h :: t -> if reverse then List.rev t @ [ p ] else t @ [ p ]
 
+(** applies skip effect to the game if [(actions c).skip] is [true],
+    otherwise does nothing.*)
+let apply_skip c g =
+  if (actions c).skip then
+    {
+      g with
+      players = rotate_players (current_player g) false g.players;
+    }
+  else g
+
 (** [legal_play c1 c2] is true if playing c1 is valid on c2.*)
 let legal_play (c1 : Card.t) (c2 : Card.t) =
   color c1 = color c2
@@ -156,26 +166,15 @@ let play_card c g =
     let player' = Player.remove_card (current_player g) c in
     if List.length (player_hand player') <> 0 then
       let stack_penalty' = g.stack_penalty + draw_penalty c in
-      let new_state =
-        {
-          g with
-          stack_penalty = stack_penalty';
-          top_card = c;
-          players = rotate_players player' (actions c).reverse g.players;
-        }
-      in
-      let apply_skip =
-        if (actions c).skip then
-          {
-            new_state with
-            players =
-              rotate_players
-                (current_player new_state)
-                false new_state.players;
-          }
-        else new_state
-      in
-      Legal apply_skip
+      Legal
+        ({
+           g with
+           stack_penalty = stack_penalty';
+           top_card = c;
+           players =
+             rotate_players player' (actions c).reverse g.players;
+         }
+        |> apply_skip c)
     else GameOver player'
   else Illegal
 
