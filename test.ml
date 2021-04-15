@@ -25,7 +25,7 @@ let string_of_digit = function
 let string_of_actions c =
   "skip: " ^ string_of_bool c.skip ^ " reverse: "
   ^ string_of_bool c.reverse
-  ^ "swap: " ^ string_of_bool c.swap ^ "change color: "
+  ^ " swap: " ^ string_of_bool c.swap ^ " change color: "
   ^ string_of_bool c.change_color
 
 (** [pp_list pp_elt lst] pretty-prints list [lst], using [pp_elt] to
@@ -49,6 +49,18 @@ let pp_card c =
     (string_of_digit (digit c))
     (draw_penalty c)
     (string_of_actions (actions c))
+
+(** [cmp_set_like_lists lst1 lst2] compares two lists to see whether
+    they are equivalent set-like lists. That means checking two things.
+    First, they must both be {i set-like}, meaning that they do not
+    contain any duplicates. Second, they must contain the same elements,
+    though not necessarily in the same order. *)
+let cmp_set_like_lists lst1 lst2 =
+  let uniq1 = List.sort_uniq compare lst1 in
+  let uniq2 = List.sort_uniq compare lst2 in
+  List.length lst1 = List.length uniq1
+  && List.length lst2 = List.length uniq2
+  && uniq1 = uniq2
 
 (** [f_test name f c expected to_str] creates an OUnit test case called
     [name] that checks [expected] equals [f c]. [to_str] dictates how

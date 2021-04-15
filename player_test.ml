@@ -6,7 +6,12 @@ open Test
     [CardNotInHand c] is raised when [p] does not contain [c]. *)
 let remove_raise_test name p c =
   name >:: fun _ ->
-  assert_raises (raise (CardNotInHand c)) (fun () -> remove_card p c)
+  assert_raises (CardNotInHand c) (fun () -> remove_card p c)
+
+let player_hand_test name lst exp =
+  name >:: fun _ ->
+  assert_equal exp (player_hand lst) ~printer:(pp_list pp_card)
+    ~cmp:cmp_set_like_lists
 
 let string_of_t x = "Abstract <T>"
 
@@ -19,11 +24,11 @@ let snd_card =
   | h :: b :: t -> b
   | _ -> failwith "Impossible"
 
-let empty : Player.t = failwith "TODO: use Player.create"
+let empty : Player.t = create "Charles"
 
 let uno = add_card empty fst_card
 
-let uno_kanye = failwith "TODO: user Player.create"
+let uno_kanye = add_card (create "Kanye") fst_card
 
 let two_cards = add_card uno snd_card
 
@@ -38,16 +43,16 @@ let name_tests =
 
 let player_hand_tests =
   [
-    f_test "empty hand is []" player_hand empty [] (pp_list pp_card);
-    f_test
+    player_hand_test "empty hand is []" empty [];
+    player_hand_test
       "uno hand is [(red, 0, 0, skip: false reverse: false swap: false \
        change color: false)]"
-      player_hand uno [ fst_card ] (pp_list pp_card);
-    f_test
+      uno [ fst_card ];
+    player_hand_test
       "two_cards hand is [(red, 0, 0, skip: false reverse: false swap: \
        false change color: false), (red, 1, 0, skip: false reverse: \
        false swap: false change color: false)]"
-      player_hand two_cards [ fst_card; snd_card ] (pp_list pp_card);
+      two_cards [ fst_card; snd_card ];
   ]
 
 let is_uno_tests =

@@ -5,6 +5,7 @@ MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
 OCAMLBUILD=ocamlbuild -use-ocamlfind
 CARDTEST=card_test.byte
+PLAYERTEST=player_test.byte
 
 default: build
 
@@ -16,6 +17,9 @@ build:
 
 card-test:
 	$(OCAMLBUILD) -tag 'debug' $(CARDTEST) && ./$(CARDTEST) -runner sequential
+
+player-test:
+	$(OCAMLBUILD) -tag 'debug' $(PLAYERTEST) && ./$(PLAYERTEST) -runner sequential
 
 docs: docs-public docs-private
 	
