@@ -9,7 +9,7 @@ let deck =
   "custom_card.json" |> from_file |> member "standard deck" |> to_list
   |> create_cards
 
-(** [string_of_color] is the string representation of color from Card.t. *)
+(** [string_of_color] is the string representation of color from a card*)
 let string_of_color = function
   | R -> "red"
   | G -> "green"
@@ -17,11 +17,13 @@ let string_of_color = function
   | Y -> "yellow"
   | ANY -> "any"
 
-(** [string_of_digit] is the string representation of digit from Card.t. *)
+(** [string_of_digit] is the string representation of digit from a card. *)
 let string_of_digit = function
   | None -> "None"
   | Some x -> string_of_int x
 
+(** [string_of_actions c] is the string representation of actions from
+    [c]*)
 let string_of_actions c =
   "skip: " ^ string_of_bool c.skip ^ " reverse: "
   ^ string_of_bool c.reverse
@@ -43,6 +45,7 @@ let pp_list pp_elt lst =
   in
   "[" ^ pp_elts lst ^ "]"
 
+(** [pp_card c] pretty prints [c]*)
 let pp_card c =
   Format.asprintf "(%s, %s, %d, %s)"
     (string_of_color (color c))
