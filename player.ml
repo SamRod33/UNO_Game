@@ -8,6 +8,8 @@ type t = {
   id : int;
 }
 
+let create name = { name; hand = []; id = Random.bits () }
+
 let name p = p.name
 
 let player_hand p = p.hand
@@ -24,7 +26,8 @@ let rec remove_first_of_dup hand card acc =
   match hand with
   | [] -> hand
   | h :: t ->
-      if h = card then acc @ t else remove_first_of_dup t card (h :: acc)
+      if h = card then acc @ t
+      else remove_first_of_dup t card (h :: acc)
 
 let remove_card player card =
   if not (List.mem card player.hand) then raise (CardNotInHand card)
