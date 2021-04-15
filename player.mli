@@ -33,3 +33,6 @@ val add_card : t -> Card.t -> t
     from player [p]'s hand. Throws [CardNotInHand] if the card is not in
     the hand. *)
 val remove_card : t -> Card.t -> t
+
+(** [id p] is the id of player [p] *)
+val id : t -> int

@@ -22,7 +22,7 @@ type draw_penalty = int
 type actions = {
   skip : bool;
   reverse : bool;
-  swap : bool;
+  swap : bool * int;
   change_color : bool;
 }
 

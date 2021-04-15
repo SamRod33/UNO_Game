@@ -34,3 +34,5 @@ let remove_card player card =
   else
     let new_hand = remove_first_of_dup player.hand card [] in
     { player with hand = new_hand }
+
+let id p = p.id
