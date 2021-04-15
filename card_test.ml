@@ -1,31 +1,11 @@
 open OUnit2
 open Card
-
-(** [f_test name f c expected to_str] creates an OUnit test case called
-    [name] that checks [expected] equals [f c]. [to_str] dictates how
-    the test case should print out the actual value of [f c] if
-    otherwise. *)
-let f_test name f c expected to_str =
-  name >:: fun _ -> assert_equal expected (f c) ~printer:to_str
+open Test
 
 (** [penalty_test name c expected] creates an OUnit test case that
     checks [expected] equals [draw_penalty c]. *)
 let penalty_test name c expected =
   f_test name draw_penalty c expected string_of_int
-
-(** [string_of_color] is the string representation of color from Card.t. *)
-let string_of_color = function
-  | R -> "red"
-  | G -> "green"
-  | B -> "blue"
-  | Y -> "yellow"
-  | ANY -> "any"
-
-let string_of_actions c =
-  "skip: " ^ string_of_bool c.skip ^ " reverse: "
-  ^ string_of_bool c.reverse
-  ^ "swap: " ^ string_of_bool c.swap ^ "change color: "
-  ^ string_of_bool c.change_color
 
 (** [color_test name c expected] creates an OUnit test case that checks
     [expected] equals [color c]. *)
@@ -41,16 +21,6 @@ let actions_test name c expected =
     [expected] equals [amount c]. *)
 let amt_test name c expected =
   f_test name amount c expected string_of_int
-
-(** [create_cards lst] is the parsed list of JSONs containing Cards. *)
-let rec create_cards lst = List.map create lst
-
-(** [deck] is the list of cards from [custom_card.json] used in testing. *)
-let deck =
-  let open Yojson.Basic in
-  let open Yojson.Basic.Util in
-  "custom_card.json" |> from_file |> member "standard deck" |> to_list
-  |> create_cards
 
 (** [colors] is the expected colors for all cards in order. *)
 let colors = [ R; G; ANY; ANY; B ]

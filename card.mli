@@ -30,6 +30,9 @@ type actions = {
     JSON adventure representation. *)
 val create : Yojson.Basic.t -> t
 
+(** [create_cards lst] is the parsed list of JSONs containing Cards. *)
+val create_cards : Yojson.Basic.t list -> t list
+
 (** [draw_penalty c] is the identifier of the draw penalty in card [c]. *)
 val draw_penalty : t -> draw_penalty
 

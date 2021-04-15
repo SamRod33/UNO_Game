@@ -67,7 +67,6 @@ let create j =
     digit = j |> member "digit" |> to_digit;
   }
 
-(** [create_cards lst] is the parsed list of JSONs containing Cards. *)
 let rec create_cards lst = List.map create lst
 
 (*** [create_std_lst] is the list of JSONs of cards in a standard deck. *)
