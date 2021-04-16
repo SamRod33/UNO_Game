@@ -16,10 +16,12 @@ let swap_hands p1_id p2_id players =
   in
   let p1_hand = find_hand p1_id players in
   let p2_hand = find_hand p2_id players in
-  List.map (fun p ->
+  List.map
+    (fun p ->
       if p.id = p1_id then { p with hand = p2_hand }
       else if p.id = p2_id then { p with hand = p1_hand }
       else p)
+    players
 
 let is_cpu p = p.is_computer
 
