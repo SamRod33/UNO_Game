@@ -14,7 +14,7 @@ exception CardNotInHand of Card.t
 
 (** [create name] is a new player with playername [name] with an empty
     hand*)
-val create : string -> t
+val create : string -> bool -> t
 
 (** [name p] is the name of player [p] *)
 val name : t -> string
@@ -36,3 +36,6 @@ val remove_card : t -> Card.t -> t
 
 (** [id p] is the id of player [p] *)
 val id : t -> int
+
+(** [is_cpu] is true when the player is a computer, false otherwise. *)
+val is_cpu : t -> bool

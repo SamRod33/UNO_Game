@@ -73,12 +73,17 @@ let create j =
     digit = j |> member "digit" |> to_digit;
   }
 
-let rec create_cards lst = List.map create lst
+let create_cards lst = List.map create lst
 
-(*** [create_std_lst] is the list of JSONs of cards in a standard deck. *)
-let rec create_std_lst =
-  let f (nm, j) = j in
-  List.map f (to_assoc (Yojson.Basic.from_file "standard_cards.json"))
+let standard_cards =
+  j "standard_cards.json" |> member "standard deck" |> to_list
+  |> create_cards
+
+let custom_cards =
+  j "custom_card.json" |> member "standard deck" |> to_list
+  |> create_cards
+
+let full_deck = custom_cards @ standard_cards
 
 (********************************************************************)
 (* Alpha Demo Card functions *)

@@ -6,9 +6,13 @@ type t = {
   name : string;
   hand : Card.t list;
   id : int;
+  is_computer : bool;
 }
 
-let create name = { name; hand = []; id = Random.bits () }
+let is_cpu p = p.is_computer
+
+let create name is_cpu =
+  { name; hand = []; id = Random.bits (); is_computer = is_cpu }
 
 let name p = p.name
 

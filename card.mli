@@ -50,3 +50,10 @@ val digit : t -> int option
 
 (** [standard_cards] is the Card.t list of cards in a standard UNO deck. *)
 val standard_cards : t list
+
+(** [custom_cards] is the Card.t list of cards in the custom deck. *)
+val custom_cards : t list
+
+(** [full_deck] is the Card.t list of cards in a standard UNO deck and
+    the custom deck. *)
+val full_deck : t list
