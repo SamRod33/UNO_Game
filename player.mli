@@ -22,6 +22,11 @@ val name : t -> string
 (** [player_hand p] is player [p]'s hand of cards *)
 val player_hand : t -> Card.t list
 
+(** [swap_hands p1_id p2_id players] is [players] with p1 and p2's hands
+    swapped where [p1_id] and [p2_id] are the id's of p1 and p2,
+    respectively. Fails if p1 and p2 are not in [players].*)
+val swap_hands : int -> int -> t list
+
 (** [is_uno p] is true when a player's hand has 1 card or less, false
     otherwise. *)
 val is_uno : t -> bool
