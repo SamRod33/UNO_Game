@@ -16,9 +16,7 @@ let rec find_valid_card g hand =
   | [] -> None
   | h :: t -> if is_valid_card g h then Some h else find_valid_card g t
 
-(** [action g] is the card the computer will play based on a give state
-    [g]. None is returned if the cpu wants to draw a card. *)
-let action g = find_valid_card g (player_hand (current_player g))
+let basic_action g = find_valid_card g (player_hand (current_player g))
 
 (*****************************************************************************
   All functions below are for determining a better move based on the
@@ -50,6 +48,14 @@ let add_weight g c =
         (c, 5)
     | _ -> (c, 10)
 
+(** [valid_hand g acc h] is a list of cards from a player's hand [h]
+    that would be valid to play in game state [g]. *)
+let rec valid_hand g acc hand =
+  match hand with
+  | [] -> acc
+  | h :: t ->
+      if is_valid_card g h then h :: acc else valid_hand g acc hand
+
 (** [comp a b] is -1 if the weight of the first card is greater, 0 if
     equal, and 1 otherwise. *)
 let comp (a : Card.t * int) (b : Card.t * int) =
@@ -57,17 +63,13 @@ let comp (a : Card.t * int) (b : Card.t * int) =
 
 (** [lw_card g] is the lowest weighted card from the list of valid
     (playable) cards of the current player's hand in game [g]. *)
-let lw_card g =
-  let rec valid_hand acc hand =
-    match hand with
-    | [] -> acc
-    | h :: t ->
-        if is_valid_card g h then h :: acc else valid_hand hand acc
+let lw_card (g : State.t) : Card.t option =
+  let w_cards =
+    List.map (add_weight g)
+      (g |> current_player |> player_hand |> valid_hand g [])
   in
-  List.map (add_weight g)
-    (g |> current_player |> player_hand |> valid_hand [])
-  |> List.sort comp |> List.hd |> fst
+  match List.sort comp w_cards with
+  | [] -> None
+  | h :: t -> Some (fst h)
 
-(** [action g] is the card the computer will play based on a give state
-    [g]. None is returned if the cpu wants to draw a card. *)
-(*let action g = lw_card g*)
+let action g = lw_card g

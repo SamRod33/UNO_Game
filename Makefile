@@ -1,4 +1,4 @@
-MODULES=card player state main
+MODULES=card player state main computer
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
