@@ -1,4 +1,4 @@
-MODULES=card player state
+MODULES=card player state main
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
@@ -6,6 +6,8 @@ MLIS=$(MODULES:=.mli)
 OCAMLBUILD=ocamlbuild -use-ocamlfind
 CARDTEST=card_test.byte
 PLAYERTEST=player_test.byte
+STATETEST=state_test.byte
+MAIN=main.byte
 
 default: build
 
@@ -20,6 +22,12 @@ card-test:
 
 player-test:
 	$(OCAMLBUILD) -tag 'debug' $(PLAYERTEST) && ./$(PLAYERTEST) -runner sequential
+
+state-test:
+	$(OCAMLBUILD) -tag 'debug' $(STATETEST) && ./$(STATETEST) -runner sequential
+
+uno:
+	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)
 
 docs: docs-public docs-private
 	
