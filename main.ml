@@ -20,12 +20,12 @@ let to_string_color c =
 (** [to_card_face c] is the face of the card [c]. *)
 let to_card_face c =
   let ac = actions c in
-  if ac.skip = true then "ⓧ "
-  else if ac.reverse = true then "R "
-  else if fst ac.swap = true then "↔ "
+  if ac.skip = true then "ⓧ"
+  else if ac.reverse = true then "R"
+  else if fst ac.swap = true then "↔"
   else if ac.change_color = true then
     let pc = draw_penalty c in
-    if pc = 0 then "C " else "+4"
+    if pc = 0 then "C" else "+4"
   else
     let pc = draw_penalty c in
     if pc = 0 then string_of_int (Option.get (Card.digit c)) else "+2"
@@ -81,9 +81,10 @@ let play_game players =
         print_string fail_str;
         game_loop g
     | Some n ->
-        if n > -2 && n < List.length (player_hand cur_player) then (
+        if n > -2 && n < List.length cur_player_hand then (
           let play_card =
-            if n = -1 then None else Some (List.nth cur_player_hand n)
+            if n = -1 then None
+            else Some (List.nth (List.rev cur_player_hand) n)
           in
           match play play_card g with
           | Illegal ->
