@@ -8,8 +8,50 @@ let rec create_players players = function
       let player = create ("Player " ^ string_of_int n) false in
       create_players (player :: players) (n - 1)
 
+let to_string_color c =
+  let cc = color c in
+  match cc with
+  | R -> ANSITerminal.red
+  | G -> ANSITerminal.green
+  | B -> ANSITerminal.blue
+  | Y -> ANSITerminal.yellow
+  | ANY -> ANSITerminal.white
+
+(** [to_card_face c] is the face of the card [c]. *)
+let to_card_face c =
+  let ac = actions c in
+  if ac.skip = true then "ⓧ "
+  else if ac.reverse = true then "R "
+  else if fst ac.swap = true then "↔ "
+  else if ac.change_color = true then
+    let pc = draw_penalty c in
+    if pc = 0 then "C " else "+4"
+  else
+    let pc = draw_penalty c in
+    if pc = 0 then string_of_int (Option.get (Card.digit c)) else "+2"
+
+let print_card card =
+  let c_color =
+    match color card with
+    | R -> "Red"
+    | G -> "Green"
+    | B -> "Blue"
+    | Y -> "Yellow"
+    | ANY -> "Black"
+  in
+  let face = to_card_face card in
+  "( " ^ c_color ^ ", " ^ face ^ " )"
+
 let cards_str cards =
-  List.fold_left (fun str card -> str ^ "[card printed here] ") "" cards
+  List.fold_left
+    (fun str card -> (print_card card, card) :: str)
+    [] cards
+
+let rec print_cards = function
+  | [] -> ()
+  | h :: t ->
+      ANSITerminal.print_string [ to_string_color (snd h) ] (fst h ^ " ");
+      print_cards t
 
 let fail_str = "\nTry again.\n"
 
@@ -21,14 +63,17 @@ let play_game players =
     let cur_player = current_player g in
     let cur_player_hand = player_hand cur_player in
     print_string ("It is " ^ name cur_player ^ "'s turn.\n");
+    print_string "The top card is ";
+    print_cards [ (print_card (top_card g), top_card g) ];
     print_string
-      ("The top card is " ^ "[card] "
-     ^ "and the current stack penalty is "
+      ("and the current stack penalty is "
       ^ string_of_int (stack_penalty g)
       ^ ".\n");
-    print_string ("Your cards are: " ^ cards_str cur_player_hand ^ "\n");
+    print_string "Your cards are:";
+    print_cards (cards_str cur_player_hand);
     print_endline
-      "Type in the index of the card you wish to play (starting from \
+      "\n\
+       Type in the index of the card you wish to play (starting from \
        0). If you do not have a card to play, type -1.\n";
     print_string "> ";
     match int_of_string_opt (read_line ()) with
@@ -46,7 +91,7 @@ let play_game players =
               game_loop g
           | Legal next_g -> game_loop next_g
           | GameOver winner ->
-              print_string (name winner ^ "wins!");
+              print_string ("\n" ^ name winner ^ " wins!\n\n");
               exit 0)
         else print_string fail_str;
         game_loop g
