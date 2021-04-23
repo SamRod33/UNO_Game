@@ -122,11 +122,13 @@ let swap_rotate_players players c =
 
 (** [legal_play c1 c2] is true if playing c1 is valid on c2.*)
 let legal_play (c1 : Card.t) (c2 : Card.t) =
+  let effects_c1 = actions c1 in
   color c1 = color c2
-  || (actions c1).change_color
+  || effects_c1.change_color
   || (draw_penalty c1 = draw_penalty c2 && draw_penalty c1 > 0)
   || (digit c1 = digit c2 && digit c1 <> None)
-  || actions c1 = actions c2
+  || effects_c1 = actions c2
+     && (effects_c1.skip || effects_c1.reverse || fst effects_c1.swap)
 
 (** [add_to_hand player cards] is [player] with [cards] added to their
     hand*)
