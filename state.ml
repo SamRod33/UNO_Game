@@ -72,7 +72,7 @@ let rec init_deck (cards : Card.t list) =
   | h :: _ ->
       let actions = Card.actions h in
       if
-        actions.skip || actions.reverse || actions.swap
+        actions.skip || actions.reverse || fst actions.swap
         || actions.change_color
       then init_deck (shuffle cards)
       else cards
@@ -83,43 +83,6 @@ let rec init_deck (cards : Card.t list) =
 let remove_card start_deck = function
   | [] -> raise NoMoreCards
   | h :: t -> if t = [] then init_deck start_deck else t
-
-let init_state (cards : Card.t list) (players : Player.t list) =
-  match init_deck cards with
-  | [] -> raise NoMoreCards
-  | h :: t as full_deck ->
-      {
-        deck = t;
-        top_card = h;
-        starting_deck = full_deck;
-        stack_penalty = 0;
-        players;
-      }
-
-(** [rotate_players p players] is [players] with the player p' at the
-    front of [players] removed and [p] is the updated p' put at the end
-    of [players] Raises NoPlayersFound if [players] is empty.*)
-let rotate_players p reverse = function
-  | [] -> raise NoPlayersFound
-  | h :: t -> if reverse then List.rev t @ [ p ] else t @ [ p ]
-
-(** applies skip effect to the game if [(actions c).skip] is [true],
-    otherwise does nothing.*)
-let apply_skip c g =
-  if (actions c).skip then
-    {
-      g with
-      players = rotate_players (current_player g) false g.players;
-    }
-  else g
-
-(** [legal_play c1 c2] is true if playing c1 is valid on c2.*)
-let legal_play (c1 : Card.t) (c2 : Card.t) =
-  color c1 = color c2
-  || (actions c1).change_color
-  || (draw_penalty c1 = draw_penalty c2 && draw_penalty c1 > 0)
-  || (digit c1 = digit c2 && digit c1 <> None)
-  || actions c1 = actions c2
 
 (** [draw_cards deck starting_deck acc n] is a tuple where the first
     item in the tuple is a list of cards drawn and the second item is
@@ -134,9 +97,73 @@ let rec draw_cards deck starting_deck acc = function
             (remove_card starting_deck deck)
             starting_deck (h :: acc) (n - 1))
 
+(** [rotate_players players] is [players] with the head of [players]
+    moved to the end of the list.*)
+let rec rotate_players = function
+  | [] -> raise NoPlayersFound
+  | h :: t -> t @ [ h ]
+
+(** applies swap, rotate, and skip effects from card [c] to players,
+    respectively.*)
+let swap_rotate_players players c =
+  let swapped_hands =
+    match players with
+    | [] -> raise NoPlayersFound
+    | h :: _ as no_swap ->
+        if fst (actions c).swap then
+          swap_hands (id h) (snd (actions c).swap) players
+        else no_swap
+  in
+  let apply_rev =
+    if (actions c).reverse then List.rev swapped_hands
+    else rotate_players swapped_hands
+  in
+  if (actions c).skip then rotate_players apply_rev else apply_rev
+
+(** [legal_play c1 c2] is true if playing c1 is valid on c2.*)
+let legal_play (c1 : Card.t) (c2 : Card.t) =
+  let effects_c1 = actions c1 in
+  color c1 = color c2
+  || effects_c1.change_color
+  || (draw_penalty c1 = draw_penalty c2 && draw_penalty c1 > 0)
+  || (digit c1 = digit c2 && digit c1 <> None)
+  || effects_c1 = actions c2
+     && (effects_c1.skip || effects_c1.reverse || fst effects_c1.swap)
+
 (** [add_to_hand player cards] is [player] with [cards] added to their
     hand*)
 let rec add_to_hand player cards = List.fold_left add_card player cards
+
+(** [players_draw players deck starting_deck] is the tuple [(ps, cards)]
+    where [ps] is a list of players with 7 cards in their hands and
+    [cards] is the deck of cards after each player has drawn their
+    cards.*)
+let players_draw players deck starting_deck =
+  let rec players_draw_help ps cards = function
+    | 0 -> (ps, cards)
+    | n -> (
+        match ps with
+        | [] -> raise NoPlayersFound
+        | h :: t ->
+            let tup = draw_cards cards starting_deck [] 7 in
+            players_draw_help
+              (t @ [ add_to_hand h (fst tup) ])
+              (snd tup) (n - 1))
+  in
+  players_draw_help players deck (List.length players)
+
+let init_state (cards : Card.t list) (players : Player.t list) =
+  match init_deck cards with
+  | [] -> raise NoMoreCards
+  | h :: t as full_deck ->
+      let players_draw_tup = players_draw players t full_deck in
+      {
+        deck = snd players_draw_tup;
+        top_card = h;
+        starting_deck = full_deck;
+        stack_penalty = 0;
+        players = fst players_draw_tup;
+      }
 
 (** [penalize g] is the new [g] after penalizing the current player in
     [g] with stack penalty if stack_penalty is not 0, otherwise the
@@ -144,14 +171,15 @@ let rec add_to_hand player cards = List.fold_left add_card player cards
 let penalize g =
   let penalty = if g.stack_penalty = 0 then 1 else g.stack_penalty in
   let card_split = draw_cards g.deck g.starting_deck [] penalty in
+  let player' = add_to_hand (current_player g) (fst card_split) in
   {
     g with
     deck = snd card_split;
     stack_penalty = 0;
     players =
-      rotate_players
-        (add_to_hand (current_player g) (fst card_split))
-        false g.players;
+      (match g.players with
+      | [] -> raise NoPlayersFound
+      | h :: t -> rotate_players (player' :: t));
   }
 
 (** [play_card c g] is the result of attempting to play card [c] in the
@@ -166,15 +194,18 @@ let play_card c g =
     let player' = Player.remove_card (current_player g) c in
     if List.length (player_hand player') <> 0 then
       let stack_penalty' = g.stack_penalty + draw_penalty c in
+      let players' =
+        match g.players with
+        | [] -> raise NoPlayersFound
+        | h :: t -> swap_rotate_players (player' :: t) c
+      in
       Legal
-        ({
-           g with
-           stack_penalty = stack_penalty';
-           top_card = c;
-           players =
-             rotate_players player' (actions c).reverse g.players;
-         }
-        |> apply_skip c)
+        {
+          g with
+          stack_penalty = stack_penalty';
+          top_card = c;
+          players = players';
+        }
     else GameOver player'
   else Illegal
 
@@ -182,3 +213,5 @@ let play c g =
   match c with
   | Some card -> play_card card g
   | None -> Legal (penalize g)
+
+let print g = g

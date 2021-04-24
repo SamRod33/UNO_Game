@@ -6,6 +6,7 @@
         "skip": false,
         "reverse": false,
         "swap": false,
+        "swap_p2": -1,
         "change color": false
       },
       "draw penalty": 2,
@@ -17,6 +18,7 @@
         "skip": true,
         "reverse": false,
         "swap": true,
+        "swap_p2": -1,
         "change color": false
       },
       "draw penalty": 0,
@@ -28,6 +30,7 @@
         "skip": false,
         "reverse": false,
         "swap": false,
+        "swap_p2": -1,
         "change color": true
       },
       "draw penalty": 0,
@@ -39,6 +42,7 @@
         "skip": true,
         "reverse": false,
         "swap": false,
+        "swap_p2": -1,
         "change color": true
       },
       "draw penalty": 4,
@@ -50,6 +54,7 @@
         "skip": true,
         "reverse": false,
         "swap": false,
+        "swap_p2": -1,
         "change color": false
       },
       "draw penalty": 0,
