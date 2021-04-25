@@ -2,3 +2,7 @@
 #require "yojson";;
 #require "ANSITerminal";;
 #directory "_build";;
+#load "facecards.cmo";;
+#load "card.cmo";;
+#load "player.cmo";;
+#load "state.cmo";;
