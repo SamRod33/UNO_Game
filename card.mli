@@ -57,3 +57,7 @@ val custom_cards : t list
 (** [full_deck] is the Card.t list of cards in a standard UNO deck and
     the custom deck. *)
 val full_deck : t list
+
+(** [pp_cards cards] prints a list of cards by printing 7 cards per row,
+    and each card has its index underneath it. *)
+val pp_cards : t list -> unit
