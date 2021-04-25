@@ -1,4 +1,4 @@
-MODULES=card player state main computer
+MODULES=card player state main computer facecards
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
