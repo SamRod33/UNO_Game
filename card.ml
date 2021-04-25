@@ -195,10 +195,10 @@ let rec print_per_row acc n cards =
   match cards with
   | [] -> print_cards acc n
   | h :: t ->
-      if List.length acc >= c_per_row then
-        print_cards acc (n - List.length acc)
+      if List.length (h :: acc) >= c_per_row then
+        print_cards (h :: acc) (n - List.length (h :: acc))
       else ();
-      if List.length acc >= c_per_row then print_per_row [] n t
+      if List.length (h :: acc) >= c_per_row then print_per_row [] n t
       else print_per_row (h :: acc) (n + 1) t
 
 let pp_cards cards = print_per_row [] 0 cards
