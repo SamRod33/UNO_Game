@@ -49,24 +49,26 @@ let make_action skip reverse swap change_color =
   { skip; reverse; swap; change_color }
 
 (** [num_action] is the action of a number card. *)
-let num_action = make_action false false false false
+let num_action = make_action false false (false, -1) false
 
 (** [plus_4_action] is the action of a +4 card. *)
-let plus_4_action = make_action true false false true
+let plus_4_action = make_action true false (false, -1) true
 
-let penalty_tests = f_tests penalty_test "penalty tests" deck penalties
+let penalty_tests =
+  f_tests penalty_test "penalty tests" custom_cards penalties
 
-let color_tests = f_tests color_test "color tests" deck colors
+let color_tests = f_tests color_test "color tests" custom_cards colors
 
 let actions_tests =
   [
-    actions_test "number card action is all false" (List.hd deck)
-      num_action;
+    actions_test "number card action is all false"
+      (List.hd custom_cards) num_action;
     actions_test "+4 card action is skip T, change color T, rest F"
-      (List.nth deck 3) plus_4_action;
+      (List.nth custom_cards 3)
+      plus_4_action;
   ]
 
-let amt_tests = f_tests amt_test "amount tests" deck amounts
+let amt_tests = f_tests amt_test "amount tests" custom_cards amounts
 
 let suite =
   "test suite for Card"
