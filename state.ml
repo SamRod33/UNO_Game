@@ -224,3 +224,12 @@ let change_current_players_hand remc addc g =
       let remve_card = Player.remove_card h remc in
       let added_card = Player.add_card remve_card addc in
       { g with players = added_card :: t }
+
+let t_test (d : Card.t list) (s : Card.t list) sp tc p =
+  {
+    deck = d;
+    starting_deck = s;
+    stack_penalty = sp;
+    top_card = tc;
+    players = p;
+  }

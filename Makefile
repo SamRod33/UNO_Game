@@ -7,6 +7,7 @@ OCAMLBUILD=ocamlbuild -use-ocamlfind
 CARDTEST=card_test.byte
 PLAYERTEST=player_test.byte
 STATETEST=state_test.byte
+COMPUTERTEST=computer_test.byte
 MAIN=main.byte
 
 default: build
@@ -25,6 +26,9 @@ player-test:
 
 state-test:
 	$(OCAMLBUILD) -tag 'debug' $(STATETEST) && ./$(STATETEST) -runner sequential
+
+computer-test:
+	$(OCAMLBUILD) -tag 'debug' $(COMPUTERTEST) && ./$(COMPUTERTEST) -runner sequential
 
 uno:
 	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)

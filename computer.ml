@@ -11,12 +11,12 @@ let is_valid_card g card =
 (** [find_valid_card g h] is the first valid card option in a player's
     hand [h] from the left in a given state [g]. None is returned if the
     hand is empty. *)
-let rec find_valid_card g hand =
+let rec first_valid_card g hand =
   match hand with
   | [] -> None
-  | h :: t -> if is_valid_card g h then Some h else find_valid_card g t
+  | h :: t -> if is_valid_card g h then Some h else first_valid_card g t
 
-let basic_action g = find_valid_card g (player_hand (current_player g))
+let basic_action g = first_valid_card g (player_hand (current_player g))
 
 (*****************************************************************************
   All functions below are for determining a better move based on the
@@ -53,8 +53,7 @@ let add_weight g c =
 let rec valid_hand g acc hand =
   match hand with
   | [] -> acc
-  | h :: t ->
-      if is_valid_card g h then h :: acc else valid_hand g acc hand
+  | h :: t -> if is_valid_card g h then h :: acc else valid_hand g acc t
 
 (** [comp a b] is -1 if the weight of the first card is greater, 0 if
     equal, and 1 otherwise. *)
@@ -68,7 +67,7 @@ let lw_card (g : State.t) : Card.t option =
     List.map (add_weight g)
       (g |> current_player |> player_hand |> valid_hand g [])
   in
-  match List.sort comp w_cards with
+  match List.fast_sort comp w_cards with
   | [] -> None
   | h :: t -> Some (fst h)
 

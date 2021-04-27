@@ -16,6 +16,10 @@ exception CardNotInHand of Card.t
     empty hand. The player is a computer iff [is_cpu] is true. *)
 val create : string -> bool -> t
 
+(** [create_test name h is_cpu] is a new player with playername [name]
+    and hand [h]. The player is a computer iff [is_cpu] is true. *)
+val create_test : string -> Card.t list -> bool -> t
+
 (** [name p] is the name of player [p] *)
 val name : t -> string
 

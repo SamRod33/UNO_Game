@@ -47,3 +47,9 @@ val play : Card.t option -> t -> result
     hand in [g.players] with [remc] removed and [addc] added. Requires:
     [remc] is in the hand of the current player.*)
 val change_current_players_hand : Card.t -> Card.t -> t -> t
+
+(** [t_test d s sp tc p] is a state that is created from the given deck
+    [d], starting deck [s], stack penalty [sp], top card [tc], and
+    player list [p]. *)
+val t_test :
+  Card.t list -> Card.t list -> int -> Card.t -> Player.t list -> t
