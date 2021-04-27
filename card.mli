@@ -58,6 +58,6 @@ val custom_cards : t list
     the custom deck. *)
 val full_deck : t list
 
-(** [pp_cards cards] prints a list of cards by printing 7 cards per row,
-    and each card has its index underneath it. *)
-val pp_cards : t list -> unit
+(** [pp_cards cards is_idx] prints a list of cards by printing 7 cards
+    per row, and each card has its index above it if [is_idx] is true. *)
+val pp_cards : t list -> bool -> unit

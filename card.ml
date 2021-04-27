@@ -173,35 +173,40 @@ let rec idx_label start stop acc =
   | n when n < start -> acc
   | _ -> failwith "Impossible pattern match: idx label"
 
+let rec print_cards_aux n pp_orders =
+  match n with
+  | 0 -> ()
+  | n ->
+      print_card_row pp_orders;
+      print_string "\n";
+      print_cards_aux (n - 1) pp_orders
+
 (** [print_cards cards start] prints out [cards] and labels each pp_card
     starting at [start] to [start] \+ min(c_per_row, length of cards -
     1). *)
-let print_cards cards start =
-  print_endline
-    ("     "
-    ^ idx_label start (start + min c_per_row (List.length cards - 1)) ""
-    );
+let print_cards cards start is_idx =
+  if is_idx then
+    print_endline
+      ("     "
+      ^ idx_label start
+          (start + min c_per_row (List.length cards - 1))
+          "")
+  else ();
   let pp_orders = List.map (fun c -> print_ord c) cards in
-  let rec pp_cards_aux = function
-    | 0 -> ()
-    | n ->
-        print_card_row pp_orders;
-        print_string "\n";
-        pp_cards_aux (n - 1)
-  in
-  pp_cards_aux (fst card_dim)
+  print_cards_aux (fst card_dim) pp_orders
 
-let rec print_per_row acc n cards =
+let rec print_per_row acc n cards is_idx =
   match cards with
-  | [] -> print_cards acc n
+  | [] -> print_cards acc n is_idx
   | h :: t ->
       if List.length (h :: acc) >= c_per_row then
-        print_cards (h :: acc) (n - List.length (h :: acc))
+        print_cards (h :: acc) (n - List.length (h :: acc)) is_idx
       else ();
-      if List.length (h :: acc) >= c_per_row then print_per_row [] n t
-      else print_per_row (h :: acc) (n + 1) t
+      if List.length (h :: acc) >= c_per_row then
+        print_per_row [] n t is_idx
+      else print_per_row (h :: acc) (n + 1) t is_idx
 
-let pp_cards cards = print_per_row [] 0 cards
+let pp_cards cards is_idx = print_per_row [] 0 cards is_idx
 
 (********************************************************************)
 (* Alpha Demo Card functions *)
