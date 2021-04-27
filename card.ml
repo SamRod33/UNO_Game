@@ -223,6 +223,12 @@ let change_color c color = { c with color }
 
 let actions c = c.actions
 
+let set_swap_id c id =
+  {
+    c with
+    actions = { c.actions with swap = (fst c.actions.swap, id) };
+  }
+
 let amount c = c.amount
 
 let digit c = c.digit

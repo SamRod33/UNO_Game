@@ -22,12 +22,20 @@ let string_of_digit = function
   | None -> "None"
   | Some x -> string_of_int x
 
-(** [string_of_actions c] is the string representation of actions from
-    [c]*)
+(** [string_of_swap] is the string representation of swap from a card. *)
+let string_of_swap c =
+  "("
+  ^ string_of_bool (fst c.swap)
+  ^ ", "
+  ^ string_of_int (snd c.swap)
+  ^ ")"
+
+(** [string_of_actions c] is the string representation of actions from a
+    card. *)
 let string_of_actions c =
   "skip: " ^ string_of_bool c.skip ^ " reverse: "
   ^ string_of_bool c.reverse
-  ^ " swap: " ^ string_of_bool c.swap ^ " change color: "
+  ^ " swap: (" ^ string_of_swap c ^ ") change color: "
   ^ string_of_bool c.change_color
 
 (** [pp_list pp_elt lst] pretty-prints list [lst], using [pp_elt] to
