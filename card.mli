@@ -46,6 +46,9 @@ val change_color : t -> color -> t
 (** [action c] is the identifier of the action of card [c]. *)
 val actions : t -> actions
 
+(** [set_swap c id] is the same [c] but its swap id is changed to [id]. *)
+val set_swap_id : t -> int -> t
+
 (** [amount c] is the amount of card [c] in the standard deck of a game. *)
 val amount : t -> int
 
