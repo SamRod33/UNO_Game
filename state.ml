@@ -75,7 +75,7 @@ let rec init_deck (cards : Card.t list) =
         actions.skip || actions.reverse || fst actions.swap
         || actions.change_color
       then init_deck (shuffle cards)
-      else cards
+      else shuffle cards
 
 (** [remove_card deck] is [deck] with the top card removed. If doing so
     results in an empty deck, then this will be a fresh set of
