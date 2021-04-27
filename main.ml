@@ -115,7 +115,9 @@ let play_game players =
           | Illegal ->
               print_string illegal_card;
               game_loop g
-          | Legal next_g -> format_card g next_g play_card
+          | Legal next_g ->
+              ignore (Sys.command "clear");
+              format_card g next_g play_card
           | GameOver winner ->
               print_string ("\n" ^ name winner ^ " wins!\n\n");
               exit 0)
