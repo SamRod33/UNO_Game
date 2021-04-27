@@ -39,6 +39,10 @@ val draw_penalty : t -> draw_penalty
 (** [color c] is the identifier of the color of card [c]. *)
 val color : t -> color
 
+(** [change_color c color] is a the same [c] except with c's color
+    updated to [color]*)
+val change_color : t -> color -> t
+
 (** [action c] is the identifier of the action of card [c]. *)
 val actions : t -> actions
 

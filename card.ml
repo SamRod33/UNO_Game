@@ -219,6 +219,8 @@ let draw_penalty c = c.penalty
 
 let color c = c.color
 
+let change_color c color = { c with color }
+
 let actions c = c.actions
 
 let amount c = c.amount
