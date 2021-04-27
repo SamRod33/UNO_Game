@@ -200,7 +200,10 @@ let rec print_per_row acc n cards is_idx =
   | [] -> print_cards acc n is_idx
   | h :: t ->
       if List.length (h :: acc) >= c_per_row then
-        print_cards (h :: acc) (n - List.length (h :: acc)) is_idx
+        print_cards
+          (List.rev (h :: acc))
+          (n - List.length (h :: acc) + 1)
+          is_idx
       else ();
       if List.length (h :: acc) >= c_per_row then
         print_per_row [] n t is_idx
