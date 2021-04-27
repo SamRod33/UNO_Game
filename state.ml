@@ -76,7 +76,7 @@ let rec init_deck (cards : Card.t list) =
         actions.skip || actions.reverse || fst actions.swap
         || actions.change_color
       then init_deck (shuffle cards)
-      else cards
+      else shuffle cards
 
 (** [remove_card deck] is [deck] with the top card removed. If doing so
     results in an empty deck, then this will be a fresh set of
@@ -122,14 +122,16 @@ let swap_rotate_players players c =
   if (actions c).skip then rotate_players apply_rev else apply_rev
 
 (** [legal_play c1 c2] is true if playing c1 is valid on c2.*)
-let legal_play (c1 : Card.t) (c2 : Card.t) =
+let legal_play (c1 : Card.t) (c2 : Card.t) penalty =
   let effects_c1 = actions c1 in
-  color c1 = color c2
-  || effects_c1.change_color
-  || (draw_penalty c1 = draw_penalty c2 && draw_penalty c1 > 0)
-  || (digit c1 = digit c2 && digit c1 <> None)
-  || effects_c1 = actions c2
-     && (effects_c1.skip || effects_c1.reverse || fst effects_c1.swap)
+  if penalty > 0 && draw_penalty c1 <> draw_penalty c2 then false
+  else
+    color c1 = color c2
+    || effects_c1.change_color
+    || (draw_penalty c1 = draw_penalty c2 && draw_penalty c1 > 0)
+    || (digit c1 = digit c2 && digit c1 <> None)
+    || effects_c1 = actions c2
+       && (effects_c1.skip || effects_c1.reverse || fst effects_c1.swap)
 
 (** [add_to_hand player cards] is [player] with [cards] added to their
     hand*)
@@ -190,7 +192,7 @@ let penalize g =
 let play_card c g =
   if
     List.mem c (Player.player_hand (current_player g))
-    && legal_play c g.top_card
+    && legal_play c g.top_card g.stack_penalty
   then
     let player' = Player.remove_card (current_player g) c in
     if List.length (player_hand player') <> 0 then
