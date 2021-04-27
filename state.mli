@@ -42,3 +42,8 @@ val init_state : Card.t list -> Player.t list -> t
     player in [g] has an empty player hand then Gameover player is
     returned. If Otherwise, Illegal is returned. *)
 val play : Card.t option -> t -> result
+
+(** [change_player_hand remc addc g] is [g] with the current player's
+    hand in [g.players] with [remc] removed and [addc] added. Requires:
+    [remc] is in the hand of the current player.*)
+val change_current_players_hand : Card.t -> Card.t -> t -> t

@@ -217,4 +217,10 @@ let play c g =
   | Some card -> play_card card g
   | None -> Legal (penalize g)
 
-let print g = g
+let change_current_players_hand remc addc g =
+  match g.players with
+  | [] -> raise NoPlayersFound
+  | h :: t ->
+      let remve_card = Player.remove_card h remc in
+      let added_card = Player.add_card remve_card addc in
+      { g with players = added_card :: t }

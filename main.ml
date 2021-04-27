@@ -2,6 +2,7 @@ open State
 open Card
 open Player
 
+(** [create_players \[\] n] is a list of [n] players.*)
 let rec create_players players = function
   | 0 -> players
   | n ->
@@ -57,9 +58,33 @@ let fail_str = "\nTry again.\n"
 
 let illegal_card = "\nYou can't play that card. Try another.\n"
 
+let rec select_color () =
+  print_string "Type in R, G, B, or Y to select the color.\n\n";
+  match read_line () with
+  | "R" -> R
+  | "G" -> G
+  | "B" -> B
+  | "Y" -> Y
+  | _ ->
+      print_string "Choose a valid color.\n\n";
+      select_color ()
+
 let play_game players =
   let start_state = init_state standard_cards players in
   let rec game_loop g =
+    let format_card gst next_gst = function
+      | None -> game_loop next_gst
+      | Some c ->
+          if color c = ANY then
+            let new_c = change_color c (select_color ()) in
+            match
+              play (Some new_c)
+                (change_current_players_hand c new_c gst)
+            with
+            | Legal next -> game_loop next
+            | _ -> print_string "Illegal game state.\n"
+          else game_loop next_gst
+    in
     let cur_player = current_player g in
     let cur_player_hand = player_hand cur_player in
     print_string ("It is " ^ name cur_player ^ "'s turn.\n");
@@ -90,7 +115,7 @@ let play_game players =
           | Illegal ->
               print_string illegal_card;
               game_loop g
-          | Legal next_g -> game_loop next_g
+          | Legal next_g -> format_card g next_g play_card
           | GameOver winner ->
               print_string ("\n" ^ name winner ^ " wins!\n\n");
               exit 0)
