@@ -69,6 +69,11 @@ let lw_card (g : State.t) : Card.t option =
   in
   match List.fast_sort comp w_cards with
   | [] -> None
-  | h :: t -> Some (fst h)
+  | h :: t -> (
+      let c = fst h in
+      match actions c with
+      | { skip = _; reverse = _; swap = _, _; change_color = true } ->
+          Some (change_color (fst h) R)
+      | _ -> Some (fst h))
 
 let action g = lw_card g
