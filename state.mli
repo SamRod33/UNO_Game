@@ -29,6 +29,9 @@ val stack_penalty : t -> int
 (** [current_player g] is the person whose turn it is in game [g]. *)
 val current_player : t -> Player.t
 
+(** [players g] is the list of players in game [g]. *)
+val players : t -> Player.t list
+
 (** [init_state c p_list] is the initial state of the game with
     customizable cards [c] and players [p_list] Requires: top_card
     (init_state c p_list)] cannot be an effect card *)

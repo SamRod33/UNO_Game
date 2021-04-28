@@ -57,6 +57,9 @@ let stack_penalty g = g.stack_penalty
 let current_player g =
   match g.players with [] -> raise NoPlayersFound | h :: t -> h
 
+(** [players g] is the list of players in game [g]. *)
+let players g = g.players
+
 (** [shuffle lst] is the same as [lst] except its elements are in a
     different order. The new order is randomized. *)
 let shuffle lst =

@@ -12,6 +12,24 @@ let basic_action_test name g c =
 
 let action_test name g c = name >:: fun _ -> assert_equal c (action g)
 
+let action_draw4_test name g (c : Card.t option) =
+  name >:: fun _ ->
+  let dp c = match c with None -> -1 | Some c -> draw_penalty c in
+  assert_equal 4 (dp (action g))
+
+let action_swap_test name g c =
+  name >:: fun _ ->
+  let swap_bool card =
+    match card with
+    | None -> false
+    | Some c -> (
+        match c |> actions with
+        | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
+            true
+        | _ -> false)
+  in
+  assert_equal (swap_bool c) (swap_bool (action g))
+
 (*********************** create game g *************************)
 
 let std_deck = standard_cards
@@ -105,6 +123,54 @@ let blue7 =
   List.filter (fun x -> color x = B && digit x = Some 7) std_deck
   |> List.hd
 
+let blue_draw2 =
+  List.filter
+    (fun x ->
+      color x = B
+      && digit x = None
+      && actions x
+         = {
+             skip = false;
+             reverse = false;
+             swap = (false, -1);
+             change_color = false;
+           }
+      && draw_penalty x = 2)
+    std_deck
+  |> List.hd
+
+let red_draw2 =
+  List.filter
+    (fun x ->
+      color x = R
+      && digit x = None
+      && actions x
+         = {
+             skip = false;
+             reverse = false;
+             swap = (false, -1);
+             change_color = false;
+           }
+      && draw_penalty x = 2)
+    std_deck
+  |> List.hd
+
+let draw4 =
+  List.filter (fun x -> draw_penalty x = 4) std_deck |> List.hd
+
+let swap =
+  List.filter
+    (fun x ->
+      actions x
+      = {
+          skip = false;
+          reverse = false;
+          swap = (true, -1);
+          change_color = false;
+        })
+    std_deck
+  |> List.hd
+
 (*** deck ***)
 
 let no_17br_deck =
@@ -132,11 +198,51 @@ let p4 =
     [ blue1; blue2; blue3; blue4; blue5; blue6; blue7 ]
     false
 
+let p5 =
+  create_test "p5"
+    [ blue_draw2; blue2; blue3; blue4; blue5; blue6; blue7 ]
+    false
+
+let p6 =
+  create_test "p6"
+    [ red_draw2; blue2; blue3; blue_draw2; blue5; blue6; blue7 ]
+    false
+
+let p7 =
+  create_test "p7"
+    [ draw4; blue2; blue3; blue_draw2; blue5; blue6; blue7 ]
+    false
+
+let p8 = create_test "p8" [ draw4 ] false
+
+let p9 =
+  create_test "p9"
+    [ draw4; blue2; blue3; red_draw2; blue5; blue6; blue7 ]
+    false
+
+let p10 = create_test "p10" [ swap ] false
+
 (*** states ***)
 let start_red0 = t_test no_17br_deck std_deck 0 red0 [ p1; p2; p3; p4 ]
 
 let start_blue0 =
   t_test no_17br_deck std_deck 0 blue0 [ p1; p2; p3; p4 ]
+
+let start_blue0_2 =
+  t_test no_17br_deck std_deck 2 blue_draw2 [ p5; p2; p3; p4 ]
+
+let start_blue0_2_p6 =
+  t_test no_17br_deck std_deck 2 blue_draw2 [ p6; p2; p3; p4 ]
+
+let start_blue0_2_p7 =
+  t_test no_17br_deck std_deck 2 blue_draw2 [ p7; p2; p3; p4 ]
+
+let nextp_uno = t_test no_17br_deck std_deck 0 blue6 [ p7; p8; p3; p4 ]
+
+let nextp_uno4 = t_test no_17br_deck std_deck 0 blue6 [ p9; p8; p3; p4 ]
+
+let nextp_uno_swap =
+  t_test no_17br_deck std_deck 0 blue6 [ p10; p8; p3; p4 ]
 
 (**************************************************************)
 
@@ -149,6 +255,16 @@ let suite =
            None;
          action_test "no_17br red0 -> red1" start_red0 (Some red1);
          action_test "no_17br blue0 -> None" start_blue0 None;
+         action_test "std blue0 2 -> blue_draw2" start_blue0_2
+           (Some blue_draw2);
+         action_test "std blue0 2 p6 -> red_draw2" start_blue0_2_p6
+           (Some red_draw2);
+         action_test "std blue0 2 p7 -> blue_draw2" start_blue0_2_p7
+           (Some blue_draw2);
+         action_test "nextp -> blue_draw2" nextp_uno (Some blue_draw2);
+         action_draw4_test "nextp_4 -> blue_draw2" nextp_uno4
+           (Some draw4);
+         action_swap_test "swap -> swap" nextp_uno_swap (Some swap);
        ]
 
 let _ = run_test_tt_main suite
