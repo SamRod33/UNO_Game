@@ -195,23 +195,18 @@ let print_cards cards start is_idx =
   let pp_orders = List.map (fun c -> print_ord c) cards in
   print_cards_aux (fst card_dim) pp_orders
 
-let rec print_per_row acc n cards is_idx fst =
-  if fst && List.length cards <= 7 then print_cards cards 0 is_idx
-  else
-    match cards with
-    | [] -> print_cards (List.rev acc) n is_idx
-    | h :: t ->
-        if List.length (h :: acc) >= c_per_row then
-          print_cards
-            (List.rev (h :: acc))
-            (n - List.length (h :: acc) + 1)
-            is_idx
-        else ();
-        if List.length (h :: acc) >= c_per_row then
-          print_per_row [] n t is_idx false
-        else print_per_row (h :: acc) (n + 1) t is_idx false
+let rec print_per_row acc n cards is_idx =
+  match cards with
+  | [] -> print_cards (List.rev acc) n is_idx
+  | h :: t ->
+      let new_acc = h :: acc in
+      let new_acc_length = List.length new_acc in
+      if new_acc_length = c_per_row then
+        let prnt = print_cards (List.rev new_acc) n is_idx in
+        print_per_row [] (n + new_acc_length) t is_idx
+      else print_per_row (h :: acc) n t is_idx
 
-let pp_cards cards is_idx = print_per_row [] 0 cards is_idx true
+let pp_cards cards is_idx = print_per_row [] 0 cards is_idx
 
 (********************************************************************)
 (* Alpha Demo Card functions *)

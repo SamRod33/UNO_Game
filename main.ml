@@ -16,11 +16,20 @@ let check_quit () =
       exit 0
   | a -> int_of_string_opt a
 
-let fail_str = "\nTry again.\n"
-
-let illegal_card = "\nYou can't play that card. Try another.\n"
-
 let clear () = ignore (Sys.command "clear")
+
+let buffer next_gst =
+  clear ();
+  print_string
+    ("It is "
+    ^ name (current_player next_gst)
+    ^ "'s turn. Enter anything to continue.\n");
+  read_line ();
+  clear ()
+
+let fail_str = "Try again.\n"
+
+let illegal_card = "You can't play that card. Try another.\n"
 
 let rec select_color () =
   print_string "Type in R, G, B, or Y to select the color.\n\n";
@@ -49,16 +58,11 @@ let play_game players =
                 (change_current_players_hand c new_c gst)
             with
             | Legal next ->
-                clear ();
-                print_string
-                  ("It is "
-                  ^ name (current_player next_gst)
-                  ^ "'s turn. Enter anything to continue.\n");
-                read_line ();
-                clear ();
+                buffer next_gst;
                 game_loop next
             | _ -> print_string "Illegal game state.\n"
-          else game_loop next_gst
+          else buffer next_gst;
+          game_loop next_gst
     in
     let cur_player = current_player g in
     let cur_player_hand = player_hand cur_player in
