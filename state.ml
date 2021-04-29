@@ -71,15 +71,17 @@ let shuffle lst =
     UNO game such that the first card in it is a non-action card. Raises
     NoMoreCards if [cards] is empty.*)
 let rec init_deck (cards : Card.t list) =
-  match cards with
+  match shuffle cards with
   | [] -> raise NoMoreCards
-  | h :: _ ->
-      let actions = Card.actions h in
+  | h :: _ as shuffled ->
+      let card_actions = Card.actions h in
       if
-        actions.skip || actions.reverse || fst actions.swap
-        || actions.change_color
-      then init_deck (shuffle cards)
-      else shuffle cards
+        card_actions.skip || card_actions.reverse
+        || fst card_actions.swap || card_actions.change_color
+        || draw_penalty h > 0
+        || color h = ANY
+      then init_deck shuffled
+      else shuffled
 
 (** [remove_card deck] is [deck] with the top card removed. If doing so
     results in an empty deck, then this will be a fresh set of

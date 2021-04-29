@@ -9,6 +9,13 @@ let rec create_players players = function
       let player = create ("Player " ^ string_of_int n) false in
       create_players (player :: players) (n - 1)
 
+let check_quit () =
+  match read_line () with
+  | "Quit" ->
+      print_string "Thanks for playing!\n\n";
+      exit 0
+  | a -> int_of_string_opt a
+
 let to_string_color c =
   let cc = color c in
   match cc with
@@ -59,8 +66,11 @@ let fail_str = "\nTry again.\n"
 let illegal_card = "\nYou can't play that card. Try another.\n"
 
 let rec select_color () =
-  print_string "Type in R, G, B, or Y to select the color.\n\n";
+  print_string "\n\nType in R, G, B, or Y to select the color.\n\n";
   match read_line () with
+  | "Quit" ->
+      print_string "Thanks for playing!\n\n";
+      exit 0
   | "R" -> R
   | "G" -> G
   | "B" -> B
@@ -88,31 +98,35 @@ let play_game players =
     let cur_player = current_player g in
     let cur_player_hand = player_hand cur_player in
     print_string ("It is " ^ name cur_player ^ "'s turn.\n");
-    print_string "The top card is ";
-    print_cards [ (print_card (top_card g), top_card g) ];
+    print_string "The top card is:\n\n";
+    pp_cards [top_card g] false;
+    (**print_cards [ (print_card (top_card g), top_card g) ];*)
     print_string
-      ("and the current stack penalty is "
+      ("\nThe current stack penalty is "
       ^ string_of_int (stack_penalty g)
       ^ ".\n");
-    print_string "Your cards are:";
-    print_cards (cards_str cur_player_hand);
+    print_string "Your cards are:\n\n";
+    pp_cards cur_player_hand true;
+    (**print_cards (cards_str cur_player_hand);*)
     print_endline
       "\n\
        Type in the index of the card you wish to play (starting from \
        0). If you do not have a card to play, type -1.\n";
     print_string "> ";
-    match int_of_string_opt (read_line ()) with
+    match check_quit () with
     | None ->
+        ignore (Sys.command "clear");
         print_string fail_str;
         game_loop g
     | Some n ->
         if n > -2 && n < List.length cur_player_hand then (
           let play_card =
             if n = -1 then None
-            else Some (List.nth (List.rev cur_player_hand) n)
+            else Some (List.nth cur_player_hand n)
           in
           match play play_card g with
           | Illegal ->
+              ignore (Sys.command "clear");
               print_string illegal_card;
               game_loop g
           | Legal next_g ->
@@ -121,7 +135,9 @@ let play_game players =
           | GameOver winner ->
               print_string ("\n" ^ name winner ^ " wins!\n\n");
               exit 0)
-        else print_string fail_str;
+        else 
+        ignore (Sys.command "clear");  
+        print_string fail_str;
         game_loop g
   in
   game_loop start_state
@@ -129,13 +145,16 @@ let play_game players =
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
   ANSITerminal.print_string [ ANSITerminal.red ]
-    "\n\nWelcome to Uno. \n";
+    "\n\n\
+     Welcome to Uno. \n\
+     Type 'Quit' at any time to quit the game.\n\n";
   let rec getPlayers u =
     print_endline
       "Type in the number of people that want to play the game.\n";
     print_string "> ";
-    match int_of_string_opt (read_line ()) with
+    match check_quit () with
     | None ->
+        ignore (Sys.command "clear");
         print_string fail_str;
         getPlayers ()
     | Some n ->
