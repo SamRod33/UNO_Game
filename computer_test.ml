@@ -23,7 +23,7 @@ let action_swap_test name g c =
     match card with
     | None -> false
     | Some c -> (
-        match c |> actions with
+        match actions c with
         | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
             true
         | _ -> false)
@@ -262,8 +262,7 @@ let suite =
          action_test "std blue0 2 p7 -> blue_draw2" start_blue0_2_p7
            (Some blue_draw2);
          action_test "nextp -> blue_draw2" nextp_uno (Some blue_draw2);
-         action_draw4_test "nextp_4 -> blue_draw2" nextp_uno4
-           (Some draw4);
+         action_draw4_test "nextp_4 -> draw4" nextp_uno4 (Some draw4);
          action_swap_test "swap -> swap" nextp_uno_swap (Some swap);
        ]
 

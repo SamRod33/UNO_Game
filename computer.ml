@@ -47,24 +47,33 @@ let least_cards g =
   | [] -> current_player g |> id
   | h :: t -> lc t (h, 100)
 
-(*let card c g = match actions c with | { skip = _; reverse = _; swap =
-  _, _; change_color = true } -> change_color c (most_color (g |>
-  current_player |> player_hand)) | { skip = _; reverse = _; swap =
-  true, _; change_color = _ } -> set_swap_id c (least_cards g) | _ -> c*)
+(** [card c g] is the card [c] with the most optimal action or color
+    applied based on the current game [g]. *)
+let card c g =
+  match actions c with
+  | { skip = _; reverse = _; swap = _, _; change_color = true } ->
+      change_color c (most_color (g |> current_player |> player_hand))
+  | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
+      set_swap_id c (least_cards g)
+  | _ -> c
+
+(** [play_new_card g c] is Legal if the card [c] is playable in game
+    [g], Gameover if playing that card results in a game over, and
+    Illegal if the card cannot be played. *)
+let play_new_card g c =
+  let card = card c g in
+  let new_g = change_current_players_hand c card g in
+  play (Some card) new_g
 
 (** [is_valid_card g c] is a true when a card [c] s a legal move in game
     [g] and false otherwise. *)
 let is_valid_card g c =
-  let card =
-    match actions c with
-    | { skip = _; reverse = _; swap = _, _; change_color = true } ->
-        change_color c (most_color (g |> current_player |> player_hand))
-    | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
-        set_swap_id c (least_cards g)
-    | _ -> c
-  in
-  let s' = play (Some card) g in
-  match s' with Legal s' -> true | _ -> false
+  match actions c with
+  | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
+      stack_penalty g = 0
+  | _ -> (
+      let s' = play_new_card g c in
+      match s' with Legal s' -> true | _ -> false)
 
 (** [find_valid_card g h] is the first valid card option in a player's
     hand [h] from the left in a given state [g]. None is returned if the
@@ -88,15 +97,7 @@ let rec valid_hand g acc hand =
 (** [next_player g c] is the player after the current player in game [g]
     after playing card [c]. *)
 let next_player g c =
-  let card =
-    match actions c with
-    | { skip = _; reverse = _; swap = _, _; change_color = true } ->
-        change_color c (most_color (g |> current_player |> player_hand))
-    | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
-        set_swap_id c (least_cards g)
-    | _ -> c
-  in
-  let s' = play (Some card) g in
+  let s' = play_new_card g c in
   match s' with Legal s' -> current_player s' | _ -> current_player g
 
 (** [add_weight g c] is the list of tuples which each have the card [c]
@@ -139,6 +140,11 @@ let action g =
           Some (set_swap_id (fst h) (least_cards g))
       | _ -> Some (fst h))
 
-(*let action_test g = let uw_cards = g |> current_player |> player_hand
-  |> valid_hand g [] in let w_cards = List.map (add_weight g) uw_cards
-  in List.fast_sort comp w_cards*)
+(** [action_test g] is a list of weighted card tuples for the current
+    player's hand in game [g]. *)
+let action_test g =
+  let uw_cards =
+    g |> current_player |> player_hand |> valid_hand g []
+  in
+  let w_cards = List.map (add_weight g) uw_cards in
+  (*List.fast_sort comp*) w_cards
