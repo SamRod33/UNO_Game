@@ -9,6 +9,17 @@ let rec create_players players = function
       let player = create ("Player " ^ string_of_int n) false in
       create_players (player :: players) (n - 1)
 
+let player_hand_info player =
+  name player ^ " has "
+  ^ string_of_int (List.length (player_hand player))
+  ^ " cards. "
+
+let player_hands_info player g =
+  List.fold_left
+    (fun str p -> str ^ player_hand_info p)
+    ""
+    (List.filter (fun p -> id p <> id player) (players g))
+
 let check_quit () =
   match read_line () with
   | "Quit" ->
@@ -73,7 +84,8 @@ let play_game players =
       ("\nThe current stack penalty is "
       ^ string_of_int (stack_penalty g)
       ^ ".\n");
-    print_string "Your cards are:\n\n";
+    print_string (player_hands_info cur_player g);
+    print_string "\nYour cards are:\n\n";
     pp_cards cur_player_hand true;
     print_endline
       "\n\
