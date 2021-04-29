@@ -20,8 +20,10 @@ let fail_str = "\nTry again.\n"
 
 let illegal_card = "\nYou can't play that card. Try another.\n"
 
+let clear () = ignore (Sys.command "clear")
+
 let rec select_color () =
-  print_string "\n\nType in R, G, B, or Y to select the color.\n\n";
+  print_string "Type in R, G, B, or Y to select the color.\n\n";
   match read_line () with
   | "Quit" ->
       print_string "Thanks for playing!\n\n";
@@ -46,7 +48,15 @@ let play_game players =
               play (Some new_c)
                 (change_current_players_hand c new_c gst)
             with
-            | Legal next -> game_loop next
+            | Legal next ->
+                clear ();
+                print_string
+                  ("It is "
+                  ^ name (current_player next_gst)
+                  ^ "'s turn. Enter anything to continue.\n");
+                read_line ();
+                clear ();
+                game_loop next
             | _ -> print_string "Illegal game state.\n"
           else game_loop next_gst
     in
@@ -68,7 +78,7 @@ let play_game players =
     print_string "> ";
     match check_quit () with
     | None ->
-        ignore (Sys.command "clear");
+        clear ();
         print_string fail_str;
         game_loop g
     | Some n ->
@@ -78,22 +88,16 @@ let play_game players =
           in
           match play play_card g with
           | Illegal ->
-              ignore (Sys.command "clear");
+              clear ();
               print_string illegal_card;
               game_loop g
           | Legal next_g ->
-              ignore (Sys.command "clear");
-              print_string
-                ("It is "
-                ^ name (current_player next_g)
-                ^ "'s turn. Enter anything to continue.\n");
-              read_line ();
-              ignore (Sys.command "clear");
+              clear ();
               format_card g next_g play_card
           | GameOver winner ->
               print_string ("\n" ^ name winner ^ " wins!\n\n");
               exit 0)
-        else ignore (Sys.command "clear");
+        else clear ();
         print_string fail_str;
         game_loop g
   in
@@ -111,7 +115,7 @@ let main () =
     print_string "> ";
     match check_quit () with
     | None ->
-        ignore (Sys.command "clear");
+        clear ();
         print_string fail_str;
         getPlayers ()
     | Some n ->
