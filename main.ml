@@ -174,7 +174,7 @@ let main () =
         match check_quit () with
         | None -> restart ()
         | Some c ->
-            if n + c >= 2 && n > 0 then
+            if n + c >= 2 && n > 0 && c >= 0 then
               c |> create_players [] n |> play_game
             else restart ())
   in
