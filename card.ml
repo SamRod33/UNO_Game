@@ -201,9 +201,9 @@ let rec print_per_row acc n cards is_idx =
   | h :: t ->
       let new_acc = h :: acc in
       let new_acc_length = List.length new_acc in
-      if new_acc_length = c_per_row then
-        let prnt = print_cards (List.rev new_acc) n is_idx in
-        print_per_row [] (n + new_acc_length) t is_idx
+      let len_check = new_acc_length = c_per_row in
+      if len_check then print_cards (List.rev new_acc) n is_idx else ();
+      if len_check then print_per_row [] (n + new_acc_length) t is_idx
       else print_per_row (h :: acc) n t is_idx
 
 let pp_cards cards is_idx = print_per_row [] 0 cards is_idx
