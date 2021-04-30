@@ -2,8 +2,7 @@ You should the following packages installed from A2 (ounit2, yojson, ANSITermina
 
 Instructions:
 1. Run make build
-2. Run make play
-3. Type "start"
-4. Hit enter
+2. Run make uno
+3. Follow the instructions in the terminal
 
-You should see the cards of the game load onto your screen!
+Have fun!
