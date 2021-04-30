@@ -30,10 +30,12 @@ let player_hands_info player g =
     ""
     (List.filter (fun p -> id p <> id player) (players g))
 
+let quit_str = "Thanks for playing!\n\n"
+
 let check_quit () =
   match read_line () with
   | "Quit" ->
-      print_string "Thanks for playing!\n\n";
+      print_string quit_str;
       exit 0
   | a -> int_of_string_opt a
 
@@ -45,7 +47,11 @@ let buffer next_gst =
     ("It is "
     ^ name (current_player next_gst)
     ^ "'s turn. Enter anything to continue.\n");
-  match read_line () with _ -> clear ()
+  match read_line () with
+  | "Quit" ->
+      print_string quit_str;
+      exit 0
+  | _ -> clear ()
 
 let fail_str = "Try again.\n"
 
@@ -152,9 +158,7 @@ let play_game players =
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
   ANSITerminal.print_string [ ANSITerminal.red ]
-    "\n\n\
-     Welcome to Uno. \n\
-     Type 'Quit' at any time to quit the game.\n\n";
+    "\n\nUno \nType 'Quit' at any time to quit the game.\n\n";
   let rec getPlayers u =
     let restart () =
       clear ();
