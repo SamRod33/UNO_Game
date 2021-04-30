@@ -45,8 +45,7 @@ let buffer next_gst =
     ("It is "
     ^ name (current_player next_gst)
     ^ "'s turn. Enter anything to continue.\n");
-  read_line ();
-  clear ()
+  match read_line () with _ -> clear ()
 
 let fail_str = "Try again.\n"
 
