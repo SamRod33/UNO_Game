@@ -1411,7 +1411,7 @@
         "reverse": false,
         "swap": true,
         "swap_p2": -1,
-        "change color": false
+        "change color": true
       },
       "draw penalty": 0,
       "amount": 1,

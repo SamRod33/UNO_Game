@@ -51,10 +51,12 @@ let least_cards g =
     applied based on the current game [g]. *)
 let card c g =
   match actions c with
+  | { skip = _; reverse = _; swap = true, _; change_color = true } ->
+      change_color
+        (set_swap_id c (least_cards g))
+        (most_color (g |> current_player |> player_hand))
   | { skip = _; reverse = _; swap = _, _; change_color = true } ->
       change_color c (most_color (g |> current_player |> player_hand))
-  | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
-      set_swap_id c (least_cards g)
   | _ -> c
 
 (** [play_new_card g c] is Legal if the card [c] is playable in game
@@ -68,12 +70,8 @@ let play_new_card g c =
 (** [is_valid_card g c] is a true when a card [c] s a legal move in game
     [g] and false otherwise. *)
 let is_valid_card g c =
-  match actions c with
-  | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
-      stack_penalty g = 0
-  | _ -> (
-      let s' = play_new_card g c in
-      match s' with Legal s' -> true | _ -> false)
+  let s' = play_new_card g c in
+  match s' with Legal s' -> true | _ -> false
 
 (** [find_valid_card g h] is the first valid card option in a player's
     hand [h] from the left in a given state [g]. None is returned if the
