@@ -19,6 +19,11 @@ $ echo $DISPLAY
 download & launch XQuartz
 
 enter in the terminal:
+$ sudo port install libsdl libsdl_mixer
+$ opam install -y ounit yojson graphics camlimages
+$ opam install ocamlsdl
+
+(* depreciated *)
 $ opam install opam-depext
 $ opam depext conf-pkg-config
 $ sudo port -v install xorg-server
@@ -29,13 +34,8 @@ sorry sam
 
 
 (*************************************)
-Test for graphics installation correctness: enter these in UTOP:
+test - enter these in UTOP:
 # #require "graphics";;
 # open Graphics;;
 # open_graph " 640x480";;
-
-Test for terminal correctness: 
-cd into the directory with init.ml
-$ ocamlbuild -package graphics init.native
-$ ./init.native
 
