@@ -14,5 +14,7 @@ let open_window =
     done
   with _ -> Graphics.clear_graph ()
 
+let upload_img = ()
+
 ;;
 open_window
