@@ -1,0 +1,41 @@
+Make sure VcXsrv or XQuartz is running each time you run graphics
+
+(***************Windows****************)
+install VcXsrv: https://techcommunity.microsoft.com/t5/windows-dev-appconsult/running-wsl-gui-apps-on-windows-10/ba-p/1493242
+
+enter in ubuntu command line:
+$ opam install opam-depext
+$ opam depext conf-pkg-config
+$ opam install graphics
+$ sudo apt install xserver-xorg-core
+$ cd ~
+$ ls -a (look for .bashrc or .bashprofile)
+$ echo 'export DISPLAY=localhost:0' >> .bashrc 
+$ echo $DISPLAY
+(make sure this is localhost:0)
+
+(*****************Mac*****************)
+
+download & launch XQuartz
+
+enter in the terminal:
+$ opam install opam-depext
+$ opam depext conf-pkg-config
+$ sudo port -v install xorg-server
+$ opam install graphics
+
+(****************Linux****************)
+sorry sam
+
+
+(*************************************)
+Test for graphics installation correctness: enter these in UTOP:
+# #require "graphics";;
+# open Graphics;;
+# open_graph " 640x480";;
+
+Test for terminal correctness: 
+cd into the directory with init.ml
+$ ocamlbuild -package graphics init.native
+$ ./init.native
+
