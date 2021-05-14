@@ -7,6 +7,10 @@ let height = Graphics.size_y
 
 let width = Graphics.size_x
 
+let px_size = 16
+
+let scaling = ref 2
+
 let open_window =
   try
     while true do
@@ -16,14 +20,15 @@ let open_window =
 
 let upload_img = ()
 
-let draw_img img x y scale is_grid =
+let draw_img img x y (*scale is_grid*) =
   let g = img |> Graphics.make_image in
-  let coord_scaling = if is_grid then scale * px_size else scale in
-  Graphics.draw_image g (x * coord_scaling) (y * coord_scaling)
+  (*let coord_scaling = if is_grid then scale * px_size else scale in*)
+  Graphics.draw_image g x y
 
 let prepare_draw dir fn x y =
   let img = Png.load (dir ^ fn ^ ".png") [] in
-  draw_img img x y !scaling false
+  draw_img img x y
 
 ;;
-open_window
+open_window;
+prepare_draw "card" "Green"
