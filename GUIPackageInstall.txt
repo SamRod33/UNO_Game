@@ -23,12 +23,6 @@ $ sudo port install libsdl libsdl_mixer
 $ opam install -y ounit yojson graphics camlimages
 $ opam install ocamlsdl
 
-(* depreciated *)
-$ opam install opam-depext
-$ opam depext conf-pkg-config
-$ sudo port -v install xorg-server
-$ opam install graphics
-
 (****************Linux****************)
 sorry sam
 
