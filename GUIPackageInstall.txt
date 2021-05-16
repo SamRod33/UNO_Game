@@ -6,8 +6,13 @@ install VcXsrv: https://techcommunity.microsoft.com/t5/windows-dev-appconsult/ru
 enter in ubuntu command line:
 $ opam install opam-depext
 $ opam depext conf-pkg-config
-$ opam install graphics
-$ sudo apt install xserver-xorg-core
+$ opam install graphics imagelib
+$ sudo apt install -y xserver-xorg-core
+$ sudo apt-get install -y libsdl2-2.0
+$ sudo apt-get install -y libsdl2-mixer-2.0-0
+$ sudo apt-get install -y libsdl-mixer1.2-dev
+$ opam install ocamlsdl
+$ opam install conf-sdl-mixer
 $ cd ~
 $ ls -a (look for .bashrc or .bashprofile)
 $ echo 'export DISPLAY=localhost:0' >> .bashrc 
