@@ -266,4 +266,4 @@ let computer_suite =
 
 let suite = "test suite for State" >::: computer_suite
 
-let _ = run_test_tt_main suite
+(* let _ = run_test_tt_main suite *)

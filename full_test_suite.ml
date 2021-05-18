@@ -1,8 +1,3 @@
-include Card_test
-include Player_test
-
-(* include Computer_test *)
-include State_test
 open OUnit2
 
 let test_suites =
@@ -14,6 +9,6 @@ let test_suites =
       State_test.state_suite;
     ]
 
-let suite = "Testing entire suite" >::: test_suites
+let full_suite = "Testing entire suite" >::: test_suites
 
-let _ = run_test_tt_main suite
+let _ = run_test_tt_main full_suite

@@ -79,4 +79,4 @@ let player_suite =
 
 let suite = "test suite for Player" >::: player_suite
 
-let _ = run_test_tt_main suite
+(* let _ = run_test_tt_main suite *)
