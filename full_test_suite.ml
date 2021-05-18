@@ -1,3 +1,7 @@
+include Card_test
+include Player_test
+include Computer_test
+include State_test
 open OUnit2
 
 let test_suites =
