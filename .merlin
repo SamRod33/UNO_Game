@@ -1,5 +1,11 @@
 B _build
 PKG ounit2
+PKG ocamlbuild
 PKG yojson
 PKG ANSITerminal
 PKG bisect_ppx-ocamlbuild
+PKG graphics
+PKG camlimages.png
+PKG camlimages.graphics
+PKG sdl
+PKG sdl.sdlmixer

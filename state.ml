@@ -124,7 +124,9 @@ let swap_rotate_players players c =
     if (actions c).reverse then List.rev swapped_hands
     else rotate_players swapped_hands
   in
-  if (actions c).skip then rotate_players apply_rev else apply_rev
+  if (actions c).skip || ((actions c).reverse && List.length players = 2)
+  then rotate_players apply_rev
+  else apply_rev
 
 (** [legal_play c1 c2] is true if playing c1 is valid on c2.*)
 let legal_play (c1 : Card.t) (c2 : Card.t) penalty =
