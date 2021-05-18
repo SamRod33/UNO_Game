@@ -24,11 +24,11 @@ let snd_card =
   | h :: b :: t -> b
   | _ -> failwith "Impossible"
 
-let empty : Player.t = create "Charles"
+let empty : Player.t = create "Charles" false
 
 let uno = add_card empty fst_card
 
-let uno_kanye = add_card (create "Kanye") fst_card
+let uno_kanye = add_card (create "Kanye" false) fst_card
 
 let two_cards = add_card uno snd_card
 
@@ -73,14 +73,10 @@ let remove_card_tests =
       empty fst_card;
   ]
 
-let suite =
-  "test suite for Player"
-  >::: List.flatten
-         [
-           name_tests;
-           player_hand_tests;
-           is_uno_tests;
-           remove_card_tests;
-         ]
+let player_suite =
+  List.flatten
+    [ name_tests; player_hand_tests; is_uno_tests; remove_card_tests ]
 
-let _ = run_test_tt_main suite
+let suite = "test suite for Player" >::: player_suite
+
+(* let _ = run_test_tt_main suite *)

@@ -166,7 +166,7 @@ let swap =
           skip = false;
           reverse = false;
           swap = (true, -1);
-          change_color = true;
+          change_color = false;
         })
     std_deck
   |> List.hd
@@ -242,28 +242,28 @@ let nextp_uno = t_test no_17br_deck std_deck 0 blue6 [ p7; p8; p3; p4 ]
 let nextp_uno4 = t_test no_17br_deck std_deck 0 blue6 [ p9; p8; p3; p4 ]
 
 let nextp_uno_swap =
-  t_test no_17br_deck std_deck 0 blue6 [ p10; p7; p3; p4 ]
+  t_test no_17br_deck std_deck 0 blue6 [ p10; p8; p3; p4 ]
 
 (**************************************************************)
 
-let suite =
-  "test suite for State"
-  >::: [
-         basic_action_test "basic no_17br red0 -> red1" start_red0
-           (Some red1);
-         basic_action_test "basic no_17br blue0 -> None" start_blue0
-           None;
-         action_test "no_17br red0 -> red1" start_red0 (Some red1);
-         action_test "no_17br blue0 -> None" start_blue0 None;
-         action_test "std blue0 2 -> blue_draw2" start_blue0_2
-           (Some blue_draw2);
-         action_test "std blue0 2 p6\n           -> red_draw2"
-           start_blue0_2_p6 (Some red_draw2);
-         action_test "std blue0 2 p7 -> blue_draw2" start_blue0_2_p7
-           (Some blue_draw2);
-         action_test "nextp -> blue_draw2" nextp_uno (Some blue_draw2);
-         action_draw4_test "nextp_4 -> draw4" nextp_uno4 (Some draw4);
-         action_swap_test "swap -> swap" nextp_uno_swap (Some swap);
-       ]
+let computer_suite =
+  [
+    basic_action_test "basic no_17br red0 -> red1" start_red0
+      (Some red1);
+    basic_action_test "basic no_17br blue0 -> None" start_blue0 None;
+    action_test "no_17br red0 -> red1" start_red0 (Some red1);
+    action_test "no_17br blue0 -> None" start_blue0 None;
+    action_test "std blue0 2 -> blue_draw2" start_blue0_2
+      (Some blue_draw2);
+    action_test "std blue0 2 p6 -> red_draw2" start_blue0_2_p6
+      (Some red_draw2);
+    action_test "std blue0 2 p7 -> blue_draw2" start_blue0_2_p7
+      (Some blue_draw2);
+    action_test "nextp -> blue_draw2" nextp_uno (Some blue_draw2);
+    action_draw4_test "nextp_4 -> draw4" nextp_uno4 (Some draw4);
+    action_swap_test "swap -> swap" nextp_uno_swap (Some swap);
+  ]
 
-let _ = run_test_tt_main suite
+let suite = "test suite for State" >::: computer_suite
+
+(* let _ = run_test_tt_main suite *)
