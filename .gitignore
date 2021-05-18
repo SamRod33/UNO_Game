@@ -1,6 +1,8 @@
 # assignment
 _doc.public
 _doc.private
+_coverage*
+bisect*
 
 # ocaml
 *.cmo
