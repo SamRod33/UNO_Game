@@ -166,7 +166,7 @@ let swap =
           skip = false;
           reverse = false;
           swap = (true, -1);
-          change_color = false;
+          change_color = true;
         })
     std_deck
   |> List.hd
@@ -242,7 +242,7 @@ let nextp_uno = t_test no_17br_deck std_deck 0 blue6 [ p7; p8; p3; p4 ]
 let nextp_uno4 = t_test no_17br_deck std_deck 0 blue6 [ p9; p8; p3; p4 ]
 
 let nextp_uno_swap =
-  t_test no_17br_deck std_deck 0 blue6 [ p10; p8; p3; p4 ]
+  t_test no_17br_deck std_deck 0 blue6 [ p10; p7; p3; p4 ]
 
 (**************************************************************)
 
