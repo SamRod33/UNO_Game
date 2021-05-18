@@ -6,11 +6,8 @@ install VcXsrv: https://techcommunity.microsoft.com/t5/windows-dev-appconsult/ru
 enter in ubuntu command line:
 $ opam install opam-depext
 $ opam depext conf-pkg-config
-$ opam install graphics imagelib
+$ opam install graphics imagelib camlimages
 $ sudo apt install -y xserver-xorg-core
-$ sudo apt-get install -y libsdl2-2.0
-$ sudo apt-get install -y libsdl2-mixer-2.0-0
-$ sudo apt-get install -y libsdl-mixer1.2-dev
 $ opam install ocamlsdl
 $ opam install conf-sdl-mixer
 $ cd ~
@@ -19,8 +16,12 @@ $ echo 'export DISPLAY=localhost:0' >> .bashrc
 $ echo $DISPLAY
 (make sure this is localhost:0)
 
-(*****************Mac*****************)
+install the following if any errors:
+$ sudo apt-get install -y libsdl2-2.0
+$ sudo apt-get install -y libsdl2-mixer-2.0-0
+$ sudo apt-get install -y libsdl-mixer1.2-dev
 
+(*****************Mac*****************)
 download & launch XQuartz
 
 enter in the terminal:
