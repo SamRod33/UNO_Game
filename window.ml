@@ -20,7 +20,14 @@ let open_window =
     done
   with _ -> Graphics.clear_graph ()
 
-(* most of this is very similar to pokemon, must change *)
+exception Exit
+
+let run_uno =
+  loop_at_exit [ Key_pressed ] (fun event ->
+      if event.key = 'q' then raise Exit;
+      if event.keypressed then open_window)
+
+(*most of this is very similar to pokemon, must change*)
 let img_arr img_t =
   let graph_arr =
     match img_t with
@@ -51,6 +58,35 @@ let upload_img folder file x y =
   let draw = img |> img_arr |> Graphics.make_image in
   Graphics.draw_image draw x y
 
+(***************buttons****************)
+
+(** Type [button] has an integer pair [(int * int)] that represents the
+    bottom right corner of the button. [string] is the text displayed
+    within the button. [color] is the button's background color. *)
+type button = (int * int) * string * color
+
+(*[draw_button button] is a function that takes in a button and displays
+  it on the screen*)
+let draw_button (button : button) : unit =
+  let (x, y), text, color = button in
+  Graphics.set_color color;
+  Graphics.fill_rect x y ((String.length text * 12) + 48) 28;
+  Graphics.set_color black;
+  Graphics.draw_rect x y ((String.length text * 12) + 48) 28;
+  Graphics.moveto (x + 24) (y + 4);
+  Graphics.draw_string text
+
+(*[clicked] returns true if the mouses location (x,y) is within the
+  parameters of the button*)
+let clicked x y button =
+  let (a, b), name, color = button in
+  x >= a
+  && x <= (String.length name * 6) + 24 + a
+  && y >= b
+  && y <= 14 + b
+
+let exit_button () : button = ((100, 450), "Exit", red)
+
 ;;
-open_window;
-upload_img "card" "Green"
+run_uno;
+upload_img "card" "Green" 50 50

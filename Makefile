@@ -54,5 +54,5 @@ zip:
 	zip uno-game.zip *.ml* *.json *.sh INSTALL.txt _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	
 
 window:
-	ocamlbuild -package graphics window.native
+	ocamlbuild -package graphics window.native -use-ocamlfind
 	./window.native
