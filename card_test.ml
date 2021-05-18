@@ -70,9 +70,9 @@ let actions_tests =
 
 let amt_tests = f_tests amt_test "amount tests" custom_cards amounts
 
-let suite =
-  "test suite for Card"
-  >::: List.flatten
-         [ penalty_tests; color_tests; actions_tests; amt_tests ]
+let card_suite =
+  List.flatten [ penalty_tests; color_tests; actions_tests; amt_tests ]
+
+let suite = "test suite for Card" >::: card_suite
 
 let _ = run_test_tt_main suite

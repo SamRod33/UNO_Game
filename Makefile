@@ -1,4 +1,4 @@
-MODULES=card player state main computer facecards
+MODULES=card player state main computer facecards 
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
@@ -8,6 +8,7 @@ CARDTEST=card_test.byte
 PLAYERTEST=player_test.byte
 STATETEST=state_test.byte
 COMPUTERTEST=computer_test.byte
+TESTS=full_test_suite.byte
 MAIN=main.byte
 
 default: build
@@ -19,10 +20,10 @@ build:
 	$(OCAMLBUILD) $(OBJECTS)
 
 card-test:
-	$(OCAMLBUILD) -tag 'debug' $(CARDTEST) && ./$(CARDTEST) -runner sequential
+	$(OCAMLBUILD) -tag 'debug' $(CARDTEST) && ./$(CARDTEST)-runner sequential
 
 player-test:
-	$(OCAMLBUILD) -tag 'debug' $(PLAYERTEST) && ./$(PLAYERTEST) -runner sequential
+	$(OCAMLBUILD) -tag 'debug' $(PLAYERTEST) && ./$(PLAYERTEST)-runner sequential
 
 state-test:
 	$(OCAMLBUILD) -tag 'debug' $(STATETEST) && ./$(STATETEST) -runner sequential
@@ -30,8 +31,19 @@ state-test:
 computer-test:
 	$(OCAMLBUILD) -tag 'debug' $(COMPUTERTEST) && ./$(COMPUTERTEST) -runner sequential
 
+tests:
+	$(OCAMLBUILD) -tag 'debug' $(TESTS) && ./$(TESTS) -runner sequential
+
+
 uno:
 	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)
+
+bisect-test:
+	BISECT_COVERAGE=YES $(OCAMLBUILD) -tag 'debug' $(TESTS) && ./$(TESTS) -runner sequential
+
+bisect: clean bisect-test
+	bisect-ppx-report html
+
 
 docs: docs-public docs-private
 	

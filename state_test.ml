@@ -24,11 +24,12 @@ let p3_start_state = init_state deck [ p3; p4; p1; p2 ]
 
 let starting_player = current_player start_state
 
-let suite =
-  "test suite for State"
-  >::: [
-         current_player_test "p1 first player" start_state p1;
-         current_player_test "p3 first player" p3_start_state p3;
-       ]
+let state_suite =
+  [
+    current_player_test "p1 first player" start_state p1;
+    current_player_test "p3 first player" p3_start_state p3;
+  ]
+
+let suite = "test suite for State" >::: state_suite
 
 let _ = run_test_tt_main suite

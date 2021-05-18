@@ -129,6 +129,7 @@ let print_face c =
   else if c.actions.skip then Facecards.skip
   else if c.actions.change_color then Facecards.wild
   else failwith "Impossible pattern match: Invalid card"
+  [@@coverage off]
 
 (** [print_ord c] is the list order to print [c] along with the color to
     print each line. *)
@@ -143,6 +144,7 @@ let print_ord c =
   in
   helper (print_face c);
   card_ord
+  [@@coverage off]
 
 (** [print_card_row q_lst] prints the first line from every card in
     [q_lst]. *)
@@ -153,6 +155,7 @@ let rec print_card_row q_lst =
       let cline = Queue.pop h in
       ANSITerminal.print_string [ fst cline ] (snd cline ^ "  ");
       print_card_row t
+  [@@coverage off]
 
 (** [num_digits n acc] is the number of digits in [n]. Implements tail
     recursion. *)
@@ -160,9 +163,12 @@ let rec num_digits n acc =
   match n with
   | n when n < 10 -> acc
   | n -> num_digits (n / 10) (acc + 1)
+  [@@coverage off]
 
 (** [idx_spacing n] is the amount of spaces to separate each card. *)
-let idx_spacing n = String.make (snd card_dim + 2 - num_digits n 1) ' '
+let idx_spacing n =
+  String.make (snd card_dim + 2 - num_digits n 1) ' '
+  [@@coverage off]
 
 (** [idx_label start stop acc] is a string sequence from start to stop
     such that each digit in the sequence is separated by idx_spacing. *)
@@ -172,6 +178,7 @@ let rec idx_label start stop acc =
       idx_label start (n - 1) (string_of_int n ^ idx_spacing n ^ acc)
   | n when n < start -> acc
   | _ -> failwith "Impossible pattern match: idx label"
+  [@@coverage off]
 
 let rec print_cards_aux n pp_orders =
   match n with
@@ -180,6 +187,7 @@ let rec print_cards_aux n pp_orders =
       print_card_row pp_orders;
       print_string "\n";
       print_cards_aux (n - 1) pp_orders
+  [@@coverage off]
 
 (** [print_cards cards start] prints out [cards] and labels each pp_card
     starting at [start] to [start] \+ min(c_per_row, length of cards -
@@ -194,6 +202,7 @@ let print_cards cards start is_idx =
   else ();
   let pp_orders = List.map (fun c -> print_ord c) cards in
   print_cards_aux (fst card_dim) pp_orders
+  [@@coverage off]
 
 let rec print_per_row acc n cards is_idx =
   match cards with
@@ -205,6 +214,7 @@ let rec print_per_row acc n cards is_idx =
       if len_check then print_cards (List.rev new_acc) n is_idx else ();
       if len_check then print_per_row [] (n + new_acc_length) t is_idx
       else print_per_row (h :: acc) n t is_idx
+  [@@coverage off]
 
 let pp_cards cards is_idx = print_per_row [] 0 cards is_idx
 
