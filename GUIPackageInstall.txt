@@ -14,7 +14,7 @@ $ opam install graphics imagelib camlimages ocamlsdl conf-sdl-mixer
 $ sudo apt install -y xserver-xorg-core
 $ cd ~
 $ ls -a (look for .bashrc or .bashprofile)
-$ echo 'export DISPLAY=localhost:0' >> .bashrc 
+$ echo 'export DISPLAY=localhost:0.0' >> .bashrc  **** -> this causes major errors on Ubuntu system, This should be omitted
 $ echo $DISPLAY
 (make sure this is localhost:0)
 
