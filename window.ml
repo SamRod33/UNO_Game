@@ -52,8 +52,9 @@ let draw_button (button : button) : unit =
   Graphics.moveto (x + 24) (y + 4);
   Graphics.draw_string text
 
-(*[clicked] returns true if the mouses location (x,y) is within the
-  parameters of the button*)
+(* cards; get orientation (colormap) of pixels for basic card, change
+   background color*)
+
 let clicked x y button =
   let (a, b), name, color = button in
   x >= a

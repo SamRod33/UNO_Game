@@ -70,8 +70,12 @@ let play_new_card g c =
 (** [is_valid_card g c] is a true when a card [c] s a legal move in game
     [g] and false otherwise. *)
 let is_valid_card g c =
-  let s' = play_new_card g c in
-  match s' with Legal s' -> true | _ -> false
+  match actions c with
+  | { skip = _; reverse = _; swap = true, _; change_color = true } ->
+      stack_penalty g = 0
+  | _ -> (
+      let s' = play_new_card g c in
+      match s' with Legal s' -> true | _ -> false)
 
 (** [find_valid_card g h] is the first valid card option in a player's
     hand [h] from the left in a given state [g]. None is returned if the
@@ -145,4 +149,4 @@ let action_test g =
     g |> current_player |> player_hand |> valid_hand g []
   in
   let w_cards = List.map (add_weight g) uw_cards in
-  (*List.fast_sort comp*) w_cards
+  w_cards

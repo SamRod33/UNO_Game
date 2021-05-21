@@ -2,14 +2,16 @@ Make sure VcXsrv or XQuartz is running each time you run graphics
 
 (***************Windows****************)
 install VcXsrv: https://techcommunity.microsoft.com/t5/windows-dev-appconsult/running-wsl-gui-apps-on-windows-10/ba-p/1493242
+install brew:
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+$ brew install libpng
 
 enter in ubuntu command line:
+$ sudo apt install ocaml-tools libsdl-ocaml-dev
 $ opam install opam-depext
 $ opam depext conf-pkg-config
-$ opam install graphics imagelib camlimages
+$ opam install graphics imagelib camlimages ocamlsdl conf-sdl-mixer
 $ sudo apt install -y xserver-xorg-core
-$ opam install ocamlsdl
-$ opam install conf-sdl-mixer
 $ cd ~
 $ ls -a (look for .bashrc or .bashprofile)
 $ echo 'export DISPLAY=localhost:0.0' >> .bashrc  **** -> this causes major errors on Ubuntu system, This should be done instead (export DISPLAY=:0.0)
