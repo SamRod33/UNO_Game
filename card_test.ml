@@ -19,8 +19,8 @@ let actions_test name c expected =
 
 (** [amt_test name c expected] creates an OUnit test case that checks
     [expected] equals [amount c]. *)
-let amt_test name c expected =
-  f_test name amount c expected string_of_int
+(* let amt_test name c expected = f_test name amount c expected
+   string_of_int *)
 
 (** [colors] is the expected colors for all cards in order. *)
 let colors = [ R; G; ANY; ANY; B ]
@@ -29,7 +29,7 @@ let colors = [ R; G; ANY; ANY; B ]
 let penalties = [ 2; 0; 0; 4; 0 ]
 
 (** [amounts] is the expected amounts for all cards in order. *)
-let amounts = [ 1; 2; 4; 1; 3 ]
+(* let amounts = [ 1; 2; 4; 1; 3 ] *)
 
 (** [f_tests f name cards expecteds] creates many OUnit test cases that
     check [f name c expected], where [c] is a card in [cards], equals
@@ -68,10 +68,10 @@ let actions_tests =
       plus_4_action;
   ]
 
-let amt_tests = f_tests amt_test "amount tests" custom_cards amounts
+(* let amt_tests = f_tests amt_test "amount tests" custom_cards amounts *)
 
 let card_suite =
-  List.flatten [ penalty_tests; color_tests; actions_tests; amt_tests ]
+  List.flatten [ penalty_tests; color_tests; actions_tests ]
 
 let suite = "test suite for Card" >::: card_suite
 

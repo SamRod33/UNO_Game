@@ -30,8 +30,7 @@ type t = {
   color : color;
   digit : int option;
   actions : actions;
-  penalty : draw_penalty;
-  amount : int;
+  penalty : draw_penalty; (* amount : int; *)
 }
 
 (********************************************************************)
@@ -75,11 +74,21 @@ let create j =
     color = j |> member "color" |> to_string |> to_color;
     actions = j |> member "actions" |> to_actions;
     penalty = j |> member "draw penalty" |> to_int;
-    amount = j |> member "amount" |> to_int;
+    (* amount = j |> member "amount" |> to_int; *)
     digit = j |> member "digit" |> to_digit;
   }
 
-let create_cards lst = List.map create lst
+let create_n j =
+  let num_cards = to_int (member "amount" j) in
+  let rec create_n_aux j = function
+    | 0 -> []
+    | n when n > 0 -> create j :: create_n_aux j (n - 1)
+    | _ -> failwith "FAILURE IN CREATE_N"
+  in
+  create_n_aux j num_cards
+
+let create_cards lst = List.flatten (List.map create_n lst)
+(* List.map create lst *)
 
 let standard_cards =
   j "standard_cards.json" |> member "standard deck" |> to_list
@@ -102,6 +111,7 @@ let print_color = function
 (** [print_face c] is the face card representation of cards in UNO. Each
     line of the face card is split into each element. *)
 let print_face c =
+  (* section to other functions *)
   if c.digit <> None then
     match Option.get c.digit with
     | 0 -> Facecards.zero
@@ -236,6 +246,6 @@ let set_swap_id c id =
     actions = { c.actions with swap = (fst c.actions.swap, id) };
   }
 
-let amount c = c.amount
+(* let amount c = c.amount *)
 
 let digit c = c.digit
