@@ -4,7 +4,7 @@ open Images
 open Png
 
 let open_window =
-  open_graph (" " ^ width ^ "x" ^ height);
+  open_graph (":0.0 " ^ width ^ "x" ^ height);
   set_window_title "Uno Game by TKYS"
 
 let upload_img dir file x y =
