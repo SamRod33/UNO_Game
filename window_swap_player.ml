@@ -1,104 +1,104 @@
 open Graphics
 open Constants
 open Window_gui
-
-(*example_for_testing********************************************************************************************************)
-
-open Card
-open Computer
 open State
 open Player
-open Yojson.Basic.Util
 
-let std_deck = standard_cards
+(*let num_ply = (g |> players |> List.length) - 1*)
 
-let blue1 =
-  List.filter (fun x -> color x = B && digit x = Some 1) std_deck
-  |> List.hd
+(* [create_player_card_tuple ply_lst acc] is a list of tuples that
+   contains the each player in [ply_lst] and number of cards in that
+   player's hand. *)
+let rec create_player_card_tuple ply_lst acc =
+  (* TODO: change player id to num *)
+  match ply_lst with
+  | [] -> acc
+  | p :: t ->
+      create_player_card_tuple t
+        ((p, p |> player_hand |> List.length) :: acc)
 
-let blue2 =
-  List.filter (fun x -> color x = B && digit x = Some 2) std_deck
-  |> List.hd
+(* [outline_width, outline_height] is the dimensions of the outline. *)
+let outline_width, outline_height = (150, 210)
 
-let blue3 =
-  List.filter (fun x -> color x = B && digit x = Some 3) std_deck
-  |> List.hd
+(* [change_c_txt_pos_x, change_c_txt_pos_y] is the position of the
+   change color prompt, as inspired by the mockup. *)
+let change_c_txt_pos_x, change_c_txt_pos_y =
+  (logo_pos_x - 200, logo_pos_y - 100)
 
-let blue4 =
-  List.filter (fun x -> color x = B && digit x = Some 4) std_deck
-  |> List.hd
+(* [cards_start_pos_x, cards_start_pos_y] is the starting position of
+   the color changing cards, as inspired by the mockup. *)
+let cards_start_pos_x, cards_start_pos_y =
+  (change_c_txt_pos_x, change_c_txt_pos_y - 300)
 
-let blue5 =
-  List.filter (fun x -> color x = B && digit x = Some 5) std_deck
-  |> List.hd
+(* [outline_pos_x, outline_pos_y] is the starting position of the
+   selection outline. *)
+let outline_pos_x, outline_pos_y =
+  (ref (cards_start_pos_x - 10), ref (cards_start_pos_y - 10))
 
-let blue6 =
-  List.filter (fun x -> color x = B && digit x = Some 6) std_deck
-  |> List.hd
+let player_selected_idx = ref 0
 
-let swap =
-  List.filter
-    (fun x ->
-      actions x
-      = {
-          skip = false;
-          reverse = false;
-          swap = (true, -1);
-          change_color = true;
-        })
-    std_deck
-  |> List.hd
+let change_color_cards =
+  [ "red_color"; "blue_color"; "green_color"; "yellow_color" ]
 
-let p1 = create_test "p1" [ swap; blue1 ] false
+(** [draw_change_color_card c pos] draws [c] at [pos]. *)
+let draw_change_color_card c pos =
+  let c_x, c_y = pos in
+  upload_img _ASSET_DIR c c_x c_y
 
-let p2 = create_test "p2" [ blue1; blue2 ] false
+(** [draw_cards cards pos] draws [cards] starting at [pos]. Ensures
+    spacing between each card. *)
+let rec draw_cards cards pos =
+  let c_x, c_y = pos in
+  let c_space_x, c_space_y = card_space in
+  match cards with
+  | [] -> ()
+  | c :: t ->
+      draw_change_color_card c pos;
+      draw_cards t (c_x + c_space_x, c_y + c_space_y)
 
-let p3 = create_test "p3" [ blue1; blue2; blue3 ] false
+let draw_change_color_screen () =
+  (* TODO: will need to omit the open_window when integrating. *)
+  open_window;
+  set_background _BLACK;
+  draw_logo ();
+  upload_img _TEXT_SRC "Choose a new color" change_c_txt_pos_x
+    change_c_txt_pos_y;
+  draw_cards change_color_cards (cards_start_pos_x, cards_start_pos_y)
 
-let p4 = create_test "p4" [ blue1; blue2; blue3; blue4 ] false
-
-let p5 = create_test "p5" [ blue1; blue2; blue3; blue4; blue5 ] false
-
-let p6 =
-  create_test "p6" [ blue1; blue2; blue3; blue4; blue5; blue6 ] false
-
-let swap_window_test =
-  t_test std_deck std_deck 0 blue6 [ p1; p2; p3; p4; p5; p6 ]
-
-(****************************************************************************************************************************)
+(* [change_color_phase st] Launches the change color window phase. *)
+let change_color_phase st =
+  if st.key = _QUIT_KEY then raise Exit
+  else if st.key = _CONFIRM_KEY then
+    failwith
+      ("TODO: return card_selected: "
+      ^ string_of_int !player_selected_idx)
+  else if st.key = _RIGHT_KEY then
+    if !outline_pos_x >= List.length change_color_cards * fst card_space
+    then ()
+    else (
+      highlight_selection _GOLD _BLACK (fst card_space) !outline_pos_x
+        !outline_pos_y outline_width outline_height;
+      outline_pos_x := !outline_pos_x + fst card_space;
+      player_selected_idx := !player_selected_idx + 1)
+  else if st.key = _LEFT_KEY then
+    if !outline_pos_x <= cards_start_pos_x - 10 then ()
+    else (
+      highlight_selection _GOLD _BLACK
+        ~-(fst card_space)
+        !outline_pos_x !outline_pos_y outline_width outline_height;
+      outline_pos_x := !outline_pos_x + ~-(fst card_space);
+      player_selected_idx := !player_selected_idx - 1)
 
 ;;
 open_window;
-draw_swap_player_screen swap_window_test;
-highlight_selection _GOLD _BLACK 0 !outline_pswap_x !outline_pswap_y
-  outline_swap_width outline_swap_height;
+draw_change_color_screen ();
+highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y
+  outline_width outline_height;
 
 try
   while running do
     let st = wait_next_event [ Key_pressed ] in
     synchronize ();
-    if st.key = _QUIT_KEY then raise Exit
-    else if st.key = _CONFIRM then
-      failwith
-        ("TODO: return player_selected: "
-        ^ string_of_int !card_selected_idx)
-    else if st.key = _DOWN_KEY then
-      if
-        !outline_pos_y
-        <= swap_start_pos_y - ((*num_players g*) 5 * fst swap_space)
-      then ()
-      else (
-        highlight_selection _GOLD _BLACK (fst card_space) !outline_pos_x
-          !outline_pos_y outline_width outline_height;
-        outline_pos_x := !outline_pos_x + fst card_space;
-        card_selected_idx := !card_selected_idx + 1)
-    else if st.key = _LEFT_KEY then
-      if !outline_pos_x <= cards_start_pos_x - 10 then ()
-      else (
-        highlight_selection _GOLD _BLACK
-          ~-(fst card_space)
-          !outline_pos_x !outline_pos_y outline_width outline_height;
-        outline_pos_x := !outline_pos_x + ~-(fst card_space);
-        card_selected_idx := !card_selected_idx - 1)
+    change_color_phase st
   done
 with Exit -> ()
