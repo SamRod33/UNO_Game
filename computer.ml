@@ -71,8 +71,8 @@ let play_new_card g c =
     [g] and false otherwise. *)
 let is_valid_card g c =
   match actions c with
-  | { skip = _; reverse = _; swap = true, _; change_color = true } ->
-      stack_penalty g = 0
+  (* | { skip = _; reverse = _; swap = true, _; change_color = true } ->
+     stack_penalty g = 0 *)
   | _ -> (
       let s' = play_new_card g c in
       match s' with Legal s' -> true | _ -> false)
