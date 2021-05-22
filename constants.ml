@@ -10,7 +10,7 @@ let _ASSET_DIR = "game_assets/"
 
 let _RED = rgb 255 0 0
 
-let _GREEN = rgb 0 255 0
+let _GREEN = rgb 0 116 70
 
 let _BLACK = rgb 0 0 0
 
@@ -22,7 +22,7 @@ let _YELLOW = rgb 255 255 0
 
 let _GOLD = rgb 248 218 39
 
-let _CONFIRM = 'j'
+let _CONFIRM_KEY = 'j'
 
 let _QUIT_KEY = 'q'
 
