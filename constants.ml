@@ -4,6 +4,8 @@ let height = "768"
 
 let card_dir = "card/"
 
+(*"cards/"*)
+
 let quit_key = 'q'
 
 let left_key = 'a'
