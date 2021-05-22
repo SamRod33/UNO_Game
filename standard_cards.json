@@ -2,6 +2,7 @@
   "standard deck": [
     {
       "color": "red",
+      "img": "Red-0.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -15,6 +16,7 @@
     },
     {
       "color": "red",
+      "img": "Red-1.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -23,11 +25,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 1
     },
     {
       "color": "red",
+      "img": "Red-2.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -36,11 +39,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 2
     },
     {
       "color": "red",
+      "img": "Red-3.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -49,11 +53,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 3
     },
     {
       "color": "red",
+      "img": "Red-4.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -62,11 +67,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 4
     },
     {
       "color": "red",
+      "img": "Red-5.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -75,11 +81,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 5
     },
     {
       "color": "red",
+      "img": "Red-6.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -88,11 +95,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 6
     },
     {
       "color": "red",
+      "img": "Red-7.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -101,11 +109,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 7
     },
     {
       "color": "red",
+      "img": "Red-8.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -114,11 +123,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 8
     },
     {
       "color": "red",
+      "img": "Red-8.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -127,11 +137,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 9
     },
     {
       "color": "red",
+      "img": "Red-skip.png",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -140,11 +151,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "red",
+      "img": "Red-reverse.png",
       "actions": {
         "skip": false,
         "reverse": true,
@@ -153,11 +165,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "red",
+      "img": "Red-draw2.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -166,11 +179,12 @@
         "change color": false
       },
       "draw penalty": 2,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "blue",
+      "img": "Blue-0.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -184,6 +198,7 @@
     },
     {
       "color": "blue",
+      "img": "Blue-1.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -192,11 +207,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 1
     },
     {
       "color": "blue",
+      "img": "Blue-2.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -205,11 +221,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 2
     },
     {
       "color": "blue",
+      "img": "Blue-3.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -218,11 +235,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 3
     },
     {
       "color": "blue",
+      "img": "Blue-4.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -231,11 +249,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 4
     },
     {
       "color": "blue",
+      "img": "Blue-5.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -244,11 +263,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 5
     },
     {
       "color": "blue",
+      "img": "Blue-6.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -257,11 +277,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 6
     },
     {
       "color": "blue",
+      "img": "Blue-7.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -270,11 +291,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 7
     },
     {
       "color": "blue",
+      "img": "Blue-8.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -283,11 +305,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 8
     },
     {
       "color": "blue",
+      "img": "Blue-9.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -296,11 +319,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 9
     },
     {
       "color": "blue",
+      "img": "Blue-skip.png",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -309,11 +333,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "blue",
+      "img": "Blue-reverse.png",
       "actions": {
         "skip": false,
         "reverse": true,
@@ -322,11 +347,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "blue",
+      "img": "Blue-draw2.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -335,11 +361,12 @@
         "change color": false
       },
       "draw penalty": 2,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "green",
+      "img": "Green-0.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -353,6 +380,7 @@
     },
     {
       "color": "green",
+      "img": "Green-1.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -361,11 +389,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 1
     },
     {
       "color": "green",
+      "img": "Green-2.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -374,11 +403,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 2
     },
     {
       "color": "green",
+      "img": "Green-3.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -387,11 +417,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 3
     },
     {
       "color": "green",
+      "img": "Green-4.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -400,11 +431,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 4
     },
     {
       "color": "green",
+      "img": "Green-5.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -413,11 +445,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 5
     },
     {
       "color": "green",
+      "img": "Green-6.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -426,11 +459,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 6
     },
     {
       "color": "green",
+      "img": "Green-7.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -439,11 +473,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 7
     },
     {
       "color": "green",
+      "img": "Green-8.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -452,11 +487,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 8
     },
     {
       "color": "green",
+      "img": "Green-9.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -465,11 +501,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 9
     },
     {
       "color": "green",
+      "img": "Green-skip.png",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -478,11 +515,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "green",
+      "img": "Green-reverse.png",
       "actions": {
         "skip": false,
         "reverse": true,
@@ -491,11 +529,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "green",
+      "img": "Green-draw2.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -504,11 +543,12 @@
         "change color": false
       },
       "draw penalty": 2,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "yellow",
+      "img": "Yellow-0.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -522,6 +562,7 @@
     },
     {
       "color": "yellow",
+      "img": "Yellow-1.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -530,11 +571,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 1
     },
     {
       "color": "yellow",
+      "img": "Yellow-2.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -543,11 +585,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 2
     },
     {
       "color": "yellow",
+      "img": "Yellow-3.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -556,11 +599,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 3
     },
     {
       "color": "yellow",
+      "img": "Yellow-4.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -569,11 +613,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 4
     },
     {
       "color": "yellow",
+      "img": "Yellow-5.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -582,11 +627,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 5
     },
     {
       "color": "yellow",
+      "img": "Yellow-6.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -595,11 +641,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 6
     },
     {
       "color": "yellow",
+      "img": "Yellow-7.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -608,11 +655,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 7
     },
     {
       "color": "yellow",
+      "img": "Yellow-8.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -621,11 +669,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 8
     },
     {
       "color": "yellow",
+      "img": "Yellow-9.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -634,11 +683,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": 9
     },
     {
       "color": "yellow",
+      "img": "Yellow-skip.png",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -647,11 +697,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "yellow",
+      "img": "Yellow-reverse.png",
       "actions": {
         "skip": false,
         "reverse": true,
@@ -660,11 +711,12 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "yellow",
+      "img": "Yellow-draw2.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -673,635 +725,12 @@
         "change color": false
       },
       "draw penalty": 2,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 1
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 2
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 3
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 4
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 5
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 6
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 7
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 8
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 9
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": true,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": true,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "red",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 2,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 1
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 2
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 3
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 4
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 5
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 6
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 7
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 8
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 9
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": true,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": true,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "blue",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 2,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 1
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 2
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 3
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 4
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 5
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 6
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 7
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 8
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 9
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": true,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": true,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "green",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 2,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 1
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 2
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 3
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 4
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 5
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 6
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 7
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 8
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": 9
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": true,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": true,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "yellow",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": false
-      },
-      "draw penalty": 2,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     },
     {
       "color": "any",
+      "img": "Wild.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -1310,50 +739,12 @@
         "change color": true
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 4,
       "digit": "none"
     },
     {
       "color": "any",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": true
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "any",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": true
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "any",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": true
-      },
-      "draw penalty": 0,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "any",
+      "img": "Draw4.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -1362,50 +753,12 @@
         "change color": true
       },
       "draw penalty": 4,
-      "amount": 1,
+      "amount": 4,
       "digit": "none"
     },
     {
       "color": "any",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": true
-      },
-      "draw penalty": 4,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "any",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": true
-      },
-      "draw penalty": 4,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "any",
-      "actions": {
-        "skip": false,
-        "reverse": false,
-        "swap": false,
-        "swap_p2": -1,
-        "change color": true
-      },
-      "draw penalty": 4,
-      "amount": 1,
-      "digit": "none"
-    },
-    {
-      "color": "any",
+      "img": "Swap.png",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -1414,7 +767,7 @@
         "change color": true
       },
       "draw penalty": 0,
-      "amount": 1,
+      "amount": 2,
       "digit": "none"
     }
   ]
