@@ -4,7 +4,7 @@ open Images
 open Png
 
 let open_window =
-  open_graph (" " ^ _WIDTH ^ "x" ^ _HEIGHT);
+  open_graph (":0.0 " ^ _WIDTH ^ "x" ^ _HEIGHT);
   set_window_title "Uno Game by TKYS"
 
 let upload_img dir file x y =
@@ -17,7 +17,7 @@ open_window;
 set_color (rgb 0 0 0);
 draw_rect 0 0 (int_of_string _WIDTH) (int_of_string _HEIGHT);
 fill_rect 0 0 (int_of_string _WIDTH) (int_of_string _HEIGHT);
-upload_img _CARD_DIR "Green" 250 250;
+(* upload_img _CARD_DIR "Green" 250 250; *)
 set_color (rgb 248 218 39)
 
 ;;
