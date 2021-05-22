@@ -7,3 +7,4 @@
 #load "card.cmo";;
 #load "player.cmo";;
 #load "state.cmo";;
+#load "computer.cmo";;
