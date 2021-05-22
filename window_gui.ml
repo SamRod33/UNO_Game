@@ -11,22 +11,23 @@ let running = true
    by the mockup. *)
 let logo_pos_x, logo_pos_y = (424, 578)
 
-(* [change_c_txt_pos_x, change_c_txt_pos_y] is the position of the
+(* [change_swap_txt_pos_x, change_swap_txt_pos_y] is the position of the
    change color prompt, as inspired by the mockup. *)
-let change_c_txt_pos_x, change_c_txt_pos_y =
+let change_swap_txt_pos_x, change_swap_txt_pos_y =
   (logo_pos_x, logo_pos_y - 100)
 
 (* [cards_start_pos_x, cards_start_pos_y] is the starting position of
    the color changing cards, as inspired by the mockup. *)
-let cards_start_pos_x, cards_start_pos_y =
-  (change_c_txt_pos_x - 250, change_c_txt_pos_y - 300)
+let cards_swap_start_pos_x, cards_swap_start_pos_y =
+  (change_swap_txt_pos_x - 250, change_swap_txt_pos_y - 300)
 
 (* [card_space] is the amount of relative spacing between cards aligned
    horizontally. *)
 let card_space = (150, 0)
 
-(* [outline_width, outline_height] is the dimensions of the outline. *)
-let outline_width, outline_height = (130, 180)
+(* [swap_h_space] is the amount of relative spacing between swap info
+   cards aligned horizontally. *)
+let swap_space = (57, 0)
 
 (** [set_background color] fills the background of the window with
     [color]. *)
