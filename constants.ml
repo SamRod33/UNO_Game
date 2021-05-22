@@ -8,9 +8,11 @@ let _CARD_DIR = "cards/"
 
 let _ASSET_DIR = "game_assets/"
 
+let _TEXT_SRC = "text_assets/"
+
 let _RED = rgb 255 0 0
 
-let _GREEN = rgb 0 255 0
+let _GREEN = rgb 0 116 70
 
 let _BLACK = rgb 0 0 0
 
@@ -22,7 +24,7 @@ let _YELLOW = rgb 255 255 0
 
 let _GOLD = rgb 248 218 39
 
-let _CONFIRM = 'j'
+let _CONFIRM_KEY = 'j'
 
 let _QUIT_KEY = 'q'
 
@@ -35,11 +37,3 @@ let _DOWN_KEY = 's'
 let _UP_KEY = 'w'
 
 let _DRAW_KEY = ' '
-
-let _START_X = ref 36
-
-let _START_Y = ref 25
-
-let _SELECTED_OUTLINE_X = ref 120
-
-let _SELECTED_OUTLINE_Y = ref 180
