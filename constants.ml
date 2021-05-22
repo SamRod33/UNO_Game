@@ -1,17 +1,25 @@
-let width = "1024"
+let _WIDTH = "1024"
 
-let height = "768"
+let _HEIGHT = "768"
 
-let card_dir = "card/"
+let _CARD_DIR = "card/"
 
-let quit_key = 'q'
+let _QUIT_KEY = 'q'
 
-let left_key = 'a'
+let _LEFT_KEY = 'a'
 
-let right_key = 'd'
+let _RIGHT_KEY = 'd'
 
-let down_key = 's'
+let _DOWN_KEY = 's'
 
-let up_key = 'w'
+let _UP_KEY = 'w'
 
-let draw_key = ' '
+let _DRAW_KEY = ' '
+
+let _START_X = ref 240
+
+let _START_Y = ref 240
+
+let _SELECTED_OUTLINE_X = ref 300
+
+let _SELECTED_OUTLINE_Y = ref 420
