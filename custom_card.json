@@ -2,7 +2,7 @@
   "standard deck": [
     {
       "color": "red",
-      "img": "Red-draw2.png",
+      "img": "Red-draw2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -15,7 +15,7 @@
     },
     {
       "color": "green",
-      "img": "Green-skip.png",
+      "img": "Green-skip",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -28,7 +28,7 @@
     },
     {
       "color": "any",
-      "img": "Wild.png",
+      "img": "Wild",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -41,7 +41,7 @@
     },
     {
       "color": "any",
-      "img": "Draw4.png",
+      "img": "Draw4",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -54,7 +54,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-skip.png",
+      "img": "Blue-skip",
       "actions": {
         "skip": true,
         "reverse": false,

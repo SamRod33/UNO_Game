@@ -20,7 +20,7 @@ let _WHITE = rgb 255 255 255
 
 let _YELLOW = rgb 255 255 0
 
-let _SAFFRON = rgb 248 218 39
+let _GOLD = rgb 248 218 39
 
 let _CONFIRM = 'j'
 

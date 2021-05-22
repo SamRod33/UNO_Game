@@ -2,6 +2,7 @@ open Graphics
 open Constants
 open Images
 open Png
+open Window_gui
 
 let open_window =
   open_graph (":0.0 " ^ _WIDTH ^ "x" ^ _HEIGHT);

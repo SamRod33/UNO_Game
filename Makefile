@@ -1,4 +1,4 @@
-MODULES=card player state main computer facecards constants
+MODULES=card player state main computer facecards constants window_gui
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
@@ -66,9 +66,9 @@ zip:
 	zip uno-game.zip *.ml* *.json *.sh INSTALL.txt _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	
 
 window:
-	ocamlbuild -package graphics window.native -use-ocamlfind
-	./window.native
+	ocamlbuild -package graphics window_main.native -use-ocamlfind
+	./window_main.native
 
 ch_c_win:
-	ocamlbuild -package graphics change_color_prompt.native -use-ocamlfind
-	./change_color_prompt.native
+	ocamlbuild -package graphics window_change_color.native -use-ocamlfind
+	./window_change_color.native
