@@ -1,16 +1,16 @@
 #require "ounit2";;
 #require "yojson";;
+#require "bisect_ppx.runtime";;
 #require "ANSITerminal";;
 #directory "_build";;
 #load "facecards.cmo";;
 #load "card.cmo";;
 #load "player.cmo";;
 #load "state.cmo";;
-
-#use "facecards.ml";;
+(* #use "facecards.ml";;
 #use "cards.ml";;
 #use "player.ml";;
 #use "computer.ml";;
 #use "state.ml";;
 #use "main.ml";;
-#use "computer_test.ml";;
+#use "computer_test.ml";; *)
