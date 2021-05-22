@@ -30,7 +30,8 @@ type t = {
   color : color;
   digit : int option;
   actions : actions;
-  penalty : draw_penalty; (* amount : int; *)
+  penalty : draw_penalty;
+  img : string;
 }
 
 (********************************************************************)
@@ -74,7 +75,7 @@ let create j =
     color = j |> member "color" |> to_string |> to_color;
     actions = j |> member "actions" |> to_actions;
     penalty = j |> member "draw penalty" |> to_int;
-    (* amount = j |> member "amount" |> to_int; *)
+    img = j |> member "img" |> to_string;
     digit = j |> member "digit" |> to_digit;
   }
 
@@ -108,24 +109,26 @@ let print_color = function
   | B -> ANSITerminal.blue
   | ANY -> ANSITerminal.white
 
+let face_card_digit = function
+  | 0 -> Facecards.zero
+  | 1 -> Facecards.one
+  | 2 -> Facecards.two
+  | 3 -> Facecards.three
+  | 4 -> Facecards.four
+  | 5 -> Facecards.five
+  | 6 -> Facecards.six
+  | 7 -> Facecards.seven
+  | 8 -> Facecards.eight
+  | 9 -> Facecards.nine
+  | x when x > 9 || x < 0 -> failwith "digit not between 0-9"
+  | _ -> failwith "Impossible pattern match: Invalid digit card"
+  [@@coverage off]
+
 (** [print_face c] is the face card representation of cards in UNO. Each
     line of the face card is split into each element. *)
 let print_face c =
   (* section to other functions *)
-  if c.digit <> None then
-    match Option.get c.digit with
-    | 0 -> Facecards.zero
-    | 1 -> Facecards.one
-    | 2 -> Facecards.two
-    | 3 -> Facecards.three
-    | 4 -> Facecards.four
-    | 5 -> Facecards.five
-    | 6 -> Facecards.six
-    | 7 -> Facecards.seven
-    | 8 -> Facecards.eight
-    | 9 -> Facecards.nine
-    | x when x > 9 || x < 0 -> failwith "digit not between 0-9"
-    | _ -> failwith "Impossible pattern match: Invalid digit card"
+  if c.digit <> None then face_card_digit (Option.get c.digit)
   else if c.penalty <> 0 then
     match c.penalty with
     | 2 -> Facecards.plus_2
@@ -246,7 +249,7 @@ let set_swap_id c id =
     actions = { c.actions with swap = (fst c.actions.swap, id) };
   }
 
-(* let amount c = c.amount *)
+let img c = c.img
 
 let digit c = c.digit
 

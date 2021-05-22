@@ -12,6 +12,10 @@ let penalty_test name c expected =
 let color_test name c expected =
   f_test name color c expected string_of_color
 
+(** [img_test name c expected] creates an OUnit test case that checks
+    [expected] equals [img c]. *)
+let img_test name c expected = f_test name img c expected Fun.id
+
 (** [actions_test name c expected] creates an OUnit test case that
     checks [expected] equals [actions c]. *)
 let actions_test name c expected =
@@ -27,9 +31,6 @@ let colors = [ R; G; ANY; ANY; B ]
 
 (** [penalties] is the expected penalties for all cards in order. *)
 let penalties = [ 2; 0; 0; 4; 0 ]
-
-(** [amounts] is the expected amounts for all cards in order. *)
-(* let amounts = [ 1; 2; 4; 1; 3 ] *)
 
 (** [f_tests f name cards expecteds] creates many OUnit test cases that
     check [f name c expected], where [c] is a card in [cards], equals
@@ -68,10 +69,20 @@ let actions_tests =
       plus_4_action;
   ]
 
-(* let amt_tests = f_tests amt_test "amount tests" custom_cards amounts *)
+let img_tests =
+  [
+    img_test "Red +2 img is Red-draw2.png" (List.hd custom_cards)
+      "Red-draw2.png";
+    img_test "Wild card img is Wild.png"
+      (List.nth custom_cards 2)
+      "Wild.png";
+    img_test "Blue skip img Blue-skip.png"
+      (List.nth custom_cards 4)
+      "Blue-skip.png";
+  ]
 
 let card_suite =
-  List.flatten [ penalty_tests; color_tests; actions_tests ]
+  List.flatten [ penalty_tests; color_tests; actions_tests; img_tests ]
 
 let suite = "test suite for Card" >::: card_suite
 

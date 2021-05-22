@@ -20,10 +20,10 @@ build:
 	$(OCAMLBUILD) $(OBJECTS)
 
 card-test:
-	$(OCAMLBUILD) -tag 'debug' $(CARDTEST) && ./$(CARDTEST)-runner sequential
+	$(OCAMLBUILD) -tag 'debug' $(CARDTEST) && ./$(CARDTEST) -runner sequential
 
 player-test:
-	$(OCAMLBUILD) -tag 'debug' $(PLAYERTEST) && ./$(PLAYERTEST)-runner sequential
+	$(OCAMLBUILD) -tag 'debug' $(PLAYERTEST) && ./$(PLAYERTEST) -runner sequential
 
 state-test:
 	$(OCAMLBUILD) -tag 'debug' $(STATETEST) && ./$(STATETEST) -runner sequential
