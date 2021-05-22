@@ -2,9 +2,9 @@ let _WIDTH = "1024"
 
 let _HEIGHT = "768"
 
-let _CARD_DIR = "card/"
+let _CARD_DIR = "cards/"
 
-(*"cards/"*)
+let _ASSET_DIR = "game_assets/"
 
 let _QUIT_KEY = 'q'
 
