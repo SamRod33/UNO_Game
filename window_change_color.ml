@@ -5,39 +5,29 @@ open Window_gui
 (* [outline_width, outline_height] is the dimensions of the outline. *)
 let outline_width, outline_height = (145, 200)
 
+(* [change_c_txt_pos_x, change_c_txt_pos_y] is the position of the
+   change color prompt, as inspired by the mockup. *)
+let change_c_txt_pos_x, change_c_txt_pos_y =
+  (logo_pos_x - 200, logo_pos_y - 100)
+
 (* [cards_start_pos_x, cards_start_pos_y] is the starting position of
    the color changing cards, as inspired by the mockup. *)
 let cards_start_pos_x, cards_start_pos_y =
-  (change_c_txt_pos_x - 200, change_c_txt_pos_y - 300)
+  (change_c_txt_pos_x, change_c_txt_pos_y - 300)
 
 (* [outline_pos_x, outline_pos_y] is the starting position of the
    selection outline. *)
 let outline_pos_x, outline_pos_y =
   (ref (cards_start_pos_x - 10), ref (cards_start_pos_y - 10))
 
-let _SELECTED_OUTLINE_X = ref 120
-
-let _SELECTED_OUTLINE_Y = ref 180
-
 let card_selected_idx = ref 0
 
-let upload_img dir file x y =
-  let img = Png.load_as_rgb24 (dir ^ file) [] in
-  let draw = Graphic_image.of_image img in
-  Graphics.draw_image draw x y
-
 let change_color_cards =
-  [
-    "red_color.png";
-    "blue_color.png";
-    "green_color.png";
-    "yellow_color.png";
-  ]
+  [ "red_color"; "blue_color"; "green_color"; "yellow_color" ]
 
-(** [draw_card c pos] draws [c] at [pos]. *)
-let draw_card c pos =
+(** [draw_change_color_card c pos] draws [c] at [pos]. *)
+let draw_change_color_card c pos =
   let c_x, c_y = pos in
-  print_endline c;
   upload_img _ASSET_DIR c c_x c_y
 
 (** [draw_cards cards pos] draws [cards] starting at [pos]. Ensures
@@ -48,7 +38,7 @@ let rec draw_cards cards pos =
   match cards with
   | [] -> ()
   | c :: t ->
-      draw_card c pos;
+      draw_change_color_card c pos;
       draw_cards t (c_x + c_space_x, c_y + c_space_y)
 
 let draw_change_color_screen () =
@@ -56,7 +46,8 @@ let draw_change_color_screen () =
   open_window;
   set_background _BLACK;
   draw_logo ();
-  draw_txt "CHOOSE A NEW COLOR";
+  upload_img _TEXT_SRC "Choose a new color" change_c_txt_pos_x
+    change_c_txt_pos_y;
   draw_cards change_color_cards (cards_start_pos_x, cards_start_pos_y)
 
 ;;

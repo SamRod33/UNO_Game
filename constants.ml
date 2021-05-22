@@ -8,11 +8,7 @@ let _CARD_DIR = "cards/"
 
 let _ASSET_DIR = "game_assets/"
 
-<<<<<<< HEAD
-let _TEXT_DIR = "text_assets/"
-=======
 let _TEXT_SRC = "text_assets/"
->>>>>>> fe44da36b0d0fb7d4bc0dbd805a17f79a53ed015
 
 let _RED = rgb 255 0 0
 
