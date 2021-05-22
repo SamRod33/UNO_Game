@@ -1,3 +1,5 @@
+open Graphics
+
 let _WIDTH = "1024"
 
 let _HEIGHT = "768"
@@ -5,6 +7,18 @@ let _HEIGHT = "768"
 let _CARD_DIR = "cards/"
 
 let _ASSET_DIR = "game_assets/"
+
+let _RED = rgb 255 0 0
+
+let _GREEN = rgb 0 255 0
+
+let _BLACK = rgb 0 0 0
+
+let _BLUE = rgb 0 0 255
+
+let _WHITE = rgb 255 255 255
+
+let _YELLOW = rgb 255 255 0
 
 let _QUIT_KEY = 'q'
 
