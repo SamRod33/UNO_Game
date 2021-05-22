@@ -29,11 +29,6 @@ let label_space = (50, -20)
    horizontally. *)
 let card_space = (150, 0)
 
-(* [outline_pos_x, outline_pos_y] is the starting position of the
-   selection outline. *)
-let outline_pos_x, outline_pos_y =
-  (ref (cards_start_pos_x - 10), ref (cards_start_pos_y - 10))
-
 (* [outline_width, outline_height] is the dimensions of the outline. *)
 let outline_width, outline_height = (130, 180)
 
@@ -76,8 +71,6 @@ let rec draw_cards cards pos =
       draw_cards t (c_x + c_space_x, c_y + c_space_y)
 
 let change_color_cards = Card.custom_cards
-
-let card_selected_idx = ref 0
 
 (** [highlight_selection color_on color_off offset x y width height]
     draws an colors old outline with [color_off] at ([x], [y]), and
