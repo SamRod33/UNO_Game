@@ -15,6 +15,10 @@ let cards_start_pos_x, cards_start_pos_y =
 let outline_pos_x, outline_pos_y =
   (ref (cards_start_pos_x - 10), ref (cards_start_pos_y - 10))
 
+let _SELECTED_OUTLINE_X = ref 120
+
+let _SELECTED_OUTLINE_Y = ref 180
+
 let card_selected_idx = ref 0
 
 let upload_img dir file x y =
