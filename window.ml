@@ -15,9 +15,14 @@ let upload_img dir file x y =
 ;;
 open_window;
 set_color (rgb 0 0 0);
-draw_rect 0 0 (int_of_string _WIDTH) (int_of_string _HEIGHT);
 fill_rect 0 0 (int_of_string _WIDTH) (int_of_string _HEIGHT);
-(* upload_img _CARD_DIR "Green" 250 250; *)
+upload_img _ASSET_DIR "game_keys" 632 553;
+upload_img _ASSET_DIR "gui_uno_logo" 424 578;
+upload_img _ASSET_DIR "player_turn_frame" 84 553;
+set_color (rgb 0 116 70);
+fill_rect 0 0 (int_of_string _WIDTH) 275;
+upload_img _CARD_DIR "Blue-0" 96 35;
+upload_img _CARD_DIR "Blue-0" (96 + 50) 35;
 set_color (rgb 248 218 39)
 
 ;;
@@ -35,6 +40,6 @@ try
       set_color (rgb 248 218 39);
       draw_rect !_START_X !_START_Y !_SELECTED_OUTLINE_X
         !_SELECTED_OUTLINE_Y;
-      _START_X := !_START_X + 400)
+      _START_X := !_START_X + 400 )
   done
 with Exit -> ()

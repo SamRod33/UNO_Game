@@ -50,7 +50,7 @@ val actions : t -> actions
 val set_swap_id : t -> int -> t
 
 (** [amount c] is the amount of card [c] in the standard deck of a game. *)
-val amount : t -> int
+(* val amount : t -> int *)
 
 (** [digit c] is the number on the face of the card. *)
 val digit : t -> int option
