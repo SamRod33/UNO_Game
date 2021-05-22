@@ -50,10 +50,7 @@ try
       set_color (rgb 248 218 39);
       _START_X := !_START_X + 161;
       draw_rect !_START_X !_START_Y !_SELECTED_OUTLINE_X
-        !_SELECTED_OUTLINE_Y
-      (* set_color (rgb 0 116 70) set_color (rgb 0 116 70); draw_rect 36
-         25 120 180; set_color (rgb 248 218 39); draw_rect (36 + 161) 25
-         120 180 *) )
+        !_SELECTED_OUTLINE_Y )
     else if st.key = _LEFT_KEY then (
       set_color (rgb 0 116 70);
       draw_rect !_START_X !_START_Y !_SELECTED_OUTLINE_X
@@ -61,9 +58,6 @@ try
       set_color (rgb 248 218 39);
       _START_X := !_START_X - 161;
       draw_rect !_START_X !_START_Y !_SELECTED_OUTLINE_X
-        !_SELECTED_OUTLINE_Y
-      (* set_color (rgb 0 116 70) set_color (rgb 0 116 70); draw_rect 36
-         25 120 180; set_color (rgb 248 218 39); draw_rect (36 + 161) 25
-         120 180 *) )
+        !_SELECTED_OUTLINE_Y )
   done
 with Exit -> ()
