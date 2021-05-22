@@ -47,7 +47,7 @@ let least_cards g =
   | [] -> current_player g |> id
   | h :: t -> lc t (h, 100)
 
-(** [card c g] is the card [c] with the most optimal action or color
+(** [card c g] is the card [c] with the most optimal action and/or color
     applied based on the current game [g]. *)
 let card c g =
   match actions c with
@@ -63,19 +63,14 @@ let card c g =
     [g], Gameover if playing that card results in a game over, and
     Illegal if the card cannot be played. *)
 let play_new_card g c =
-  let card = card c g in
-  let new_g = change_current_players_hand c card g in
-  play (Some card) new_g
+  let new_card = card c g in
+  let new_g = change_current_players_hand c new_card g in
+  play (Some new_card) new_g
 
 (** [is_valid_card g c] is a true when a card [c] s a legal move in game
     [g] and false otherwise. *)
 let is_valid_card g c =
-  match actions c with
-  (* | { skip = _; reverse = _; swap = true, _; change_color = true } ->
-     stack_penalty g = 0 *)
-  | _ -> (
-      let s' = play_new_card g c in
-      match s' with Legal s' -> true | _ -> false)
+  match play_new_card g c with Illegal -> false | _ -> true
 
 (** [find_valid_card g h] is the first valid card option in a player's
     hand [h] from the left in a given state [g]. None is returned if the
@@ -144,9 +139,13 @@ let action g =
 
 (** [action_test g] is a list of weighted card tuples for the current
     player's hand in game [g]. *)
-let action_test g =
+let action_test_cpu g =
   let uw_cards =
     g |> current_player |> player_hand |> valid_hand g []
   in
   let w_cards = List.map (add_weight g) uw_cards in
   w_cards
+
+let computer_swap_id c = swap_id_of_card c
+
+let computer_color c = color c

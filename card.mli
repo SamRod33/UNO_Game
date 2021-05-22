@@ -68,3 +68,7 @@ val full_deck : t list
 (** [pp_cards cards is_idx] prints a list of cards by printing 7 cards
     per row, and each card has its index above it if [is_idx] is true. *)
 val pp_cards : t list -> bool -> unit
+
+(** [swap_id_of_card c] is the player's id that the current player wants
+    to swap hands with on card [c]. *)
+val swap_id_of_card : t -> int
