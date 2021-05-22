@@ -239,3 +239,5 @@ let set_swap_id c id =
 let amount c = c.amount
 
 let digit c = c.digit
+
+let swap_id_of_card c = snd c.actions.swap

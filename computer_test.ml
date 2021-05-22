@@ -220,7 +220,7 @@ let p9 =
     [ draw4; blue2; blue3; red_draw2; blue5; blue6; blue7 ]
     false
 
-let p10 = create_test "p10" [ swap ] false
+let p10 = create_test "p10" [ swap; red5 ] false
 
 (*** states ***)
 let start_red0 = t_test no_17br_deck std_deck 0 red0 [ p1; p2; p3; p4 ]
@@ -242,7 +242,7 @@ let nextp_uno = t_test no_17br_deck std_deck 0 blue6 [ p7; p8; p3; p4 ]
 let nextp_uno4 = t_test no_17br_deck std_deck 0 blue6 [ p9; p8; p3; p4 ]
 
 let nextp_uno_swap =
-  t_test no_17br_deck std_deck 0 blue6 [ p10; p7; p3; p4 ]
+  t_test no_17br_deck std_deck 0 blue6 [ p10; p8; p3; p4 ]
 
 (**************************************************************)
 
