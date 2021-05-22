@@ -35,11 +35,3 @@ let _DOWN_KEY = 's'
 let _UP_KEY = 'w'
 
 let _DRAW_KEY = ' '
-
-let _SELECTED_PLAYER_CARD_X = ref 30
-
-let _SELECTED_PLAYER_CARD_Y = ref 25
-
-let _SELECTED_OUTLINE_X = ref 120
-
-let _SELECTED_OUTLINE_Y = ref 180
