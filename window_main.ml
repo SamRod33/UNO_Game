@@ -6,6 +6,8 @@ open Window_gui
 
 let selected_spacing = 161
 
+let card_selected_idx = ref 0
+
 let draw_player_cards () =
   upload_img _CARD_DIR "Blue-0" (40 + (0 * selected_spacing)) 35;
   upload_img _CARD_DIR "Blue-0" (40 + (1 * selected_spacing)) 35;
@@ -39,7 +41,8 @@ let move_selected op =
   set_color _GOLD;
   _START_X := op !_START_X selected_spacing;
   draw_rect !_START_X !_START_Y !_SELECTED_OUTLINE_X
-    !_SELECTED_OUTLINE_Y
+    !_SELECTED_OUTLINE_Y;
+  card_selected_idx := op !card_selected_idx 1
 
 ;;
 open_window;
@@ -60,6 +63,8 @@ try
     if st.key = _QUIT_KEY then raise Exit
     else if st.key = _RIGHT_KEY then move_selected ( + )
     else if st.key = _LEFT_KEY then move_selected ( - )
-    else if st.key = _CONFIRM_KEY then failwith "player selected a card"
+    else if st.key = _CONFIRM_KEY then
+      failwith
+        ("player selected a card: " ^ string_of_int !card_selected_idx)
   done
 with Exit -> ()

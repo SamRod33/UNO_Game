@@ -2,6 +2,13 @@ open Graphics
 open Constants
 open Window_gui
 
+(* [outline_pos_x, outline_pos_y] is the starting position of the
+   selection outline. *)
+let outline_pos_x, outline_pos_y =
+  (ref (cards_start_pos_x - 10), ref (cards_start_pos_y - 10))
+
+let card_selected_idx = ref 0
+
 ;;
 open_window;
 draw_change_color_screen ();
@@ -13,7 +20,7 @@ try
     let st = wait_next_event [ Key_pressed ] in
     synchronize ();
     if st.key = _QUIT_KEY then raise Exit
-    else if st.key = _CONFIRM then
+    else if st.key = _CONFIRM_KEY then
       failwith
         ( "TODO: return card_selected: "
         ^ string_of_int !card_selected_idx )
