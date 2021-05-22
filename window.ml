@@ -3,8 +3,6 @@ open Constants
 open Images
 open Png
 
-let card_dir = "card/"
-
 let open_window =
   open_graph (" " ^ width ^ "x" ^ height);
   set_window_title "Uno Game by TKYS"
