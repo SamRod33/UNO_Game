@@ -21,10 +21,6 @@ let change_swap_txt_pos_x, change_swap_txt_pos_y =
 let cards_swap_start_pos_x, cards_swap_start_pos_y =
   (change_swap_txt_pos_x - 250, change_swap_txt_pos_y - 300)
 
-(* [label_space] is the amount of relative spacing between a card color
-   and its label. *)
-let label_space = (50, -20)
-
 (* [card_space] is the amount of relative spacing between cards aligned
    horizontally. *)
 let card_space = (150, 0)
@@ -48,30 +44,21 @@ let upload_img dir file x y =
 let draw_logo () =
   upload_img _ASSET_DIR "gui_uno_logo" logo_pos_x logo_pos_y
 
-(** [draw_txt ()] draws the change color prompt text on the screen. *)
-let draw_txt s =
-  (* TODO: will need to change with img instead for good looks *)
-  set_color _WHITE;
-  moveto change_swap_txt_pos_x change_swap_txt_pos_y;
-  draw_string s
-
 (** [draw_card c pos] draws [c] at [pos]. *)
 let draw_card c pos =
   let c_x, c_y = pos in
   upload_img _CARD_DIR (Card.img c) c_x c_y
 
-(** [draw_cards cards pos] draws [cards] starting at [pos]. Ensures
-    spacing between each card. *)
-let rec draw_cards cards pos =
+(** [draw_cards cards pos space] draws [cards] starting at [pos].
+    Separates each [space]. *)
+let rec draw_cards cards pos space =
   let c_x, c_y = pos in
-  let c_space_x, c_space_y = card_space in
+  let c_space_x, c_space_y = space in
   match cards with
   | [] -> ()
   | c :: t ->
       draw_card c pos;
-      draw_cards t (c_x + c_space_x, c_y + c_space_y)
-
-let change_color_cards = Card.custom_cards
+      draw_cards t (c_x + c_space_x, c_y + c_space_y) space
 
 (** [highlight_selection color_on color_off offset x y width height]
     draws an colors old outline with [color_off] at ([x], [y]), and
@@ -82,21 +69,3 @@ let highlight_selection color_on color_off offset x y width height =
   draw_rect x y width height;
   set_color color_on;
   draw_rect (x + offset) y width height
-
-let draw_change_color_screen () =
-  (* TODO: will need to omit the open_window when integrating. *)
-  open_window;
-  set_background _BLACK;
-  draw_logo ();
-  draw_txt "CHOOSE A NEW COLOR";
-  draw_cards change_color_cards
-    (cards_swap_start_pos_x, cards_swap_start_pos_y)
-
-let draw_swap_player_screen g =
-  (* TODO: will need to omit the open_window when integrating. *)
-  open_window;
-  set_background _BLACK;
-  draw_logo ();
-  (*upload_img (_ASSET_DIR ^ "swap_text") 0 0;*)
-  draw_cards g (cards_swap_start_pos_x, cards_swap_start_pos_y)
-(*add_nums*)

@@ -72,3 +72,7 @@ window:
 ch_c_win:
 	ocamlbuild -package graphics window_change_color.native -use-ocamlfind
 	./window_change_color.native
+
+intermission:
+	ocamlbuild -package graphics window_intermission.native -use-ocamlfind
+	./window_intermission.native

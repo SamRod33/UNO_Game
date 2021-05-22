@@ -6,6 +6,17 @@ open Player
 
 (*let num_ply = (g |> players |> List.length) - 1*)
 
+(*let draw_change_color_screen () = (* TODO: will need to omit the
+  open_window when integrating. *) open_window; set_background _BLACK;
+  draw_logo (); draw_txt "CHOOSE A NEW COLOR"; draw_cards
+  change_color_cards (cards_swap_start_pos_x, cards_swap_start_pos_y)
+
+  let draw_swap_player_screen g = (* TODO: will need to omit the
+  open_window when integrating. *) open_window; set_background _BLACK;
+  draw_logo (); (*upload_img (_ASSET_DIR ^ "swap_text") 0 0;*)
+  draw_cards g (cards_swap_start_pos_x, cards_swap_start_pos_y)
+  (*add_nums*)*)
+
 (* [create_player_card_tuple ply_lst acc] is a list of tuples that
    contains the each player in [ply_lst] and number of cards in that
    player's hand. *)
@@ -61,7 +72,7 @@ let draw_change_color_screen () =
   open_window;
   set_background _BLACK;
   draw_logo ();
-  upload_img _TEXT_SRC "Choose a new color" change_c_txt_pos_x
+  upload_img _TEXT_DIR "Choose a new color" change_c_txt_pos_x
     change_c_txt_pos_y;
   draw_cards change_color_cards (cards_start_pos_x, cards_start_pos_y)
 
