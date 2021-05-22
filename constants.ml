@@ -18,10 +18,10 @@ let _UP_KEY = 'w'
 
 let _DRAW_KEY = ' '
 
-let _START_X = ref 240
+let _START_X = ref 36
 
-let _START_Y = ref 240
+let _START_Y = ref 25
 
-let _SELECTED_OUTLINE_X = ref 300
+let _SELECTED_OUTLINE_X = ref 120
 
-let _SELECTED_OUTLINE_Y = ref 420
+let _SELECTED_OUTLINE_Y = ref 180

@@ -56,9 +56,9 @@ let clear () = ignore (Sys.command "clear")
 let buffer next_gst =
   clear ();
   print_string
-    ("It is "
+    ( "It is "
     ^ name (current_player next_gst)
-    ^ "'s turn. Enter anything to continue.\n");
+    ^ "'s turn. Enter anything to continue.\n" );
   match read_line () with
   | "Quit" ->
       print_string quit_str;
@@ -113,7 +113,7 @@ let rec select_swap_player gst =
         get_nth_player_id n other_players
       else (
         failed ();
-        select_swap_player gst)
+        select_swap_player gst )
 
 let rec game_loop g =
   let cur_player = current_player g in
@@ -146,9 +146,9 @@ and player_play g cur_player =
   print_string "The top card is:\n\n";
   pp_cards [ top_card g ] false;
   print_string
-    ("\nThe current stack penalty is "
+    ( "\nThe current stack penalty is "
     ^ string_of_int (stack_penalty g)
-    ^ ".\n");
+    ^ ".\n" );
   print_string (player_hands_info cur_player g);
   print_string "\nYour cards are:\n\n";
   pp_cards cur_player_hand true;
@@ -263,7 +263,7 @@ let main () =
         | Some c ->
             if n + c >= 2 && n > 0 && c >= 0 then
               c |> create_players [] n |> play_game
-            else restart ())
+            else restart () )
   in
   getPlayers ()
 
