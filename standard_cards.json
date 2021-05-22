@@ -2,7 +2,7 @@
   "standard deck": [
     {
       "color": "red",
-      "img": "Red-0.png",
+      "img": "Red-0",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -16,7 +16,7 @@
     },
     {
       "color": "red",
-      "img": "Red-1.png",
+      "img": "Red-1",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -30,7 +30,7 @@
     },
     {
       "color": "red",
-      "img": "Red-2.png",
+      "img": "Red-2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -44,7 +44,7 @@
     },
     {
       "color": "red",
-      "img": "Red-3.png",
+      "img": "Red-3",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -58,7 +58,7 @@
     },
     {
       "color": "red",
-      "img": "Red-4.png",
+      "img": "Red-4",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -72,7 +72,7 @@
     },
     {
       "color": "red",
-      "img": "Red-5.png",
+      "img": "Red-5",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -86,7 +86,7 @@
     },
     {
       "color": "red",
-      "img": "Red-6.png",
+      "img": "Red-6",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -100,7 +100,7 @@
     },
     {
       "color": "red",
-      "img": "Red-7.png",
+      "img": "Red-7",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -114,7 +114,7 @@
     },
     {
       "color": "red",
-      "img": "Red-8.png",
+      "img": "Red-8",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -128,7 +128,7 @@
     },
     {
       "color": "red",
-      "img": "Red-8.png",
+      "img": "Red-8",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -142,7 +142,7 @@
     },
     {
       "color": "red",
-      "img": "Red-skip.png",
+      "img": "Red-skip",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -156,7 +156,7 @@
     },
     {
       "color": "red",
-      "img": "Red-reverse.png",
+      "img": "Red-reverse",
       "actions": {
         "skip": false,
         "reverse": true,
@@ -170,7 +170,7 @@
     },
     {
       "color": "red",
-      "img": "Red-draw2.png",
+      "img": "Red-draw2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -184,7 +184,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-0.png",
+      "img": "Blue-0",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -198,7 +198,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-1.png",
+      "img": "Blue-1",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -212,7 +212,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-2.png",
+      "img": "Blue-2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -226,7 +226,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-3.png",
+      "img": "Blue-3",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -240,7 +240,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-4.png",
+      "img": "Blue-4",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -254,7 +254,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-5.png",
+      "img": "Blue-5",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -268,7 +268,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-6.png",
+      "img": "Blue-6",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -282,7 +282,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-7.png",
+      "img": "Blue-7",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -296,7 +296,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-8.png",
+      "img": "Blue-8",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -310,7 +310,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-9.png",
+      "img": "Blue-9",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -324,7 +324,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-skip.png",
+      "img": "Blue-skip",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -338,7 +338,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-reverse.png",
+      "img": "Blue-reverse",
       "actions": {
         "skip": false,
         "reverse": true,
@@ -352,7 +352,7 @@
     },
     {
       "color": "blue",
-      "img": "Blue-draw2.png",
+      "img": "Blue-draw2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -366,7 +366,7 @@
     },
     {
       "color": "green",
-      "img": "Green-0.png",
+      "img": "Green-0",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -380,7 +380,7 @@
     },
     {
       "color": "green",
-      "img": "Green-1.png",
+      "img": "Green-1",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -394,7 +394,7 @@
     },
     {
       "color": "green",
-      "img": "Green-2.png",
+      "img": "Green-2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -408,7 +408,7 @@
     },
     {
       "color": "green",
-      "img": "Green-3.png",
+      "img": "Green-3",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -422,7 +422,7 @@
     },
     {
       "color": "green",
-      "img": "Green-4.png",
+      "img": "Green-4",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -436,7 +436,7 @@
     },
     {
       "color": "green",
-      "img": "Green-5.png",
+      "img": "Green-5",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -450,7 +450,7 @@
     },
     {
       "color": "green",
-      "img": "Green-6.png",
+      "img": "Green-6",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -464,7 +464,7 @@
     },
     {
       "color": "green",
-      "img": "Green-7.png",
+      "img": "Green-7",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -478,7 +478,7 @@
     },
     {
       "color": "green",
-      "img": "Green-8.png",
+      "img": "Green-8",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -492,7 +492,7 @@
     },
     {
       "color": "green",
-      "img": "Green-9.png",
+      "img": "Green-9",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -506,7 +506,7 @@
     },
     {
       "color": "green",
-      "img": "Green-skip.png",
+      "img": "Green-skip",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -520,7 +520,7 @@
     },
     {
       "color": "green",
-      "img": "Green-reverse.png",
+      "img": "Green-reverse",
       "actions": {
         "skip": false,
         "reverse": true,
@@ -534,7 +534,7 @@
     },
     {
       "color": "green",
-      "img": "Green-draw2.png",
+      "img": "Green-draw2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -548,7 +548,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-0.png",
+      "img": "Yellow-0",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -562,7 +562,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-1.png",
+      "img": "Yellow-1",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -576,7 +576,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-2.png",
+      "img": "Yellow-2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -590,7 +590,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-3.png",
+      "img": "Yellow-3",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -604,7 +604,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-4.png",
+      "img": "Yellow-4",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -618,7 +618,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-5.png",
+      "img": "Yellow-5",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -632,7 +632,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-6.png",
+      "img": "Yellow-6",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -646,7 +646,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-7.png",
+      "img": "Yellow-7",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -660,7 +660,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-8.png",
+      "img": "Yellow-8",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -674,7 +674,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-9.png",
+      "img": "Yellow-9",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -688,7 +688,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-skip.png",
+      "img": "Yellow-skip",
       "actions": {
         "skip": true,
         "reverse": false,
@@ -702,7 +702,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-reverse.png",
+      "img": "Yellow-reverse",
       "actions": {
         "skip": false,
         "reverse": true,
@@ -716,7 +716,7 @@
     },
     {
       "color": "yellow",
-      "img": "Yellow-draw2.png",
+      "img": "Yellow-draw2",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -730,7 +730,7 @@
     },
     {
       "color": "any",
-      "img": "Wild.png",
+      "img": "Wild",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -744,7 +744,7 @@
     },
     {
       "color": "any",
-      "img": "Draw4.png",
+      "img": "Draw4",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -758,7 +758,7 @@
     },
     {
       "color": "any",
-      "img": "Swap.png",
+      "img": "Swap",
       "actions": {
         "skip": false,
         "reverse": false,
