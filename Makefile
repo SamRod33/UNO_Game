@@ -68,3 +68,7 @@ zip:
 window:
 	ocamlbuild -package graphics window.native -use-ocamlfind
 	./window.native
+
+ch_c_win:
+	ocamlbuild -package graphics change_color_prompt.native -use-ocamlfind
+	./change_color_prompt.native
