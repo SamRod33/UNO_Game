@@ -28,7 +28,10 @@ let draw_card_deck () = upload_img _CARD_DIR "back" 84 330
 
 let indicate_selected_card () =
   set_color _GOLD;
-  draw_rect !_START_X !_START_Y outline_width outline_height
+  draw_rect
+    !_SELECTED_PLAYER_CARD_X
+    !_SELECTED_PLAYER_CARD_Y
+    outline_width outline_height
 
 let set_player_hand_background () =
   set_color _GREEN;
@@ -41,11 +44,13 @@ let draw_game_frames () =
   upload_img _ASSET_DIR "player_hand_frame" 624 330
 
 let move_selected op =
+  (* erases previous card selected frame*)
   set_color _GREEN;
   draw_rect
     !_SELECTED_PLAYER_CARD_X
     !_SELECTED_PLAYER_CARD_Y
     outline_width outline_height;
+  (* draws new card selected frame*)
   set_color _GOLD;
   _SELECTED_PLAYER_CARD_X :=
     op !_SELECTED_PLAYER_CARD_X selected_spacing;
@@ -53,6 +58,7 @@ let move_selected op =
     !_SELECTED_PLAYER_CARD_X
     !_SELECTED_PLAYER_CARD_Y
     outline_width outline_height;
+  (* updateds selected card index*)
   card_selected_idx := op !card_selected_idx 1
 
 ;;
