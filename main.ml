@@ -71,88 +71,94 @@ let rec select_color () =
       print_string "Choose a valid color.\n\n";
       select_color ()
 
+let rec game_loop g =
+  let cur_player = current_player g in
+  if is_cpu cur_player then cpu_play g cur_player
+  else player_play g cur_player
+
+and player_play g cur_player =
+  let cur_player_hand = player_hand cur_player in
+  print_string ("It is " ^ name cur_player ^ "'s turn.\n");
+  print_string "The top card is:\n\n";
+  pp_cards [ top_card g ] false;
+  print_string
+    ("\nThe current stack penalty is "
+    ^ string_of_int (stack_penalty g)
+    ^ ".\n");
+  print_string (player_hands_info cur_player g);
+  print_string "\nYour cards are:\n\n";
+  pp_cards cur_player_hand true;
+  print_endline
+    "\n\
+     Type in the index of the card you wish to play (starting from 0). \
+     If you do not have a card to play, type -1.\n";
+  print_string "> ";
+  end_of_game_loop g cur_player cur_player_hand
+
+and end_of_game_loop g cur_player cur_player_hand =
+  match check_quit () with
+  | None ->
+      clear ();
+      print_string fail_str;
+      game_loop g
+  | Some n ->
+      if n > -2 && n < List.length cur_player_hand then (
+        let play_card =
+          if n = -1 then None else Some (List.nth cur_player_hand n)
+        in
+        match play play_card g with
+        | Illegal ->
+            clear ();
+            print_string illegal_card;
+            game_loop g
+        | Legal next_g ->
+            clear ();
+            format_card g next_g play_card
+        | GameOver winner ->
+            print_string ("\n" ^ name winner ^ " wins!\n\n");
+            exit 0)
+      else clear ();
+      print_string fail_str;
+      game_loop g
+
+and cpu_play g cur_player =
+  let cpu_card = action g in
+  let changed_gst =
+    if
+      Option.is_some cpu_card
+      && (actions (Option.get cpu_card)).change_color
+    then
+      change_current_players_hand
+        (change_color (Option.get cpu_card) ANY)
+        (Option.get cpu_card) g
+    else g
+  in
+  match play cpu_card changed_gst with
+  | Legal new_gst -> format_card changed_gst new_gst cpu_card
+  | Illegal -> print_string "The computer made an error!\n\n"
+  | GameOver _ ->
+      print_string "The computer wins...\n\n";
+      exit 0
+
+and format_card gst next_gst = function
+  | None ->
+      buffer next_gst;
+      game_loop next_gst
+  | Some c ->
+      if color c = ANY then
+        let new_c = change_color c (select_color ()) in
+        match
+          play (Some new_c) (change_current_players_hand c new_c gst)
+        with
+        | Legal next ->
+            buffer next_gst;
+            game_loop next
+        | _ -> print_string "Illegal game state.\n"
+      else buffer next_gst;
+      game_loop next_gst
+
 let play_game players =
   let start_state = init_state standard_cards players in
-  let rec game_loop g =
-    let format_card gst next_gst = function
-      | None ->
-          buffer next_gst;
-          game_loop next_gst
-      | Some c ->
-          if color c = ANY then
-            let new_c = change_color c (select_color ()) in
-            match
-              play (Some new_c)
-                (change_current_players_hand c new_c gst)
-            with
-            | Legal next ->
-                buffer next_gst;
-                game_loop next
-            | _ -> print_string "Illegal game state.\n"
-          else buffer next_gst;
-          game_loop next_gst
-    in
-    let cur_player = current_player g in
-    if is_cpu cur_player then (
-      let cpu_card = action g in
-      let changed_gst =
-        if
-          Option.is_some cpu_card
-          && (actions (Option.get cpu_card)).change_color
-        then
-          change_current_players_hand
-            (change_color (Option.get cpu_card) ANY)
-            (Option.get cpu_card) g
-        else g
-      in
-      match play cpu_card changed_gst with
-      | Legal new_gst -> format_card changed_gst new_gst cpu_card
-      | Illegal -> print_string "The computer made an error!\n\n"
-      | GameOver _ ->
-          print_string "The computer wins...\n\n";
-          exit 0)
-    else
-      let cur_player_hand = player_hand cur_player in
-      print_string ("It is " ^ name cur_player ^ "'s turn.\n");
-      print_string "The top card is:\n\n";
-      pp_cards [ top_card g ] false;
-      print_string
-        ("\nThe current stack penalty is "
-        ^ string_of_int (stack_penalty g)
-        ^ ".\n");
-      print_string (player_hands_info cur_player g);
-      print_string "\nYour cards are:\n\n";
-      pp_cards cur_player_hand true;
-      print_endline
-        "\n\
-         Type in the index of the card you wish to play (starting from \
-         0). If you do not have a card to play, type -1.\n";
-      print_string "> ";
-      match check_quit () with
-      | None ->
-          clear ();
-          print_string fail_str;
-          game_loop g
-      | Some n ->
-          if n > -2 && n < List.length cur_player_hand then (
-            let play_card =
-              if n = -1 then None else Some (List.nth cur_player_hand n)
-            in
-            match play play_card g with
-            | Illegal ->
-                clear ();
-                print_string illegal_card;
-                game_loop g
-            | Legal next_g ->
-                clear ();
-                format_card g next_g play_card
-            | GameOver winner ->
-                print_string ("\n" ^ name winner ^ " wins!\n\n");
-                exit 0)
-          else clear ();
-          print_string fail_str;
-          game_loop g
-  in
   game_loop start_state
 
 (** [main ()] prompts for the game to play, then starts it. *)
