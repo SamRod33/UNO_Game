@@ -4,6 +4,10 @@ open Images
 open Png
 open Window_gui
 
+let _SELECTED_PLAYER_CARD_X = ref 30
+
+let _SELECTED_PLAYER_CARD_Y = ref 25
+
 let selected_spacing = 161
 
 let card_selected_idx = ref 0
@@ -24,7 +28,7 @@ let draw_card_deck () = upload_img _CARD_DIR "back" 84 330
 
 let indicate_selected_card () =
   set_color _GOLD;
-  draw_rect 36 25 120 180
+  draw_rect !_START_X !_START_Y outline_width outline_height
 
 let set_player_hand_background () =
   set_color _GREEN;
@@ -38,12 +42,17 @@ let draw_game_frames () =
 
 let move_selected op =
   set_color _GREEN;
-  draw_rect !_START_X !_START_Y !_SELECTED_OUTLINE_X
-    !_SELECTED_OUTLINE_Y;
+  draw_rect
+    !_SELECTED_PLAYER_CARD_X
+    !_SELECTED_PLAYER_CARD_Y
+    outline_width outline_height;
   set_color _GOLD;
-  _START_X := op !_START_X selected_spacing;
-  draw_rect !_START_X !_START_Y !_SELECTED_OUTLINE_X
-    !_SELECTED_OUTLINE_Y;
+  _SELECTED_PLAYER_CARD_X :=
+    op !_SELECTED_PLAYER_CARD_X selected_spacing;
+  draw_rect
+    !_SELECTED_PLAYER_CARD_X
+    !_SELECTED_PLAYER_CARD_Y
+    outline_width outline_height;
   card_selected_idx := op !card_selected_idx 1
 
 ;;

@@ -36,9 +36,9 @@ let _UP_KEY = 'w'
 
 let _DRAW_KEY = ' '
 
-let _START_X = ref 36
+let _SELECTED_PLAYER_CARD_X = ref 30
 
-let _START_Y = ref 25
+let _SELECTED_PLAYER_CARD_Y = ref 25
 
 let _SELECTED_OUTLINE_X = ref 120
 
