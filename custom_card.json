@@ -22,7 +22,7 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 2
+      "amount": 1
     },
     {
       "color": "any",
@@ -34,7 +34,7 @@
         "change color": true
       },
       "draw penalty": 0,
-      "amount": 4
+      "amount": 1
     },
     {
       "color": "any",
@@ -58,7 +58,7 @@
         "change color": false
       },
       "draw penalty": 0,
-      "amount": 3
+      "amount": 1
     }
   ]
 }
