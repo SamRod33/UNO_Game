@@ -9,6 +9,8 @@ let selected_spacing = 161
 let card_selected_idx = ref 0
 
 let draw_player_cards () =
+  (********************** starting x, index of list, selected spacing,
+    same y*)
   upload_img _CARD_DIR "Blue-0" (40 + (0 * selected_spacing)) 35;
   upload_img _CARD_DIR "Blue-0" (40 + (1 * selected_spacing)) 35;
   upload_img _CARD_DIR "Blue-0" (40 + (2 * selected_spacing)) 35;
