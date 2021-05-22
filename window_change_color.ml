@@ -50,6 +50,29 @@ let draw_change_color_screen () =
     change_c_txt_pos_y;
   draw_cards change_color_cards (cards_start_pos_x, cards_start_pos_y)
 
+(* [change_color_phase st] Launches the change color window phase. *)
+let change_color_phase st =
+  if st.key = _QUIT_KEY then raise Exit
+  else if st.key = _CONFIRM_KEY then
+    failwith
+      ("TODO: return card_selected: " ^ string_of_int !card_selected_idx)
+  else if st.key = _RIGHT_KEY then
+    if !outline_pos_x >= List.length change_color_cards * fst card_space
+    then ()
+    else (
+      highlight_selection _GOLD _BLACK (fst card_space) !outline_pos_x
+        !outline_pos_y outline_width outline_height;
+      outline_pos_x := !outline_pos_x + fst card_space;
+      card_selected_idx := !card_selected_idx + 1)
+  else if st.key = _LEFT_KEY then
+    if !outline_pos_x <= cards_start_pos_x - 10 then ()
+    else (
+      highlight_selection _GOLD _BLACK
+        ~-(fst card_space)
+        !outline_pos_x !outline_pos_y outline_width outline_height;
+      outline_pos_x := !outline_pos_x + ~-(fst card_space);
+      card_selected_idx := !card_selected_idx - 1)
+
 ;;
 open_window;
 draw_change_color_screen ();
@@ -60,28 +83,6 @@ try
   while running do
     let st = wait_next_event [ Key_pressed ] in
     synchronize ();
-    if st.key = _QUIT_KEY then raise Exit
-    else if st.key = _CONFIRM_KEY then
-      failwith
-        ("TODO: return card_selected: "
-        ^ string_of_int !card_selected_idx)
-    else if st.key = _RIGHT_KEY then
-      if
-        !outline_pos_x
-        >= List.length change_color_cards * fst card_space
-      then ()
-      else (
-        highlight_selection _GOLD _BLACK (fst card_space) !outline_pos_x
-          !outline_pos_y outline_width outline_height;
-        outline_pos_x := !outline_pos_x + fst card_space;
-        card_selected_idx := !card_selected_idx + 1)
-    else if st.key = _LEFT_KEY then
-      if !outline_pos_x <= cards_start_pos_x - 10 then ()
-      else (
-        highlight_selection _GOLD _BLACK
-          ~-(fst card_space)
-          !outline_pos_x !outline_pos_y outline_width outline_height;
-        outline_pos_x := !outline_pos_x + ~-(fst card_space);
-        card_selected_idx := !card_selected_idx - 1)
+    change_color_phase st
   done
 with Exit -> ()
