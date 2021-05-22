@@ -7,10 +7,3 @@
 #load "card.cmo";;
 #load "player.cmo";;
 #load "state.cmo";;
-(* #use "facecards.ml";;
-#use "cards.ml";;
-#use "player.ml";;
-#use "computer.ml";;
-#use "state.ml";;
-#use "main.ml";;
-#use "computer_test.ml";; *)
