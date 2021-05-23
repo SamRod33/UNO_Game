@@ -69,3 +69,6 @@ let highlight_selection color_on color_off offset x y width height =
   draw_rect x y width height;
   set_color color_on;
   draw_rect (x + offset) y width height
+
+let display_player_num p (x, y) =
+  upload_img _TEXT_DIR (string_of_int p) x y
