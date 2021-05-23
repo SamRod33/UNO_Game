@@ -90,7 +90,7 @@ let move op1 op2 limit bound =
 
 (* [draw_main_screen] draws all parts of the main screen except player
    hand cards. *)
-let draw_main_screen p_id penalty =
+let draw_main_screen p_id penalty other_player_info =
   open_window;
   set_background _BLACK;
   draw_logo ();
@@ -98,7 +98,7 @@ let draw_main_screen p_id penalty =
   (*tise difference*)
   display_player_num p_id player_num_pos;
   display_num penalty penalty_num_pos;
-  draw_player_hand_amounts dummy_data (645, 330 + 46);
+  draw_player_hand_amounts other_player_info (645, 330 + 46);
   (*difference*)
   draw_top_card "Draw4";
   draw_card_deck ();
@@ -107,7 +107,7 @@ let draw_main_screen p_id penalty =
     outline_width outline_height
 
 ;;
-draw_main_screen p_id penalty_num;
+draw_main_screen p_id penalty_num dummy_data;
 try
   while true do
     draw_cards player_cards !card_start_pos (selected_spacing, 0);
