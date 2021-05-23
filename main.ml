@@ -6,15 +6,20 @@ open Computer
 let five_most_recent_card = ref []
 
 let update_five_most_recent_card c () =
-  if List.length !five_most_recent_card <= 5 then (
-    five_most_recent_card := c :: !five_most_recent_card;
-    () )
-  else
-    match !five_most_recent_card with
-    | c1 :: c2 :: c3 :: c4 :: t ->
-        five_most_recent_card := [ c; c1; c2; c3; c4 ];
-        ()
-    | _ -> failwith "Impossible case b/c we can only have length of 5"
+  match c with
+  | None -> ()
+  | Some x -> (
+      if List.length !five_most_recent_card < 5 then (
+        five_most_recent_card := x :: !five_most_recent_card;
+        () )
+      else
+        match !five_most_recent_card with
+        | c1 :: c2 :: c3 :: c4 :: t ->
+            five_most_recent_card := [ x; c1; c2; c3; c4 ];
+            ()
+        | _ ->
+            failwith "Impossible case b/c we can only have length of 5"
+      )
 
 (** [create_players num_real num_computer] is a list of
     [num_real + num_computer] players, where [num_computer] are
@@ -72,6 +77,8 @@ let buffer next_gst =
     ( "It is "
     ^ name (current_player next_gst)
     ^ "'s turn. Enter anything to continue.\n" );
+  print_string "\n";
+  pp_cards !five_most_recent_card false;
   match read_line () with
   | "Quit" ->
       print_string quit_str;
