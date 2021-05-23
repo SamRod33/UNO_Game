@@ -3,6 +3,19 @@ open Card
 open Player
 open Computer
 
+let five_most_recent_card = ref []
+
+let update_five_most_recent_card c () =
+  if List.length !five_most_recent_card <= 5 then (
+    five_most_recent_card := c :: !five_most_recent_card;
+    () )
+  else
+    match !five_most_recent_card with
+    | c1 :: c2 :: c3 :: c4 :: t ->
+        five_most_recent_card := [ c; c1; c2; c3; c4 ];
+        ()
+    | _ -> failwith "Impossible case b/c we can only have length of 5"
+
 (** [create_players num_real num_computer] is a list of
     [num_real + num_computer] players, where [num_computer] are
     computers.*)
@@ -186,15 +199,16 @@ and end_of_game_loop g cur_player cur_player_hand =
       failed ();
       game_loop g
   | Some n ->
-      if n > -2 && n < List.length cur_player_hand then
+      if n > -2 && n < List.length cur_player_hand then (
         let index_card =
           if n = -1 then None else Some (List.nth cur_player_hand n)
         in
         let is_swap =
           n <> -1 && fst (actions (Option.get index_card)).swap
         in
+        update_five_most_recent_card index_card ();
         end_of_game_loop_2 g cur_player cur_player_hand index_card
-          is_swap
+          is_swap )
       else failed ();
       game_loop g
 
