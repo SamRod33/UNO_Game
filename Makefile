@@ -73,6 +73,11 @@ ch_c_win:
 	ocamlbuild -package graphics window_change_color.native -use-ocamlfind
 	./window_change_color.native
 
+window_swap_player:
+	ocamlbuild -package graphics window_swap_player.native -use-ocamlfind
+	./window_swap_player.native
+
 intermission:
 	ocamlbuild -package graphics window_intermission.native -use-ocamlfind
 	./window_intermission.native
+
