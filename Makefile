@@ -81,3 +81,7 @@ intermission:
 	ocamlbuild -package graphics window_intermission.native -use-ocamlfind
 	./window_intermission.native
 
+tise:
+	ocamlbuild -package graphics window_tise_main.native -use-ocamlfind
+	./window_tise_main.native
+
