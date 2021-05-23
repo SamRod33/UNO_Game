@@ -4,34 +4,27 @@ open Images
 open Png
 open Window_gui
 
-let _SELECTED_PLAYER_CARD_X = ref 30
+let player_cards = Card.standard_cards
 
-let _SELECTED_PLAYER_CARD_Y = ref 25
+let outline_width, outline_height = (130, 180)
 
 let selected_spacing = 161
 
 let card_selected_idx = ref 0
 
-let draw_player_cards () =
-  (********************** starting x, index of list, selected spacing,
-    same y*)
-  upload_img _CARD_DIR "Blue-0" (40 + (0 * selected_spacing)) 35;
-  upload_img _CARD_DIR "Blue-0" (40 + (1 * selected_spacing)) 35;
-  upload_img _CARD_DIR "Blue-0" (40 + (2 * selected_spacing)) 35;
-  upload_img _CARD_DIR "Blue-0" (40 + (3 * selected_spacing)) 35;
-  upload_img _CARD_DIR "Blue-0" (40 + (4 * selected_spacing)) 35;
-  upload_img _CARD_DIR "Blue-0" (40 + (5 * selected_spacing)) 35
+let card_init_pos = (40, 35)
 
-let draw_top_card () = upload_img _CARD_DIR "Blue-0" 272 330
+let card_start_pos = ref card_init_pos
+
+let card_end_pos = ref (List.length player_cards * fst card_space)
+
+let outline_pos_x = ref 30
+
+let outline_pos_y = ref 25
+
+let draw_top_card card = upload_img _CARD_DIR card 272 330
 
 let draw_card_deck () = upload_img _CARD_DIR "back" 84 330
-
-let indicate_selected_card () =
-  set_color _GOLD;
-  draw_rect
-    !_SELECTED_PLAYER_CARD_X
-    !_SELECTED_PLAYER_CARD_Y
-    outline_width outline_height
 
 let set_player_hand_background () =
   set_color _GREEN;
@@ -43,43 +36,68 @@ let draw_game_frames () =
   upload_img _ASSET_DIR "penalty_frame" 448 330;
   upload_img _ASSET_DIR "player_hand_frame" 624 330
 
-let move_selected op =
-  (* erases previous card selected frame*)
-  set_color _GREEN;
-  draw_rect
-    !_SELECTED_PLAYER_CARD_X
-    !_SELECTED_PLAYER_CARD_Y
-    outline_width outline_height;
-  (* draws new card selected frame*)
-  set_color _GOLD;
-  _SELECTED_PLAYER_CARD_X :=
-    op !_SELECTED_PLAYER_CARD_X selected_spacing;
-  draw_rect
-    !_SELECTED_PLAYER_CARD_X
-    !_SELECTED_PLAYER_CARD_Y
-    outline_width outline_height;
-  (* updateds selected card index*)
-  card_selected_idx := op !card_selected_idx 1
+(** [move op1 op2 limit] draws the selection and if the player selection
+    satisfies [limit] then the cards are shifted by [op1]. *)
+let move op1 op2 limit =
+  if limit !outline_pos_x then
+    card_start_pos :=
+      (op1 (fst !card_start_pos) selected_spacing, snd !card_start_pos)
+  else (
+    highlight_selection _GOLD _GREEN
+      (op2 0 selected_spacing)
+      !outline_pos_x !outline_pos_y outline_width outline_height;
+    outline_pos_x := op2 !outline_pos_x selected_spacing;
+    card_selected_idx := !card_selected_idx + 1)
+
+let gt x = 1 <= x
+
+(* [draw_main_screen] draws all parts of the main screen except player
+   hand cards. *)
+let draw_main_screen =
+  open_window;
+  set_background _BLACK;
+  draw_logo ();
+  draw_game_frames ();
+  draw_top_card "Draw4";
+  draw_card_deck ();
+  set_player_hand_background ();
+  highlight_selection _GOLD _GREEN 0 !outline_pos_x !outline_pos_y
+    outline_width outline_height
+
+let pp_tuple tuple =
+  "("
+  ^ string_of_int (fst tuple)
+  ^ ", "
+  ^ string_of_int (snd tuple)
+  ^ ")"
 
 ;;
-open_window;
-set_background _BLACK;
-draw_logo ();
-draw_game_frames ();
-draw_top_card ();
-draw_card_deck ();
-set_player_hand_background ();
-draw_player_cards ();
-indicate_selected_card ()
-
-;;
+draw_main_screen;
 try
   while true do
+    draw_cards player_cards !card_start_pos (selected_spacing, 0);
     let st = wait_next_event [ Key_pressed ] in
     synchronize ();
     if st.key = _QUIT_KEY then raise Exit
-    else if st.key = _RIGHT_KEY then move_selected ( + )
-    else if st.key = _LEFT_KEY then move_selected ( - )
+    else if st.key = _RIGHT_KEY then
+      (* if !outline_pos_x >= List.length player_cards * fst card_space
+         then () *)
+      (* if !outline_pos_x >= int_of_string _WIDTH - fst card_space then
+         card_start_pos := (fst !card_start_pos - selected_spacing, snd
+         !card_start_pos) else ( highlight_selection _GOLD _GREEN
+         selected_spacing !outline_pos_x !outline_pos_y outline_width
+         outline_height; outline_pos_x := !outline_pos_x +
+         selected_spacing; card_selected_idx := !card_selected_idx + 1 ) *)
+      move ( - ) ( + ) (fun x ->
+          x >= int_of_string _WIDTH - fst card_space)
+      (* move_selected ( + ) *)
+    else if st.key = _LEFT_KEY then
+      (* if !outline_pos_x <= fst !card_start_pos - 10 then () else (
+         highlight_selection _GOLD _GREEN ~-selected_spacing
+         !outline_pos_x !outline_pos_y outline_width outline_height;
+         outline_pos_x := !outline_pos_x + ~-selected_spacing;
+         card_selected_idx := !card_selected_idx - 1 ) *)
+      move ( + ) ( - ) (fun x -> x <= fst card_init_pos)
     else if st.key = _CONFIRM_KEY then
       failwith
         ("player selected a card: " ^ string_of_int !card_selected_idx)

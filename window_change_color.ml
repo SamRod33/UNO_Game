@@ -2,7 +2,8 @@ open Graphics
 open Constants
 open Window_gui
 
-(* [outline_width, outline_height] is the dimensions of the outline. *)
+(* [outline_width, outline_height] is the dimensions of the outline in
+   change color. *)
 let outline_width, outline_height = (145, 200)
 
 (* [change_c_txt_pos_x, change_c_txt_pos_y] is the position of the
