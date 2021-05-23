@@ -84,23 +84,10 @@ try
     synchronize ();
     if st.key = _QUIT_KEY then raise Exit
     else if st.key = _RIGHT_KEY then
-      (* if !outline_pos_x >= List.length player_cards * fst card_space
-         then () *)
-      (* if !outline_pos_x >= int_of_string _WIDTH - fst card_space then
-         card_start_pos := (fst !card_start_pos - selected_spacing, snd
-         !card_start_pos) else ( highlight_selection _GOLD _GREEN
-         selected_spacing !outline_pos_x !outline_pos_y outline_width
-         outline_height; outline_pos_x := !outline_pos_x +
-         selected_spacing; card_selected_idx := !card_selected_idx + 1 ) *)
       move ( - ) ( + )
         (fun x -> x >= int_of_string _WIDTH - (2 * fst card_space))
         (!card_end_pos >= !outline_pos_x)
     else if st.key = _LEFT_KEY then
-      (* if !outline_pos_x <= fst !card_start_pos - 10 then () else (
-         highlight_selection _GOLD _GREEN ~-selected_spacing
-         !outline_pos_x !outline_pos_y outline_width outline_height;
-         outline_pos_x := !outline_pos_x + ~-selected_spacing;
-         card_selected_idx := !card_selected_idx - 1 ) *)
       move ( + ) ( - )
         (fun x -> x <= fst card_init_pos)
         (fst !card_start_pos <= !outline_pos_x)
