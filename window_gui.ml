@@ -25,9 +25,9 @@ let cards_swap_start_pos_x, cards_swap_start_pos_y =
    horizontally. *)
 let card_space = (150, 0)
 
-(* [swap_h_space] is the amount of relative spacing between swap info
-   cards aligned horizontally. *)
-let swap_space = (57, 0)
+(* [swap_h_space] is the amount of spacing between the left edges of two
+   swap info cards aligned horizontally. *)
+let swap_space = (112 + 57, 0)
 
 (** [set_background color] fills the background of the window with
     [color]. *)
