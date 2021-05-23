@@ -47,7 +47,7 @@ let draw_change_color_screen () =
   open_window;
   set_background _BLACK;
   draw_logo ();
-  upload_img _TEXT_SRC "Choose a new color" change_c_txt_pos_x
+  upload_img _TEXT_DIR "Choose a new color" change_c_txt_pos_x
     change_c_txt_pos_y;
   draw_cards change_color_cards (cards_start_pos_x, cards_start_pos_y)
 
