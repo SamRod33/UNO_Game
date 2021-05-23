@@ -4,6 +4,7 @@ open Images
 open Png
 open Window_gui
 open State
+open_window Player
 
 (**********************************************************************)
 (*functions will be replaced once we integrate info*)
@@ -34,14 +35,20 @@ let draw_intermission_window () =
   upload_img _TEXT_DIR "New" 108 301;
   upload_img _TEXT_DIR "Old" 816 301
 
+(* [change_color_phase st] Launches the change color window phase. *)
+let change_color_phase st g =
+  if st.key = _QUIT_KEY then raise Exit
+  else if st.key = _CONFIRM_KEY then failwith "hi"
+  else open_window;
+  draw_intermission_window ();
+  display_player_num (id (current_player g)) (600, 520)
+  draw_cards (top_card g)
+
 ;;
 open_window;
 draw_intermission_window ();
 display_player_num 5 (600, 520);
 draw_images dummy_data (105, 101)
-
-(* display_player_num (player_num g) (600, 520); draw_cards
-   (most_recent_5_cards g) (105, 101) card_space *)
 
 ;;
 try
