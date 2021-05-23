@@ -6,8 +6,11 @@ open Window_gui
 open State
 open Player
 
+(*Overrides x spacing constant for intermssion window*)
+let card_space = (176, snd Window_gui.card_space)
+
 (**********************************************************************)
-(*functions will be replaced once we integrate info*)
+(*These functions are here testing and modular development purposes*)
 let draw_img c pos =
   let c_x, c_y = pos in
   upload_img _CARD_DIR c c_x c_y
@@ -24,9 +27,6 @@ let rec draw_images cards pos =
 let dummy_data = [ "Blue-0"; "Green-0"; "Yellow-0"; "Red-0"; "Blue-0" ]
 
 (**********************************************************************)
-
-let card_space = (176, snd card_space)
-
 let draw_intermission_window () =
   set_background _BLACK;
   upload_img _TEXT_DIR "Click any key to continue" 333 686;
@@ -35,14 +35,14 @@ let draw_intermission_window () =
   upload_img _TEXT_DIR "New" 108 301;
   upload_img _TEXT_DIR "Old" 816 301
 
-(* [change_color_phase st] Launches the change color window phase. *)
-let change_color_phase st g =
+(* [intermission_phase st g] Launches the intermission window phase. *)
+let intermission_phase st g card_list =
   if st.key = _QUIT_KEY then raise Exit
   else if st.key = _CONFIRM_KEY then failwith "hi"
   else open_window;
   draw_intermission_window ();
   display_player_num (id (current_player g)) (600, 520);
-  draw_cards [ top_card g ] (105, 101) card_space
+  draw_cards card_list (105, 101) card_space
 
 ;;
 open_window;
