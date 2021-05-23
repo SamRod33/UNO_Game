@@ -41,9 +41,8 @@ let change_color_phase st g =
   else if st.key = _CONFIRM_KEY then failwith "hi"
   else open_window;
   draw_intermission_window ();
-  display_player_num
-    (id (current_player g))
-    (600, 520) draw_cards (top_card g) (105, 101) card_space
+  display_player_num (id (current_player g)) (600, 520);
+  draw_cards [ top_card g ] (105, 101) card_space
 
 ;;
 open_window;
