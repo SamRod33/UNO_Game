@@ -34,15 +34,14 @@ let draw_intermission_window () =
   upload_img _TEXT_DIR "New" 108 301;
   upload_img _TEXT_DIR "Old" 816 301
 
-let player_num g = current_player g
-
-let most_recent_5_cards g = [ top_card g ]
-
 ;;
 open_window;
 draw_intermission_window ();
-(* display_player_num 5 (600, 520); draw_images dummy_data (105, 101) *)
-draw_cards most_recent_5_cards (105, 101) card_space
+display_player_num 5 (600, 520);
+draw_images dummy_data (105, 101)
+
+(* display_player_num (player_num g) (600, 520); draw_cards
+   (most_recent_5_cards g) (105, 101) card_space *)
 
 ;;
 try
