@@ -53,8 +53,6 @@ let move op1 op2 limit bound =
       card_selected_idx := !card_selected_idx + 1)
   else ()
 
-let gt x = 1 <= x
-
 (* [draw_main_screen] draws all parts of the main screen except player
    hand cards. *)
 let draw_main_screen =
@@ -67,13 +65,6 @@ let draw_main_screen =
   set_player_hand_background ();
   highlight_selection _GOLD _GREEN 0 !outline_pos_x !outline_pos_y
     outline_width outline_height
-
-let pp_tuple tuple =
-  "("
-  ^ string_of_int (fst tuple)
-  ^ ", "
-  ^ string_of_int (snd tuple)
-  ^ ")"
 
 ;;
 draw_main_screen;

@@ -43,47 +43,48 @@ let rec draw_cards cards pos =
       draw_cards t (c_x + c_space_x, c_y + c_space_y)
 
 let draw_change_color_screen () =
-  (* TODO: will need to omit the open_window when integrating. *)
-  open_window;
   set_background _BLACK;
   draw_logo ();
   upload_img _TEXT_DIR "Choose a new color" change_c_txt_pos_x
     change_c_txt_pos_y;
   draw_cards change_color_cards (cards_start_pos_x, cards_start_pos_y)
 
+(** [move op limit space color_a color_b] draws the new selection. *)
+let move op space color_a color_b =
+  highlight_selection color_a color_b (op 0 space) !outline_pos_x
+    !outline_pos_y outline_width outline_height;
+  outline_pos_x := op !outline_pos_x space
+
 (* [change_color_phase st] Launches the change color window phase. *)
 let change_color_phase st =
-  if st.key = _QUIT_KEY then raise Exit
-  else if st.key = _CONFIRM_KEY then
-    failwith
-      ("TODO: return card_selected: " ^ string_of_int !card_selected_idx)
+  if st.key = _QUIT_KEY || st.key = _CONFIRM_KEY then raise Exit
   else if st.key = _RIGHT_KEY then
     if !outline_pos_x >= List.length change_color_cards * fst card_space
     then ()
     else (
-      highlight_selection _GOLD _BLACK (fst card_space) !outline_pos_x
-        !outline_pos_y outline_width outline_height;
-      outline_pos_x := !outline_pos_x + fst card_space;
+      move ( + ) (fst card_space) _GOLD _BLACK;
       card_selected_idx := !card_selected_idx + 1)
   else if st.key = _LEFT_KEY then
-    if !outline_pos_x <= cards_start_pos_x - 10 then ()
+    if !outline_pos_x <= cards_start_pos_x then ()
     else (
-      highlight_selection _GOLD _BLACK
-        ~-(fst card_space)
-        !outline_pos_x !outline_pos_y outline_width outline_height;
-      outline_pos_x := !outline_pos_x + ~-(fst card_space);
+      move ( - ) (fst card_space) _GOLD _BLACK;
       card_selected_idx := !card_selected_idx - 1)
+
+let change_color_win =
+  draw_change_color_screen ();
+  highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y
+    outline_width outline_height;
+  (try
+     while running do
+       let st = wait_next_event [ Key_pressed ] in
+       synchronize ();
+       change_color_phase st
+     done
+   with Exit -> ());
+  List.nth change_color_cards !card_selected_idx
 
 ;;
 open_window;
-draw_change_color_screen ();
-highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y
-  outline_width outline_height;
-
-try
-  while running do
-    let st = wait_next_event [ Key_pressed ] in
-    synchronize ();
-    change_color_phase st
-  done
-with Exit -> ()
+(* demo change color screen *)
+let chosen_color = change_color_win in
+print_endline chosen_color
