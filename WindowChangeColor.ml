@@ -1,6 +1,6 @@
 open Graphics
 open Constants
-open Window_gui
+open WindowGui
 
 (* [outline_width, outline_height] is the dimensions of the outline in
    change color. *)
@@ -57,7 +57,10 @@ let move op space color_a color_b =
 
 (* [change_color_phase st] Launches the change color window phase. *)
 let change_color_phase st =
-  if st.key = _QUIT_KEY || st.key = _CONFIRM_KEY then raise Exit
+  if st.key = _QUIT_KEY then (
+    card_selected_idx := -1;
+    raise Exit)
+  else if st.key = _CONFIRM_KEY then raise Exit
   else if st.key = _RIGHT_KEY then
     if !outline_pos_x >= List.length change_color_cards * fst card_space
     then ()
@@ -81,10 +84,8 @@ let change_color_win =
        change_color_phase st
      done
    with Exit -> ());
-  List.nth change_color_cards !card_selected_idx
+  if !card_selected_idx < 0 then None
+  else Some (List.nth change_color_cards !card_selected_idx)
 
-;;
-open_window;
-(* demo change color screen *)
-let chosen_color = change_color_win in
-print_endline chosen_color
+(* ;; open_window; (* demo change color screen *) let chosen_color =
+   change_color_win in print_endline (Option.get chosen_color) *)

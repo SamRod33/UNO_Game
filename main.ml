@@ -2,45 +2,7 @@ open State
 open Card
 open Player
 open Computer
-
-let five_most_recent_card = ref []
-
-let update_five_most_recent_card c () =
-  match c with
-  | None -> ()
-  | Some x -> (
-      if List.length !five_most_recent_card < 5 then (
-        five_most_recent_card := x :: !five_most_recent_card;
-        () )
-      else
-        match !five_most_recent_card with
-        | c1 :: c2 :: c3 :: c4 :: t ->
-            five_most_recent_card := [ x; c1; c2; c3; c4 ];
-            ()
-        | _ ->
-            failwith "Impossible case b/c we can only have length of 5"
-      )
-
-(** [create_players num_real num_computer] is a list of
-    [num_real + num_computer] players, where [num_computer] are
-    computers.*)
-let create_players players num_real num_computer =
-  let rec help lst cpus = function
-    | 0 -> lst
-    | n ->
-        let player =
-          if cpus then create ("Computer " ^ string_of_int n) true
-          else create ("Player " ^ string_of_int n) false
-        in
-        help (player :: lst) cpus (n - 1)
-  in
-  let people = help [] true num_computer in
-  help people false num_real
-
-(** [all_players_but_one player g] is a list of all the players but
-    [player] in state [g].*)
-let all_players_but_one player g =
-  List.filter (fun p -> id p <> id player) (players g)
+open MainFunctions
 
 (** [player_hand_info player] is a string with infomation about the hand
     of [player].*)
@@ -71,14 +33,14 @@ let check_quit () =
 let clear () = ignore (Sys.command "clear")
 
 (** buffers the game in-between each player's turn.*)
-let buffer next_gst =
+let buffer next_gst recent =
   clear ();
+  print_string "\nThe most recently played cards are:\n";
+  pp_cards recent false;
   print_string
-    ( "It is "
+    ("It is "
     ^ name (current_player next_gst)
-    ^ "'s turn. Enter anything to continue.\n" );
-  print_string "\n";
-  pp_cards !five_most_recent_card false;
+    ^ "'s turn. Enter anything to continue.\n\n");
   match read_line () with
   | "Quit" ->
       print_string quit_str;
@@ -108,13 +70,6 @@ let failed () =
   clear ();
   print_string fail_str
 
-(** [get_nth_player_id n players] is the id of the (n+1)th player in
-    [players] starting from the leftmost player.*)
-let rec get_nth_player_id n players =
-  match players with
-  | [] -> failwith "not enough players"
-  | h :: t -> if n = 0 then id h else get_nth_player_id (n - 1) t
-
 (* handles the logic for handling when a players plays a swap card.*)
 let rec select_swap_player gst =
   clear ();
@@ -133,42 +88,49 @@ let rec select_swap_player gst =
         get_nth_player_id n other_players
       else (
         failed ();
-        select_swap_player gst )
+        select_swap_player gst)
 
-let rec game_loop g =
+let rec game_loop g recent_cards =
   let cur_player = current_player g in
-  if is_cpu cur_player then cpu_play g cur_player
-  else player_play g cur_player
+  if is_cpu cur_player then cpu_play g cur_player recent_cards
+  else player_play g cur_player recent_cards
 
 (** buffers the game and handles changing colors from a wild card for
     human players (computer already handles changing colors).*)
-and format_card gst next_gst = function
+and format_card gst next_gst recent_cards = function
   | None ->
-      buffer next_gst;
-      game_loop next_gst
+      buffer next_gst recent_cards;
+      game_loop next_gst recent_cards
   | Some c ->
       if color c = ANY then
         let new_c = change_color c (select_color ()) in
+        let recent_cards =
+          update_five_most_recent_card new_c recent_cards
+        in
         match
           play (Some new_c) (change_current_players_hand c new_c gst)
         with
         | Legal next ->
-            buffer next_gst;
-            game_loop next
+            buffer next_gst recent_cards;
+            game_loop next recent_cards
         | _ -> print_string "Illegal game state.\n"
-      else buffer next_gst;
-      game_loop next_gst
+      else
+        let recent_cards =
+          update_five_most_recent_card c recent_cards
+        in
+        buffer next_gst recent_cards;
+        game_loop next_gst recent_cards
 
 (** handles logic for human players taking their turn.*)
-and player_play g cur_player =
+and player_play g cur_player recent_cards =
   let cur_player_hand = player_hand cur_player in
   print_string ("It is " ^ name cur_player ^ "'s turn.\n");
   print_string "The top card is:\n\n";
   pp_cards [ top_card g ] false;
   print_string
-    ( "\nThe current stack penalty is "
+    ("\nThe current stack penalty is "
     ^ string_of_int (stack_penalty g)
-    ^ ".\n" );
+    ^ ".\n");
   print_string (player_hands_info cur_player g);
   print_string "\nYour cards are:\n\n";
   pp_cards cur_player_hand true;
@@ -177,10 +139,10 @@ and player_play g cur_player =
      Type in the index of the card you wish to play (starting from 0). \
      If you do not have a card to play, type -1.\n";
   print_string "> ";
-  end_of_game_loop g cur_player cur_player_hand
+  end_of_game_loop g cur_player cur_player_hand recent_cards
 
 (** handles logic for computer players taking their turn.*)
-and cpu_play g cur_player =
+and cpu_play g cur_player recent_cards =
   let cpu_card = action g in
   let changed_gst =
     if
@@ -193,34 +155,40 @@ and cpu_play g cur_player =
     else g
   in
   match play cpu_card changed_gst with
-  | Legal new_gst -> format_card changed_gst new_gst cpu_card
+  | Legal new_gst ->
+      format_card changed_gst new_gst recent_cards cpu_card
   | Illegal -> print_string "The computer made an error!\n\n"
   | GameOver _ ->
       print_string "The computer wins...\n\n";
       exit 0
 
 (** handles game logic after player decides which card to play.*)
-and end_of_game_loop g cur_player cur_player_hand =
+and end_of_game_loop g cur_player cur_player_hand recent_cards =
   match check_quit () with
   | None ->
       failed ();
-      game_loop g
+      game_loop g recent_cards
   | Some n ->
-      if n > -2 && n < List.length cur_player_hand then (
+      if n > -2 && n < List.length cur_player_hand then
         let index_card =
           if n = -1 then None else Some (List.nth cur_player_hand n)
         in
         let is_swap =
           n <> -1 && fst (actions (Option.get index_card)).swap
         in
-        update_five_most_recent_card index_card ();
         end_of_game_loop_2 g cur_player cur_player_hand index_card
-          is_swap )
+          is_swap recent_cards
       else failed ();
-      game_loop g
+      game_loop g recent_cards
 
 (** continuation of above function*)
-and end_of_game_loop_2 g cur_player cur_player_hand index_card is_swap =
+and end_of_game_loop_2
+    g
+    cur_player
+    cur_player_hand
+    index_card
+    is_swap
+    recent_cards =
   let play_card =
     if is_swap then
       Some (set_swap_id (Option.get index_card) (select_swap_player g))
@@ -233,7 +201,7 @@ and end_of_game_loop_2 g cur_player cur_player_hand index_card is_swap =
     else g
   in
   end_of_game_loop_3 g cur_player cur_player_hand index_card is_swap
-    play_card
+    play_card recent_cards
 
 (** continuation of above function*)
 and end_of_game_loop_3
@@ -242,22 +210,23 @@ and end_of_game_loop_3
     cur_player_hand
     index_card
     is_swap
-    play_card =
+    play_card
+    recent_cards =
   match play play_card g with
   | Illegal ->
       clear ();
       print_string illegal_card;
-      game_loop g
+      game_loop g recent_cards
   | Legal next_g ->
       clear ();
-      format_card g next_g play_card
+      format_card g next_g recent_cards play_card
   | GameOver winner ->
       print_string ("\n" ^ name winner ^ " wins!\n\n");
       exit 0
 
 let play_game players =
   let start_state = init_state standard_cards players in
-  game_loop start_state
+  game_loop start_state []
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
@@ -284,7 +253,7 @@ let main () =
         | Some c ->
             if n + c >= 2 && n > 0 && c >= 0 then
               c |> create_players [] n |> play_game
-            else restart () )
+            else restart ())
   in
   getPlayers ()
 

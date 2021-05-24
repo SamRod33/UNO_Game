@@ -2,12 +2,12 @@ open Graphics
 open Constants
 open Images
 open Png
-open Window_gui
+open WindowGui
 open State
 open Player
 
 (*Overrides x spacing constant for intermssion window*)
-let card_space = (176, snd Window_gui.card_space)
+let card_space = (176, snd WindowGui.card_space)
 
 (**********************************************************************)
 (*These functions are here testing and modular development purposes*)

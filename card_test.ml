@@ -72,13 +72,13 @@ let actions_tests =
 let img_tests =
   [
     img_test "Red +2 img is Red-draw2.png" (List.hd custom_cards)
-      "Red-draw2.png";
+      "Red-draw2";
     img_test "Wild card img is Wild.png"
       (List.nth custom_cards 2)
-      "Wild.png";
+      "Wild";
     img_test "Blue skip img Blue-skip.png"
       (List.nth custom_cards 4)
-      "Blue-skip.png";
+      "Blue-skip";
   ]
 
 let card_suite =
