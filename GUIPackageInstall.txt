@@ -2,26 +2,18 @@ Make sure VcXsrv or XQuartz is running each time you run graphics
 
 (***************Windows****************)
 install VcXsrv: https://techcommunity.microsoft.com/t5/windows-dev-appconsult/running-wsl-gui-apps-on-windows-10/ba-p/1493242
-install brew:
-$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-$ brew install libpng
 
 enter in ubuntu command line:
 $ sudo apt install ocaml-tools libsdl-ocaml-dev
 $ opam install opam-depext
 $ opam depext conf-pkg-config
-$ opam install graphics imagelib camlimages ocamlsdl conf-sdl-mixer
+$ opam install graphics imagelib camlimages
 $ sudo apt install -y xserver-xorg-core
 $ cd ~
 $ ls -a (look for .bashrc or .bashprofile)
-$ echo 'export DISPLAY=localhost:0.0' >> .bashrc  **** -> this causes major errors on Ubuntu system, This should be done instead (export DISPLAY=:0.0)
-$ echo $DISPLAY
-(make sure this is localhost:0)
-
-install the following if any errors:
-$ sudo apt-get install -y libsdl2-2.0
-$ sudo apt-get install -y libsdl2-mixer-2.0-0
-$ sudo apt-get install -y libsdl-mixer1.2-dev
+$ echo 'export DISPLAY=:0.0' >> .bashrc
+$ echo $DISPLAY   
+(above command should output localhost:0)
 
 (*****************Mac*****************)
 download & launch XQuartz
@@ -30,14 +22,4 @@ enter in the terminal:
 $ sudo port install libsdl libsdl_mixer
 $ opam install -y ounit yojson graphics camlimages
 $ opam install ocamlsdl
-
-(****************Linux****************)
-sorry sam
-
-
-(*************************************)
-test - enter these in UTOP:
-# #require "graphics";;
-# open Graphics;;
-# open_graph " 640x480";;
 

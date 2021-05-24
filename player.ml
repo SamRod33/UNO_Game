@@ -30,8 +30,8 @@ let is_cpu p = p.is_computer
 let create name is_cpu id_num =
   { name; hand = []; id = id_num; is_computer = is_cpu }
 
-let create_test name h is_cpu =
-  { name; hand = h; id = Random.bits (); is_computer = is_cpu }
+let create_test name h is_cpu id =
+  { name; hand = h; id; is_computer = is_cpu }
 
 let name p = p.name
 
