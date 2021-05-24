@@ -13,7 +13,9 @@ let intro_win =
     while running do
       let st = wait_next_event [ Key_pressed ] in
       synchronize ();
-      if st.keypressed then raise Exit
+      (* if st.keypressed then raise Exit -> this should also work and
+         reads better :) *)
+      match st.key with '\000' -> () | _ -> raise Exit
     done
   with Exit -> ()
 

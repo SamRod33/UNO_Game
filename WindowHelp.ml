@@ -5,7 +5,7 @@ open Png
 open WindowGui
 
 (** [help_win] displays the Help Window to the UNO Game. *)
-let help_win =
+let help_win () =
   upload_img _ASSET_DIR "Help_Game" 0 0;
   try
     while running do
@@ -17,4 +17,4 @@ let help_win =
 
 ;;
 open_window;
-help_win
+help_win ()
