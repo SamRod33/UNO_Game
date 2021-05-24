@@ -115,7 +115,7 @@ let run_main st =
     player selected a card, or None if they wanted to quit the game. *)
 let main_win top p_id penalty other_player_info player_cards =
   (* TODO: Make it under 20 lines *)
-  draw_main_screen top p_id penalty other_player_info;
+  draw_main_screen (Card.img top) p_id penalty other_player_info;
   (try
      while true do
        draw_cards player_cards !card_start_pos (selected_spacing, 0);
