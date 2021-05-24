@@ -1,6 +1,6 @@
 open Graphics
 open Constants
-open Window_gui
+open WindowGui
 open State
 open Player
 

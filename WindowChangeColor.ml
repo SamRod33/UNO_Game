@@ -1,6 +1,6 @@
 open Graphics
 open Constants
-open Window_gui
+open WindowGui
 
 (* [outline_width, outline_height] is the dimensions of the outline in
    change color. *)

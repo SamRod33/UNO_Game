@@ -1,4 +1,4 @@
-MODULES=card player state main computer constants window_gui MainFunctions
+MODULES=card player state main computer constants WindowGui MainFunctions
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
@@ -66,20 +66,20 @@ zip:
 	zip uno-game.zip *.ml* *.json *.sh INSTALL.txt _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	
 
 window:
-	ocamlbuild -package graphics window_main.native -use-ocamlfind
-	./window_main.native
+	ocamlbuild -package graphics WindowMain.native -use-ocamlfind
+	./WindowMain.native
 
-ch_c_win:
-	ocamlbuild -package graphics window_change_color.native -use-ocamlfind
-	./window_change_color.native
+change-color:
+	ocamlbuild -package graphics WindowChangeColor.native -use-ocamlfind
+	./WindowChangeColor.native
 
-window_swap_player:
-	ocamlbuild -package graphics window_swap_player.native -use-ocamlfind
-	./window_swap_player.native
+window-swap-player:
+	ocamlbuild -package graphics WindowSwapPlayer.native -use-ocamlfind
+	./WindowSwapPlayer.native
 
 intermission:
-	ocamlbuild -package graphics window_intermission.native -use-ocamlfind
-	./window_intermission.native
+	ocamlbuild -package graphics WindowIntermission.native -use-ocamlfind
+	./WindowIntermission.native
 
 tise:
 	ocamlbuild -package graphics window_tise_main.native -use-ocamlfind
