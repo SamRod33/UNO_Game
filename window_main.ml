@@ -40,7 +40,7 @@ let draw_game_frames () =
     selection satisfies [limit] and [bound] then the cards are shifted
     by [op1]. *)
 let move op1 op2 limit bound =
-  if bound then
+  if bound then (
     if limit !outline_pos_x then (
       card_start_pos :=
         (op1 (fst !card_start_pos) selected_spacing, snd !card_start_pos);
@@ -49,14 +49,13 @@ let move op1 op2 limit bound =
       highlight_selection _GOLD _GREEN
         (op2 0 selected_spacing)
         !outline_pos_x !outline_pos_y outline_width outline_height;
-      outline_pos_x := op2 !outline_pos_x selected_spacing;
-      card_selected_idx := !card_selected_idx + 1)
+      outline_pos_x := op2 !outline_pos_x selected_spacing);
+    card_selected_idx := op2 !card_selected_idx 1)
   else ()
 
 (* [draw_main_screen] draws all parts of the main screen except player
    hand cards. *)
 let draw_main_screen =
-  open_window;
   set_background _BLACK;
   draw_logo ();
   draw_game_frames ();
@@ -66,24 +65,27 @@ let draw_main_screen =
   highlight_selection _GOLD _GREEN 0 !outline_pos_x !outline_pos_y
     outline_width outline_height
 
+let main_win =
+  draw_main_screen;
+  (try
+     while true do
+       draw_cards player_cards !card_start_pos (selected_spacing, 0);
+       let st = wait_next_event [ Key_pressed ] in
+       synchronize ();
+       if st.key = _QUIT_KEY || st.key = _CONFIRM_KEY then raise Exit
+       else if st.key = _RIGHT_KEY then
+         move ( - ) ( + )
+           (fun x -> x >= int_of_string _WIDTH - (2 * fst card_space))
+           (!card_end_pos >= !outline_pos_x)
+       else if st.key = _LEFT_KEY then
+         move ( + ) ( - )
+           (fun x -> x <= fst card_init_pos)
+           (fst !card_start_pos <= !outline_pos_x)
+     done
+   with Exit -> ());
+  List.nth player_cards !card_selected_idx
+
 ;;
-draw_main_screen;
-try
-  while true do
-    draw_cards player_cards !card_start_pos (selected_spacing, 0);
-    let st = wait_next_event [ Key_pressed ] in
-    synchronize ();
-    if st.key = _QUIT_KEY then raise Exit
-    else if st.key = _RIGHT_KEY then
-      move ( - ) ( + )
-        (fun x -> x >= int_of_string _WIDTH - (2 * fst card_space))
-        (!card_end_pos >= !outline_pos_x)
-    else if st.key = _LEFT_KEY then
-      move ( + ) ( - )
-        (fun x -> x <= fst card_init_pos)
-        (fst !card_start_pos <= !outline_pos_x)
-    else if st.key = _CONFIRM_KEY then
-      failwith
-        ("player selected a card: " ^ string_of_int !card_selected_idx)
-  done
-with Exit -> ()
+open_window;
+let s = main_win in
+Card.pp_cards [ s ] false
