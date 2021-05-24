@@ -9,7 +9,7 @@ open WindowChangeColor
 open WindowIntermission
 open WindowIntro
 
-let color_change =
+let color_change () =
   match change_color_win with
   | None -> exit 0
   | Some "red_color" -> R
@@ -60,7 +60,7 @@ and gui_player_play g cur_player recent_cards =
       match played_card with
       | Some c ->
           if color c = ANY then
-            let new_color = color_change in
+            let new_color = color_change () in
             let new_c = change_color c new_color in
             let recent_cards =
               update_five_most_recent_card new_c recent_cards
