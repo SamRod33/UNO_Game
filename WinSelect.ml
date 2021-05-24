@@ -119,16 +119,25 @@ let select_win () =
     select_p_win ()
       "select_the_number_of_people_that_want_to_play_the_game"
   in
+  outline_pos_x := init_outline_x;
+  outline_pos_y := init_ouline_y;
   ( p_selection,
     select_comp_win p_selection
       "select_the_number_of_computer_opponents" )
 
-(* ;; open_window; let p_selection = select_p_win ()
-   "select_the_number_of_people_that_want_to_play_the_game" in
-   print_endline (string_of_int p_selection); outline_pos_x :=
-   init_outline_x; outline_pos_y := init_ouline_y; let comp_selection =
-   select_comp_win p_selection "select_the_number_of_computer_opponents"
-   in print_endline (string_of_int comp_selection) *)
+;;
+open_window;
+let p_selection =
+  select_p_win ()
+    "select_the_number_of_people_that_want_to_play_the_game"
+in
+print_endline (string_of_int p_selection);
+outline_pos_x := init_outline_x;
+outline_pos_y := init_ouline_y;
+let comp_selection =
+  select_comp_win p_selection "select_the_number_of_computer_opponents"
+in
+print_endline (string_of_int comp_selection)
 (* let comp_selection = select_comp_win 5 in print_endline
    (string_of_int comp_selection) *)
 (* select_seq () *)
