@@ -131,10 +131,13 @@ let action g =
   | [] -> None
   | h :: t -> (
       match actions (fst h) with
+      | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
+          Some
+            (change_color
+               (set_swap_id (fst h) (least_cards g))
+               (most_color uw_cards))
       | { skip = _; reverse = _; swap = _, _; change_color = true } ->
           Some (change_color (fst h) (most_color uw_cards))
-      | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
-          Some (set_swap_id (fst h) (least_cards g))
       | _ -> Some (fst h))
 
 (** [action_test g] is a list of weighted card tuples for the current
