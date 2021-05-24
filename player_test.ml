@@ -24,11 +24,11 @@ let snd_card =
   | h :: b :: t -> b
   | _ -> failwith "Impossible"
 
-let empty : Player.t = create "Charles" false
+let empty : Player.t = create "Charles" false 1
 
 let uno = add_card empty fst_card
 
-let uno_kanye = add_card (create "Kanye" false) fst_card
+let uno_kanye = add_card (create "Kanye" false 2) fst_card
 
 let two_cards = add_card uno snd_card
 

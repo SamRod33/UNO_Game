@@ -182,44 +182,44 @@ let no_17br_deck =
 
 (*** players ***)
 let p1 =
-  create_test "p1" [ red1; red2; red3; red4; red5; red6; red7 ] false
+  create_test "p1" [ red1; red2; red3; red4; red5; red6; red7 ] false 1
 
 let p2 =
-  create_test "p2" [ red1; red2; red3; red4; red5; red6; red7 ] false
+  create_test "p2" [ red1; red2; red3; red4; red5; red6; red7 ] false 1
 
 let p3 =
   create_test "p3"
     [ blue1; blue2; blue3; blue4; blue5; blue6; blue7 ]
-    false
+    false 3
 
 let p4 =
   create_test "p4"
     [ blue1; blue2; blue3; blue4; blue5; blue6; blue7 ]
-    false
+    false 4
 
 let p5 =
   create_test "p5"
     [ blue_draw2; blue2; blue3; blue4; blue5; blue6; blue7 ]
-    false
+    false 5
 
 let p6 =
   create_test "p6"
     [ red_draw2; blue2; blue3; blue_draw2; blue5; blue6; blue7 ]
-    false
+    false 6
 
 let p7 =
   create_test "p7"
     [ draw4; blue2; blue3; blue_draw2; blue5; blue6; blue7 ]
-    false
+    false 7
 
-let p8 = create_test "p8" [ draw4 ] false
+let p8 = create_test "p8" [ draw4 ] false 8
 
 let p9 =
   create_test "p9"
     [ draw4; blue2; blue3; red_draw2; blue5; blue6; blue7 ]
-    false
+    false 9
 
-let p10 = create_test "p10" [ swap; red5 ] false
+let p10 = create_test "p10" [ swap; red5 ] false 10
 
 (*** states ***)
 let start_red0 = t_test no_17br_deck std_deck 0 red0 [ p1; p2; p3; p4 ]

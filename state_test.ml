@@ -11,13 +11,13 @@ let current_player_test name g player =
 
 let deck = standard_cards
 
-let p1 = create "p1" false
+let p1 = create "p1" false 1
 
-let p2 = create "p2" false
+let p2 = create "p2" false 2
 
-let p3 = create "p3" false
+let p3 = create "p3" false 3
 
-let p4 = create "p4" false
+let p4 = create "p4" false 4
 
 let player_list = [ p1; p2; p3; p4 ]
 
