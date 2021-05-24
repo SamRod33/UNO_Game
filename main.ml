@@ -149,8 +149,7 @@ and cpu_play g cur_player recent_cards =
       Option.is_some cpu_card
       && (actions (Option.get cpu_card)).change_color
     then
-      change_current_players_hand
-        (change_color (Option.get cpu_card) ANY)
+      change_current_players_hand (Option.get cpu_card)
         (Option.get cpu_card) g
     else g
   in
