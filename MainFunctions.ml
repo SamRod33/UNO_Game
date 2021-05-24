@@ -15,17 +15,17 @@ let update_five_most_recent_card card = function
     [num_real + num_computer] players, where [num_computer] are
     computers.*)
 let create_players players num_real num_computer =
-  let rec help lst num_human = function
+  let rec help lst = function
     | 0 -> lst
     | n ->
         let player =
-          if n > num_human then
+          if n > num_real then
             create ("Computer " ^ string_of_int n) true n
           else create ("Player " ^ string_of_int n) false n
         in
-        help (player :: lst) num_real (n - 1)
+        help (player :: lst) (n - 1)
   in
-  help [] num_real (num_real + num_computer)
+  help [] (num_real + num_computer)
 
 (** [all_players_but_one player g] is a list of all the players but
     [player] in state [g].*)
