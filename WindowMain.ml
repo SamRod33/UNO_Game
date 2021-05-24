@@ -14,17 +14,33 @@ let player_num_pos = (223 + 84, 54 + 553)
 
 let penalty_num_pos = (448 + 35, 380)
 
-let card_selected_idx = ref 0
-
 let card_init_pos = (40, 35)
 
 let card_start_pos = ref card_init_pos
+
+let out_init_x, out_init_y = (30, 25)
 
 let outline_pos_x = ref 30
 
 let outline_pos_y = ref 25
 
-let draw_top_card card = upload_img _CARD_DIR card 272 330
+let init_idx =
+  ((!outline_pos_x - 30) / selected_spacing)
+  - ((fst !card_start_pos - fst card_init_pos) / selected_spacing)
+
+let card_selected_idx = ref init_idx
+
+(** [draw_top_card card] draws the top card on the main screen*)
+let draw_top_card card =
+  match Card.img card with
+  | "draw4" | "Wild" -> (
+      match Card.color card with
+      | Card.R -> upload_img _ASSET_DIR "red_color" 272 330
+      | Card.Y -> upload_img _ASSET_DIR "yellow_color" 272 330
+      | Card.B -> upload_img _ASSET_DIR "blue_color" 272 330
+      | Card.G -> upload_img _ASSET_DIR "green_color" 272 330
+      | Card.ANY -> failwith "ANY is invalid in draw_top_card")
+  | _ -> upload_img _CARD_DIR (Card.img card) 272 330
 
 let draw_card_deck () = upload_img _CARD_DIR "back" 84 330
 
@@ -106,11 +122,7 @@ let run_main st card_end_pos =
       card_end_pos
   else if st.key = _DRAW_KEY then (
     card_selected_idx := -1;
-    raise Exit);
-  print_endline
-    (string_of_int (!outline_pos_x + 180)
-    ^ " "
-    ^ string_of_int !card_end_pos)
+    raise Exit)
 
 (** [main_win top p_id penalty other_player_info player_cards] run the
     main window game loop. i.e. show the top card [top], who the current
@@ -119,20 +131,26 @@ let run_main st card_end_pos =
     of their [player_cards]. This function returns Some Card.t if the
     player selected a card, or None if they wanted to quit the game. *)
 let main_win top p_id penalty other_player_info player_cards =
-  (* TODO: Make it under 20 lines *)
-  print_endline (string_of_int (List.length player_cards));
+  card_start_pos := card_init_pos;
+  outline_pos_x := out_init_x;
+  outline_pos_y := out_init_y;
   let card_end_pos =
     ref
       ((List.length player_cards * (9 + fst card_space))
       + fst !card_start_pos)
   in
-  draw_main_screen (Card.img top) p_id penalty other_player_info;
+  card_selected_idx :=
+    ((!outline_pos_x - 30) / selected_spacing)
+    - ((fst !card_start_pos - fst card_init_pos) / selected_spacing);
+  draw_main_screen top p_id penalty other_player_info;
   (try
      while true do
        draw_cards player_cards !card_start_pos (selected_spacing, 0);
        let st = wait_next_event [ Key_pressed ] in
        synchronize ();
-       run_main st card_end_pos
+       run_main st card_end_pos;
+       print_endline (string_of_int !card_selected_idx)
+       (* print_endline (string_of_int !outline_pos_x) *)
      done
    with Exit -> ());
   if !card_selected_idx < 0 then None
