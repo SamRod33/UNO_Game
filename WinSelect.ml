@@ -88,7 +88,7 @@ let select st p_selection select_idx =
 
 (* TODO: spec *)
 let run_select_win p_selection select_idx x y msg =
-  if p_selection >= 5 then None
+  if p_selection >= 5 then 0
   else (
     draw_selections msg x y
       (List.length selections - p_selection)
@@ -103,7 +103,7 @@ let run_select_win p_selection select_idx x y msg =
          else select st p_selection select_idx
        done
      with Exit -> ());
-    Some !select_idx)
+    !select_idx)
 
 (** [select_p_win] is the main player select window. *)
 let select_p_win () = run_select_win 0 p_select_idx p_txt_x p_txt_y
@@ -120,17 +120,15 @@ let select_win () =
       "select_the_number_of_people_that_want_to_play_the_game"
   in
   ( p_selection,
-    select_comp_win
-      (Option.get p_selection)
+    select_comp_win p_selection
       "select_the_number_of_computer_opponents" )
 
 (* ;; open_window; let p_selection = select_p_win ()
    "select_the_number_of_people_that_want_to_play_the_game" in
-   print_endline (string_of_int (Option.get p_selection)); outline_pos_x
-   := init_outline_x; outline_pos_y := init_ouline_y; let comp_selection
-   = select_comp_win (Option.get p_selection)
-   "select_the_number_of_computer_opponents" in print_endline
-   (string_of_int (Option.get comp_selection)) *)
+   print_endline (string_of_int p_selection); outline_pos_x :=
+   init_outline_x; outline_pos_y := init_ouline_y; let comp_selection =
+   select_comp_win p_selection "select_the_number_of_computer_opponents"
+   in print_endline (string_of_int comp_selection) *)
 (* let comp_selection = select_comp_win 5 in print_endline
    (string_of_int comp_selection) *)
 (* select_seq () *)
