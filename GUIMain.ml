@@ -10,7 +10,7 @@ open WindowIntermission
 open WindowIntro
 
 let color_change () =
-  match change_color_win with
+  match change_color_win () with
   | None -> exit 0
   | Some "red_color" -> R
   | Some "blue_color" -> B
