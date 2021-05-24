@@ -102,9 +102,11 @@ and format_card gst next_gst recent_cards = function
       buffer next_gst recent_cards;
       game_loop next_gst recent_cards
   | Some c ->
-      let recent_cards = update_five_most_recent_card c recent_cards in
       if color c = ANY then
         let new_c = change_color c (select_color ()) in
+        let recent_cards =
+          update_five_most_recent_card new_c recent_cards
+        in
         match
           play (Some new_c) (change_current_players_hand c new_c gst)
         with
@@ -112,8 +114,12 @@ and format_card gst next_gst recent_cards = function
             buffer next_gst recent_cards;
             game_loop next recent_cards
         | _ -> print_string "Illegal game state.\n"
-      else buffer next_gst recent_cards;
-      game_loop next_gst recent_cards
+      else
+        let recent_cards =
+          update_five_most_recent_card c recent_cards
+        in
+        buffer next_gst recent_cards;
+        game_loop next_gst recent_cards
 
 (** handles logic for human players taking their turn.*)
 and player_play g cur_player recent_cards =
