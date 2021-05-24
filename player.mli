@@ -12,8 +12,9 @@ type t
 (** Raised when player does not have the card in its hand. *)
 exception CardNotInHand of Card.t
 
-(** [create name is_cpu] is a new player with playername [name] with an
-    empty hand. The player is a computer iff [is_cpu] is true. *)
+(** [create name is_cpu id_num] is a new player with playername [name]
+    and id [id_num] with an empty hand. The player is a computer iff
+    [is_cpu] is true. *)
 val create : string -> bool -> int -> t
 
 (** [create_test name h is_cpu] is a new player with playername [name]

@@ -11,7 +11,9 @@ type t = {
 
 let swap_hands p1_id p2_id players =
   let rec find_hand p_id = function
-    | [] -> failwith "player not found"
+    | [] ->
+        failwith
+          ("player not found. id attempted = " ^ string_of_int p_id)
     | h :: t -> if h.id = p_id then h.hand else find_hand p_id t
   in
   let p1_hand = find_hand p1_id players in
@@ -47,7 +49,8 @@ let rec remove_first_of_dup hand card acc =
   match hand with
   | [] -> hand
   | h :: t ->
-      if h = card then acc @ t else remove_first_of_dup t card (h :: acc)
+      if h = card then acc @ t
+      else remove_first_of_dup t card (h :: acc)
 
 let remove_card player card =
   if not (List.mem card player.hand) then raise (CardNotInHand card)
