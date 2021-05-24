@@ -101,6 +101,10 @@ let custom_cards =
 
 let full_deck = custom_cards @ standard_cards
 
+let facecard_pp card =
+  j "facecards.json" |> member card |> to_list
+  |> List.map (fun s -> to_string s)
+
 (** [print_color c] is the color for ANSITerminal to print. *)
 let print_color = function
   | R -> ANSITerminal.red
@@ -110,16 +114,16 @@ let print_color = function
   | ANY -> ANSITerminal.white
 
 let face_card_digit = function
-  | 0 -> Facecards.zero
-  | 1 -> Facecards.one
-  | 2 -> Facecards.two
-  | 3 -> Facecards.three
-  | 4 -> Facecards.four
-  | 5 -> Facecards.five
-  | 6 -> Facecards.six
-  | 7 -> Facecards.seven
-  | 8 -> Facecards.eight
-  | 9 -> Facecards.nine
+  | 0 -> facecard_pp "zero"
+  | 1 -> facecard_pp "one"
+  | 2 -> facecard_pp "two"
+  | 3 -> facecard_pp "three"
+  | 4 -> facecard_pp "four"
+  | 5 -> facecard_pp "five"
+  | 6 -> facecard_pp "six"
+  | 7 -> facecard_pp "seven"
+  | 8 -> facecard_pp "eight"
+  | 9 -> facecard_pp "nine"
   | x when x > 9 || x < 0 -> failwith "digit not between 0-9"
   | _ -> failwith "Impossible pattern match: Invalid digit card"
   [@@coverage off]
@@ -131,16 +135,16 @@ let print_face c =
   if c.digit <> None then face_card_digit (Option.get c.digit)
   else if c.penalty <> 0 then
     match c.penalty with
-    | 2 -> Facecards.plus_2
-    | 4 -> Facecards.plus_4
+    | 2 -> facecard_pp "plus_2"
+    | 4 -> facecard_pp "plus_4"
     | x when x <> 2 || x <> 4 -> failwith "Stack card not +2 nor +4"
     | _ ->
         failwith
           "Impossible pattern match: Invalid stack penalty face card"
-  else if c.actions.reverse then Facecards.reverse
-  else if fst c.actions.swap then Facecards.swap
-  else if c.actions.skip then Facecards.skip
-  else if c.actions.change_color then Facecards.wild
+  else if c.actions.reverse then facecard_pp "reverse"
+  else if fst c.actions.swap then facecard_pp "swap"
+  else if c.actions.skip then facecard_pp "skip"
+  else if c.actions.change_color then facecard_pp "wild"
   else failwith "Impossible pattern match: Invalid card"
   [@@coverage off]
 
