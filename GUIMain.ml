@@ -8,6 +8,7 @@ open WindowSwapPlayer
 open WindowChangeColor
 open WindowIntermission
 open WindowIntro
+open WinSelect
 
 let color_change () =
   match change_color_win () with
@@ -113,7 +114,8 @@ and gui_cpu_play g cur_player recent_cards =
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
   intro_win;
-  let players = create_players [] 3 2 in
+  let players_tup = select_win () in
+  let players = create_players [] (fst players_tup) (snd players_tup) in
   let start_state = init_state standard_cards players in
   gui_game_loop start_state []
 
