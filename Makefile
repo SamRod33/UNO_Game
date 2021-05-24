@@ -85,3 +85,8 @@ tise:
 	ocamlbuild -package graphics window_tise_main.native -use-ocamlfind
 	./window_tise_main.native
 
+intro-win:
+		ocamlbuild -package graphics WindowIntro.native -use-ocamlfind
+	./WindowIntro.native
+
+
