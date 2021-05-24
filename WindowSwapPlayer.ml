@@ -269,8 +269,8 @@ let g = t_test std_deck std_deck 0 blue6 [ p5; p2; p1; p4 ]
 (* [swap_player_win g] is the id of the selected player to swap with in
    game [g]. *)
 let swap_player_win (*()*) g =
-  print_id_lst (guiid_id g);
-  print_string "\nfinal id to swap hands with: ";
+  (* print_id_lst (guiid_id g); print_string "\nfinal id to swap hands
+     with: "; *)
   draw_swap_player_screen g;
   highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y
     outline_width outline_height;

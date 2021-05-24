@@ -1,6 +1,30 @@
-You should the following packages installed from A2 (ounit2, yojson, ANSITerminal) and recitation 8 (bisect_ppx).
+Setup Instructions:
+Make sure VcXsrv or XQuartz is running each time you run graphics
 
-Instructions:
+(***************Windows****************)
+    download & launch VcXsrv: https://techcommunity.microsoft.com/t5/windows-dev-appconsult/running-wsl-gui-apps-on-windows-10/ba-p/1493242
+
+    enter in ubuntu command line:
+    $ sudo apt install ocaml-tools libsdl-ocaml-dev
+    $ opam install opam-depext
+    $ opam depext conf-pkg-config
+    $ opam install graphics imagelib camlimages ounit2 yojson ANSITerminal bisect_ppx
+    $ sudo apt install -y xserver-xorg-core
+    $ cd ~
+    $ ls -a (look for .bashrc or .bashprofile)
+    $ echo 'export DISPLAY=:0.0' >> .bashrc
+    $ echo $DISPLAY   
+    (above command should output localhost:0)
+
+(*****************Mac*****************)
+    download & launch XQuartz
+
+    enter in the terminal:
+    $ sudo port install libsdl libsdl_mixer
+    $ opam install -y ounit yojson graphics camlimages
+    $ opam install ocamlsdl
+
+Run Instructions:
 1. Run make build
 2. Run make uno
 3. Follow the instructions in the terminal
