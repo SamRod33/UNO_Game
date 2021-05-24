@@ -59,8 +59,7 @@ let rec create_player_card_nums ply_lst acc =
 
 (* [split_num nc acc] is the lsit of digits in number [nc]. *)
 let rec split_num nc acc =
-  if nc < 10 then nc :: acc
-  else split_num (nc / 10) ((nc mod 10) :: acc)
+  if nc < 10 then nc :: acc else split_num (nc / 10) ((nc mod 10) :: acc)
 
 (* [draw_specific_num lst_digs x y] is the number [lst_digs] drawn using
    GUI images at position [x], [y]. *)
@@ -100,7 +99,7 @@ let rec draw_specific_num lst_digs x y =
       | 9 ->
           upload_img _TEXT_DIR "9_med" x y;
           draw_next
-      | _ -> failwith "impossible: number not composed of digits")
+      | _ -> failwith "impossible: number not composed of digits" )
 
 (* [draw_nums] is the number of cards [nums] for each opponent player's
    hand drawn in the window starting at position [x], [y]. *)
@@ -191,12 +190,12 @@ let swap_player_phase st g =
     then ()
     else (
       move ( + ) (fst swap_space) _GOLD _BLACK;
-      player_selected_idx := !player_selected_idx + 1)
+      player_selected_idx := !player_selected_idx + 1 )
   else if st.key = _LEFT_KEY then
     if !outline_pos_x <= swap_start_pos_x - 10 then ()
     else (
       move ( - ) (fst swap_space) _GOLD _BLACK;
-      player_selected_idx := !player_selected_idx - 1)
+      player_selected_idx := !player_selected_idx - 1 )
 
 (*********************************************************************)
 (****** EVERYTHING UNTIL NEXT COMMENT LINE IS FOR TESTING ONLY *******)
@@ -320,13 +319,13 @@ let swap_player_win g (*()*) =
   draw_swap_player_screen g;
   highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y
     outline_width outline_height;
-  (try
-     while running do
-       let st = wait_next_event [ Key_pressed ] in
-       synchronize ();
-       swap_player_phase st g
-     done
-   with Exit -> ());
+  ( try
+      while running do
+        let st = wait_next_event [ Key_pressed ] in
+        synchronize ();
+        swap_player_phase st g
+      done
+    with Exit -> () );
   get_id !player_selected_idx g
 
 (* ;; open_window; let chosen_player = swap_player_win () in

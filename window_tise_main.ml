@@ -2,7 +2,7 @@ open Graphics
 open Constants
 open Images
 open Png
-open Window_gui
+open WindowGui
 
 (**********************)
 let p_id = 5
