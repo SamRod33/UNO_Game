@@ -10,13 +10,7 @@ open WindowIntermission
 open WindowIntro
 
 let color_change () =
-  match change_color_win with
-  | None -> exit 0
-  | Some "red_color" -> R
-  | Some "blue_color" -> B
-  | Some "green_color" -> G
-  | Some "yellow_color" -> Y
-  | _ -> failwith "change color window gave an incorrect color"
+  
 
 let rec gui_game_loop g recent_cards =
   let cur_player = current_player g in
@@ -60,7 +54,13 @@ and gui_player_play g cur_player recent_cards =
       match played_card with
       | Some c ->
           if color c = ANY then
-            let new_color = color_change () in
+            let new_color = match change_color_win with
+            | None -> exit 0
+            | Some "red_color" -> R
+            | Some "blue_color" -> B
+            | Some "green_color" -> G
+            | Some "yellow_color" -> Y
+            | _ -> failwith "change color window gave an incorrect color" in
             let new_c = change_color c new_color in
             let recent_cards =
               update_five_most_recent_card new_c recent_cards
