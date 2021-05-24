@@ -270,7 +270,7 @@ let g = t_test std_deck std_deck 0 blue6 [ p5; p2; p1; p4 ]
 
 (******************************************************************************)
 
-let swap_player_win (*g*) () =
+let swap_player_win (*()*) g =
   print_id_lst (guiid_id g);
   print_string "\nfinal id to swap hands with: ";
   draw_swap_player_screen g;
@@ -285,7 +285,5 @@ let swap_player_win (*g*) () =
    with Exit -> ());
   get_id !player_selected_idx g
 
-;;
-open_window;
-let chosen_player = swap_player_win () in
-print_endline chosen_player
+(* ;; open_window; let chosen_player = swap_player_win () in
+   print_endline chosen_player *)
