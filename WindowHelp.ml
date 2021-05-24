@@ -15,6 +15,4 @@ let help_win () =
     done
   with Exit -> ()
 
-;;
-open_window;
-help_win ()
+(* ;; open_window; help_win () *)

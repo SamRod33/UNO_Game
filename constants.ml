@@ -37,3 +37,5 @@ let _DOWN_KEY = 's'
 let _UP_KEY = 'w'
 
 let _DRAW_KEY = ' '
+
+let _HELP_KEY = 'h'

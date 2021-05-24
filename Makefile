@@ -1,4 +1,4 @@
-MODULES=card player state main computer constants WindowGui MainFunctions WindowChangeColor WindowIntermission WindowSwapPlayer WindowMain WindowIntro WinSelect
+MODULES=card player state main computer constants WindowGui MainFunctions WindowChangeColor WindowIntermission WindowSwapPlayer WindowMain WindowIntro WinSelect WindowHelp
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)

@@ -3,6 +3,7 @@ open Constants
 open Images
 open Png
 open WindowGui
+open WindowHelp
 
 let player_cards = Card.standard_cards
 
@@ -107,8 +108,11 @@ let draw_main_screen top p_id penalty other_player_info =
   highlight_selection _GOLD _GREEN 0 !outline_pos_x !outline_pos_y
     outline_width outline_height
 
-let run_main st card_end_pos =
+let run_main st card_end_pos top p_id penalty other_player_info =
   if st.key = _QUIT_KEY then exit 0
+  else if st.key = _HELP_KEY then (
+    help_win ();
+    draw_main_screen top p_id penalty other_player_info)
   else if st.key = _CONFIRM_KEY then raise Exit
   else if st.key = _RIGHT_KEY then
     move ( - ) ( + )
@@ -148,7 +152,7 @@ let main_win top p_id penalty other_player_info player_cards =
        draw_cards player_cards !card_start_pos (selected_spacing, 0);
        let st = wait_next_event [ Key_pressed ] in
        synchronize ();
-       run_main st card_end_pos
+       run_main st card_end_pos top p_id penalty other_player_info
      done
    with Exit -> ());
   if !card_selected_idx < 0 then None
