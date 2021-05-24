@@ -73,7 +73,7 @@ let change_color_phase st =
       move ( - ) (fst card_space) _GOLD _BLACK;
       card_selected_idx := !card_selected_idx - 1)
 
-let change_color_win =
+let change_color_win () =
   draw_change_color_screen ();
   highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y
     outline_width outline_height;
