@@ -24,8 +24,9 @@ let action_swap_test name g c =
     | None -> false
     | Some c -> (
         match actions c with
-        | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
-            true
+        | { skip = _; reverse = _; swap = true, id; change_color = _ }
+          ->
+            (* print_string (string_of_int id); *) true
         | _ -> false)
   in
   assert_equal (swap_bool c) (swap_bool (action g))
