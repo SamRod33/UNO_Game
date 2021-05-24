@@ -37,7 +37,7 @@ let draw_intermission_window () =
 
 (* [intermission_phase st g] Launches the intermission window phase. *)
 let intermission_phase st g card_list =
-  if st.key = _QUIT_KEY then raise Exit
+  if st.key = _QUIT_KEY then exit 0
   else if st.key = _CONFIRM_KEY then failwith "hi"
   else open_window;
   draw_intermission_window ();
