@@ -34,7 +34,7 @@ let card_selected_idx = ref init_idx
 (** [draw_top_card card] draws the top card on the main screen*)
 let draw_top_card card =
   match Card.img card with
-  | "Draw4" | "Wild" -> (
+  | "Draw4" | "Wild" | "Swap" -> (
       match Card.color card with
       | Card.R -> upload_img _ASSET_DIR "red_color" 272 330
       | Card.Y -> upload_img _ASSET_DIR "yellow_color" 272 330
