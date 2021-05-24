@@ -85,14 +85,12 @@ and gui_player_play g cur_player recent_cards =
   | GameOver winner -> exit 0
 
 and gui_cpu_play g cur_player recent_cards =
-  let cpu_card = snd (action g) in
+  let played_action = action g in
+  let hand_card = fst played_action in
+  let cpu_card = snd played_action in
   let changed_gst =
-    if
-      Option.is_some cpu_card
-      && (actions (Option.get cpu_card)).change_color
-    then
-      change_current_players_hand
-        (change_color (Option.get cpu_card) ANY)
+    if Option.is_some cpu_card then
+      change_current_players_hand (Option.get hand_card)
         (Option.get cpu_card) g
     else g
   in
