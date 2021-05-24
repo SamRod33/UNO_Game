@@ -2,7 +2,7 @@ open State
 open Card
 open Player
 open Computer
-open Main_functions
+open MainFunctions
 
 (** [player_hand_info player] is a string with infomation about the hand
     of [player].*)
