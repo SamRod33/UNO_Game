@@ -10,6 +10,7 @@ STATETEST=state_test.byte
 COMPUTERTEST=computer_test.byte
 TESTS=full_test_suite.byte
 MAIN=main.byte
+GUI = GUIMain.byte
 
 default: build
 
@@ -37,6 +38,9 @@ tests:
 
 uno:
 	$(OCAMLBUILD) -tag 'debug' $(MAIN) && OCAMLRUNPARAM=b ./$(MAIN)
+
+uno-gui:
+	$(OCAMLBUILD) -tag 'debug' $(GUI) && OCAMLRUNPARAM=b ./$(GUI)
 
 bisect-test:
 	BISECT_COVERAGE=YES $(OCAMLBUILD) -tag 'debug' $(TESTS) && ./$(TESTS) -runner sequential
