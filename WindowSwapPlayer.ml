@@ -34,11 +34,12 @@ let player_selected_idx = ref 0
    with a plyer id. *)
 let id_nums = ref [ (0, -1); (1, -1); (2, -1); (3, -1) ]
 
-(* [make_deck num acc] is the list of card names to be displayed in the
-   swap window. *)
-let rec make_deck num acc =
+(* [make_deck num_og acc] is the list of card names to be displayed in
+   the swap window based on the given amount [num_og]. *)
+let rec make_deck num_og acc =
+  let num = num_og (*+ 1*) in
   match num with
-  | 0 -> List.rev acc
+  | 0 (*1*) -> acc
   | _ ->
       make_deck (num - 1) (("player_hand_" ^ string_of_int num) :: acc)
 
@@ -161,6 +162,14 @@ let guiid_id g =
     (g |> players |> List.filter (fun p -> p <> current_player g))
     []
 
+(* [print_id_lst g] prints the gui id, player id tuples from game [g] to
+   the terminal. *)
+let rec print_id_lst = function
+  | [] -> ()
+  | (gui, id) :: t ->
+      print_string ("\n" ^ string_of_int gui ^ ": " ^ string_of_int id);
+      print_id_lst t
+
 (* [get_id gui_idx g] is the player id in game [g] of the selected
    player's id [gui_idx] from the swap window. *)
 let get_id gui_idx g = string_of_int (List.assoc gui_idx (guiid_id g))
@@ -173,7 +182,8 @@ let move op space color_a color_b =
 
 (* [swap_player_phase st] launches the swap player window phase. *)
 let swap_player_phase st g =
-  if st.key = _QUIT_KEY || st.key = _CONFIRM_KEY then raise Exit
+  if st.key = _QUIT_KEY then exit 0
+  else if st.key = _CONFIRM_KEY then raise Exit
   else if st.key = _RIGHT_KEY then
     if
       !outline_pos_x
@@ -189,7 +199,7 @@ let swap_player_phase st g =
       player_selected_idx := !player_selected_idx - 1)
 
 (*********************************************************************)
-(*************** EVERYTHING BELOW IS FOR TESTING ONLY ****************)
+(****** EVERYTHING UNTIL NEXT COMMENT LINE IS FOR TESTING ONLY *******)
 (*********************************************************************)
 
 open Card
@@ -298,11 +308,15 @@ let p7 =
 
 let p8 = create_test "p8" [ draw4 ] false
 
-let g1 = t_test std_deck std_deck 0 swap [ p1; p2; p3; p4; p5 ]
+let g = t_test std_deck std_deck 0 swap [ p1; p2; p3; p4; p5 ]
 
-let g = t_test std_deck std_deck 0 blue6 [ p7; p8; p3; p4 ]
+let g2 = t_test std_deck std_deck 0 blue6 [ p7; p8; p3; p4 ]
 
-let swap_player_win () =
+(******************************************************************************)
+
+let swap_player_win g (*()*) =
+  print_id_lst (guiid_id g);
+  print_string "\nfinal id to swap hands with: ";
   draw_swap_player_screen g;
   highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y
     outline_width outline_height;
@@ -315,7 +329,5 @@ let swap_player_win () =
    with Exit -> ());
   get_id !player_selected_idx g
 
-;;
-open_window;
-let chosen_player = swap_player_win () in
-print_endline chosen_player
+(* ;; open_window; let chosen_player = swap_player_win () in
+   print_endline chosen_player *)

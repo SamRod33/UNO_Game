@@ -42,7 +42,7 @@ and gui_player_play g cur_player recent_cards =
     | None -> None
     | Some c ->
         if fst (actions c).swap then
-          let swapping_player_id = int_of_string (swap_player_win ()) in
+          let swapping_player_id = int_of_string (swap_player_win g) in
           Some (set_swap_id c swapping_player_id)
         else Some c
   in
