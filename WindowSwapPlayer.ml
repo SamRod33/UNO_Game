@@ -290,7 +290,7 @@ let p5 =
 
 let g = t_test std_deck std_deck 0 swap [ p1; p2; p3; p4; p5 ]
 
-let swap_player_win =
+let swap_player_win () =
   draw_swap_player_screen g;
   highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y
     outline_width outline_height;
