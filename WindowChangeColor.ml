@@ -57,9 +57,7 @@ let move op space color_a color_b =
 
 (* [change_color_phase st] Launches the change color window phase. *)
 let change_color_phase st =
-  if st.key = _QUIT_KEY then (
-    card_selected_idx := -1;
-    raise Exit)
+  if st.key = _QUIT_KEY then exit 0
   else if st.key = _CONFIRM_KEY then raise Exit
   else if st.key = _RIGHT_KEY then
     if !outline_pos_x >= List.length change_color_cards * fst card_space
