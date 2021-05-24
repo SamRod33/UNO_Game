@@ -1,25 +1,30 @@
 Setup Instructions:
   Windows:
     download & launch VcXsrv: https://techcommunity.microsoft.com/t5/windows-dev-appconsult/running-wsl-gui-apps-on-windows-10/ba-p/1493242
-      enter in ubuntu command line:
-        $ sudo apt install ocaml-tools
-        $ opam install opam-depext
-        $ opam depext conf-pkg-config
-        $ opam install graphics imagelib camlimages ounit2 yojson ANSITerminal bisect_ppx
-        $ sudo apt install -y xserver-xorg-core
-        $ cd ~
-        $ ls -a                (look for .bashrc or .bashprofile)
-        $ echo 'export DISPLAY=:0.0' >> .bashrc
-        $ echo $DISPLAY        (this command should output localhost:0)
+    enter in ubuntu command line:
+      $ sudo apt install ocaml-tools
+      $ opam install opam-depext
+      $ opam depext conf-pkg-config
+      $ opam install graphics imagelib camlimages ounit2 yojson ANSITerminal bisect_ppx
+      $ sudo apt install -y xserver-xorg-core
+      $ cd ~
+      $ ls -a                (look for .bashrc or .bashprofile)
+      $ echo 'export DISPLAY=:0.0' >> .bashrc
+      $ echo $DISPLAY        (this command should output localhost:0)
   Mac:
     download & launch XQuartz
     enter in the terminal:
-        $ sudo port install libsdl libsdl_mixer
-        $ opam install -y ounit yojson graphics camlimages
-        $ opam install ocamlsdl
+      $ opam install -y ounit yojson graphics camlimages
+  Linux:
+    enter in ubuntu command line:
+      $ sudo apt install ocaml-tools
+      $ opam install opam-depext
+      $ opam depext conf-pkg-config
+      $ opam install graphics imagelib camlimages ounit2 yojson ANSITerminal bisect_ppx
 
 Run Instructions:
   Terminal:
+    Make sure VcXsrv or XQuartz is running (If Non-Linux)
     Run make build
     Run make uno
     Follow the instructions in the terminal

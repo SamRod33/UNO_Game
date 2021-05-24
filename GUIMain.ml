@@ -9,6 +9,7 @@ open WindowChangeColor
 open WindowIntermission
 open WindowIntro
 open WinSelect
+open WindowEndGame
 
 let color_change () =
   match change_color_win () with
@@ -82,7 +83,7 @@ and gui_player_play g cur_player recent_cards =
       | None ->
           intermit_win next_p_id recent_cards;
           gui_game_loop next_g recent_cards)
-  | GameOver winner -> exit 0
+  | GameOver winner -> end_game_win (Player.id winner) ()
 
 and gui_cpu_play g cur_player recent_cards =
   let played_action = action g in
@@ -105,9 +106,7 @@ and gui_cpu_play g cur_player recent_cards =
       intermit_win next_p_id recent_cards;
       gui_game_loop new_gst recent_cards
   | Illegal -> failwith "The computer made an error!\n\n"
-  | GameOver _ ->
-      print_string "The computer wins...\n\n";
-      exit 0
+  | GameOver winner -> end_game_win (Player.id winner) ()
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =

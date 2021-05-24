@@ -12,10 +12,8 @@ let end_game_win p_id () =
     while running do
       let st = wait_next_event [ Key_pressed ] in
       synchronize ();
-      if st.keypressed then raise Exit
+      if st.keypressed then exit 0
     done
   with Exit -> ()
 
-;;
-open_window;
-end_game_win 9 ()
+(* ;; open_window; end_game_win 9 () *)
