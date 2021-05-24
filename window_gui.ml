@@ -79,4 +79,4 @@ let rec display_num i (x, y) =
     let fst_dig = i / 10 in
     let snd_dig = i mod 10 in
     upload_img _TEXT_DIR (string_of_int fst_dig) x y;
-    display_num snd_dig (x + 32, y) )
+    display_num snd_dig (x + 32, y))
