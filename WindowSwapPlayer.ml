@@ -267,6 +267,9 @@ let swap =
     std_deck
   |> List.hd
 
+let draw4 =
+  List.filter (fun x -> draw_penalty x = 4) std_deck |> List.hd
+
 let p1 =
   create_test "p1" [ red1; red2; red3; red4; red5; red6; red7 ] false
 
@@ -288,7 +291,16 @@ let p5 =
     [ blue1; blue2; blue3; blue4; blue5; blue6; blue7 ]
     false
 
-let g = t_test std_deck std_deck 0 swap [ p1; p2; p3; p4; p5 ]
+let p7 =
+  create_test "p7"
+    [ draw4; blue2; blue3; blue1; blue5; blue6; blue7 ]
+    false
+
+let p8 = create_test "p8" [ draw4 ] false
+
+let g1 = t_test std_deck std_deck 0 swap [ p1; p2; p3; p4; p5 ]
+
+let g = t_test std_deck std_deck 0 blue6 [ p7; p8; p3; p4 ]
 
 let swap_player_win () =
   draw_swap_player_screen g;
@@ -302,5 +314,8 @@ let swap_player_win () =
      done
    with Exit -> ());
   get_id !player_selected_idx g
-(* open_window; let chosen_player = swap_player_win in print_endline
-   chosen_player *)
+
+;;
+open_window;
+let chosen_player = swap_player_win () in
+print_endline chosen_player
