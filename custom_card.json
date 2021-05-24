@@ -19,7 +19,7 @@
       "actions": {
         "skip": true,
         "reverse": false,
-        "swap": true,
+        "swap": false,
         "swap_p2": -1,
         "change color": false
       },
@@ -64,6 +64,19 @@
       },
       "draw penalty": 0,
       "amount": 1
+    },
+    {
+      "color": "any",
+      "img": "Swap",
+      "actions": {
+        "skip": false,
+        "reverse": false,
+        "swap": true,
+        "swap_p2": -1,
+        "change color": true
+      },
+      "draw penalty": 0,
+      "amount": 2
     }
   ]
 }

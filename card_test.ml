@@ -55,6 +55,14 @@ let num_action = make_action false false (false, -1) false
 (** [plus_4_action] is the action of a +4 card. *)
 let plus_4_action = make_action true false (false, -1) true
 
+let change_color_action = make_action false false (false, -1) true
+
+let skip_action = make_action true false (false, -1) false
+
+let draw2_action = make_action false false (false, -1) false
+
+let swap_action = make_action false false (true, -1) true
+
 let penalty_tests =
   f_tests penalty_test "penalty tests" custom_cards penalties
 
@@ -67,6 +75,18 @@ let actions_tests =
     actions_test "+4 card action is skip T, change color T, rest F"
       (List.nth custom_cards 3)
       plus_4_action;
+    actions_test "change color action is change color T, rest F"
+      (List.nth custom_cards 2)
+      change_color_action;
+    actions_test "skip action is skip T, rest F"
+      (List.nth custom_cards 1)
+      skip_action;
+    actions_test "draw2 action is all F"
+      (List.nth custom_cards 0)
+      draw2_action;
+    actions_test "swap action is swap T, change coolor T, rest F"
+      (List.nth custom_cards 5)
+      swap_action;
   ]
 
 let img_tests =
