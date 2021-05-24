@@ -3,6 +3,7 @@ open Constants
 open Images
 open Png
 open WindowGui
+open WindowHelp
 
 let intro_txt_x, intro_txt_y = (logo_pos_x, logo_pos_y - 100)
 
@@ -13,9 +14,9 @@ let intro_win =
     while running do
       let st = wait_next_event [ Key_pressed ] in
       synchronize ();
-      (* if st.keypressed then raise Exit -> this should also work and
-         reads better :) *)
-      match st.key with '\000' -> () | _ -> raise Exit
+      if st.keypressed then (
+        help_win ();
+        raise Exit)
     done
   with Exit -> ()
 
