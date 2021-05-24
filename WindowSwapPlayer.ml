@@ -302,8 +302,5 @@ let swap_player_win =
      done
    with Exit -> ());
   get_id !player_selected_idx g
-
-;;
-open_window;
-let chosen_player = swap_player_win in
-print_endline chosen_player
+(* open_window; let chosen_player = swap_player_win in print_endline
+   chosen_player *)

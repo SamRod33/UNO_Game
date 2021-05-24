@@ -127,11 +127,5 @@ let main_win top p_id penalty other_player_info player_cards =
   if !card_selected_idx < 0 then None
   else Some (List.nth player_cards !card_selected_idx)
 
-;;
-open_window;
-let s =
-  main_win "Draw4" 1 0
-    [ (5, 20); (2, 30); (3, 55); (4, 50) ]
-    player_cards
-in
-Card.pp_cards [ Option.get s ] false
+(* ;; open_window; let s = main_win "Draw4" 1 0 [ (5, 20); (2, 30); (3,
+   55); (4, 50) ] player_cards in Card.pp_cards [ Option.get s ] false *)

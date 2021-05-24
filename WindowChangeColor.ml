@@ -87,8 +87,5 @@ let change_color_win =
   if !card_selected_idx < 0 then None
   else Some (List.nth change_color_cards !card_selected_idx)
 
-;;
-open_window;
-(* demo change color screen *)
-let chosen_color = change_color_win in
-print_endline (Option.get chosen_color)
+(* ;; open_window; (* demo change color screen *) let chosen_color =
+   change_color_win in print_endline (Option.get chosen_color) *)
