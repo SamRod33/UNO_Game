@@ -100,3 +100,7 @@ select-win:
 help-win:
 		ocamlbuild -package graphics WindowHelp.native -use-ocamlfind
 	./WindowHelp.native
+
+end-game:
+		ocamlbuild -package graphics WindowEndGame.native -use-ocamlfind
+	./WindowEndGame.native
