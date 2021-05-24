@@ -4,8 +4,6 @@ open Images
 open Png
 open WindowGui
 
-(* need to refactor a lot of player and computer specific functions. *)
-
 (* [selections] is the selection list to display for player and computer
    selections. *)
 let selections =
