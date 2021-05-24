@@ -89,4 +89,7 @@ intro-win:
 		ocamlbuild -package graphics WindowIntro.native -use-ocamlfind
 	./WindowIntro.native
 
+select-win:
+		ocamlbuild -package graphics WinSelect.native -use-ocamlfind
+	./WinSelect.native
 
