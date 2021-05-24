@@ -7,17 +7,15 @@ open Yojson.Basic.Util
 
 (** Test suite for the Computer module *)
 
-let basic_action_test name g c =
-  name >:: fun _ -> assert_equal c (basic_action g)
-
-let action_test name g c = name >:: fun _ -> assert_equal c (action g)
+let action_test name g c =
+  name >:: fun _ -> assert_equal c (snd (action g))
 
 let action_draw4_test name g (c : Card.t option) =
   name >:: fun _ ->
-  let dp c = match c with None -> -1 | Some c -> draw_penalty c in
+  let dp c = match snd c with None -> -1 | Some c -> draw_penalty c in
   assert_equal 4 (dp (action g))
 
-let action_swap_test name g c =
+let action_swap_test name g (c : Card.t option) =
   name >:: fun _ ->
   let swap_bool card =
     match card with
@@ -29,7 +27,7 @@ let action_swap_test name g c =
             (* print_string (string_of_int id); *) true
         | _ -> false)
   in
-  assert_equal (swap_bool c) (swap_bool (action g))
+  assert_equal (swap_bool c) (swap_bool (snd (action g)))
 
 (*********************** create game g *************************)
 
@@ -240,18 +238,24 @@ let start_blue0_2_p7 =
 
 let nextp_uno = t_test no_17br_deck std_deck 0 blue6 [ p7; p8; p3; p4 ]
 
+let nextp_uno_43 =
+  t_test no_17br_deck std_deck 0 blue6 [ p7; p8; p4; p3 ]
+
 let nextp_uno4 = t_test no_17br_deck std_deck 0 blue6 [ p9; p8; p3; p4 ]
 
 let nextp_uno_swap =
   t_test no_17br_deck std_deck 0 blue6 [ p10; p8; p3; p4 ]
 
+let both_std_deck =
+  t_test std_deck std_deck 2 blue_draw2 [ p6; p2; p3; p4 ]
+
+let both_nobr_deck =
+  t_test no_17br_deck no_17br_deck 2 blue_draw2 [ p6; p2; p3; p4 ]
+
 (**************************************************************)
 
 let computer_suite =
   [
-    basic_action_test "basic no_17br red0 -> red1" start_red0
-      (Some red1);
-    basic_action_test "basic no_17br blue0 -> None" start_blue0 None;
     action_test "no_17br red0 -> red1" start_red0 (Some red1);
     action_test "no_17br blue0 -> None" start_blue0 None;
     action_test "std blue0 2 -> blue_draw2" start_blue0_2
@@ -261,8 +265,14 @@ let computer_suite =
     action_test "std blue0 2 p7 -> blue_draw2" start_blue0_2_p7
       (Some blue_draw2);
     action_test "nextp -> blue_draw2" nextp_uno (Some blue_draw2);
+    action_test "nextp_uno_43 -> blue_draw2" nextp_uno_43
+      (Some blue_draw2);
     action_draw4_test "nextp_4 -> draw4" nextp_uno4 (Some draw4);
     action_swap_test "swap -> swap" nextp_uno_swap (Some swap);
+    action_test "std blue0 2 p6 -> red_draw2, both std" both_std_deck
+      (Some red_draw2);
+    action_test "std blue0 2 p6 -> red_draw2, both nobr" both_nobr_deck
+      (Some red_draw2);
   ]
 
 let suite = "test suite for State" >::: computer_suite

@@ -119,6 +119,8 @@ let select_win () =
     select_p_win ()
       "select_the_number_of_people_that_want_to_play_the_game"
   in
+  outline_pos_x := init_outline_x;
+  outline_pos_y := init_ouline_y;
   ( p_selection,
     select_comp_win p_selection
       "select_the_number_of_computer_opponents" )

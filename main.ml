@@ -143,7 +143,7 @@ and player_play g cur_player recent_cards =
 
 (** handles logic for computer players taking their turn.*)
 and cpu_play g cur_player recent_cards =
-  let cpu_card = action g in
+  let cpu_card = snd (action g) in
   let changed_gst =
     if
       Option.is_some cpu_card

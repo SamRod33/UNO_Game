@@ -80,8 +80,6 @@ let rec first_valid_card g hand =
   | [] -> None
   | h :: t -> if is_valid_card g h then Some h else first_valid_card g t
 
-let basic_action g = first_valid_card g (player_hand (current_player g))
-
 (** [valid_hand g acc h] is a list of cards from a player's hand [h]
     that would be valid to play in game state [g]. *)
 let rec valid_hand g acc hand =
@@ -122,23 +120,25 @@ let add_weight g c =
 let comp (a : Card.t * int) (b : Card.t * int) =
   Stdlib.compare (snd a) (snd b)
 
-let action g =
+let action g : 'a option * 'a option =
   let uw_cards =
     g |> current_player |> player_hand |> valid_hand g []
   in
   let w_cards = List.map (add_weight g) uw_cards in
   match List.fast_sort comp w_cards with
-  | [] -> None
+  | [] -> (None, None)
   | h :: t -> (
       match actions (fst h) with
       | { skip = _; reverse = _; swap = true, _; change_color = _ } ->
-          Some
-            (change_color
-               (set_swap_id (fst h) (least_cards g))
-               (most_color uw_cards))
+          ( Some (fst h),
+            Some
+              (change_color
+                 (set_swap_id (fst h) (least_cards g))
+                 (most_color uw_cards)) )
       | { skip = _; reverse = _; swap = _, _; change_color = true } ->
-          Some (change_color (fst h) (most_color uw_cards))
-      | _ -> Some (fst h))
+          ( Some (fst h),
+            Some (change_color (fst h) (most_color uw_cards)) )
+      | _ -> (Some (fst h), Some (fst h)))
 
 (** [action_test g] is a list of weighted card tuples for the current
     player's hand in game [g]. *)
