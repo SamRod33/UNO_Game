@@ -148,9 +148,7 @@ let main_win top p_id penalty other_player_info player_cards =
        draw_cards player_cards !card_start_pos (selected_spacing, 0);
        let st = wait_next_event [ Key_pressed ] in
        synchronize ();
-       run_main st card_end_pos;
-       print_endline (string_of_int !card_selected_idx)
-       (* print_endline (string_of_int !outline_pos_x) *)
+       run_main st card_end_pos
      done
    with Exit -> ());
   if !card_selected_idx < 0 then None
