@@ -72,3 +72,11 @@ let highlight_selection color_on color_off offset x y width height =
 
 let display_player_num p (x, y) =
   upload_img _TEXT_DIR (string_of_int p) x y
+
+let rec display_num i (x, y) =
+  if i < 10 then upload_img _TEXT_DIR (string_of_int i) x y
+  else if i < 100 then (
+    let fst_dig = i / 10 in
+    let snd_dig = i mod 10 in
+    upload_img _TEXT_DIR (string_of_int fst_dig) x y;
+    display_num snd_dig (x + 32, y))
