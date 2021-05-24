@@ -19,10 +19,11 @@ let player_hands_info player g =
     ""
     (all_players_but_one player g)
 
+(** [quit_str] is the string displayed when the user quits the game. *)
 let quit_str = "Thanks for playing!\n\n"
 
-(** reads player input from the terminal and either ends the game, is
-    [None], or is [Some n] for some integer [n].*)
+(** [check_quit ()] reads player input from the terminal and either ends
+    the game, is [None], or is [Some n] for some integer [n].*)
 let check_quit () =
   match read_line () with
   | "Quit" ->
@@ -30,9 +31,12 @@ let check_quit () =
       exit 0
   | a -> int_of_string_opt a
 
+(** [clear ()] is the command for clearing the terminal. *)
 let clear () = ignore (Sys.command "clear")
 
-(** buffers the game in-between each player's turn.*)
+(** [buffer next_gst recent] buffers the game in the next gamestate
+    [next_gst] in-between each player's turn after card [recent] was
+    played.*)
 let buffer next_gst recent =
   clear ();
   print_string "\nThe most recently played cards are:\n";
@@ -47,11 +51,15 @@ let buffer next_gst recent =
       exit 0
   | _ -> clear ()
 
+(** [fail_str] is the string used for when an action has failed. *)
 let fail_str = "Try again.\n"
 
+(** [illegal_card] is the string used when a play with an illegal card
+    is attempted. *)
 let illegal_card = "You can't play that card. Try another.\n"
 
-(** terminal prompt for selecting the color of a wild card.*)
+(** [select_color ()] is the terminal prompt for selecting the color of
+    a wild card. *)
 let rec select_color () =
   print_string "Type in R, G, B, or Y to select the color.\n\n";
   match read_line () with
@@ -66,11 +74,13 @@ let rec select_color () =
       print_string "Choose a valid color.\n\n";
       select_color ()
 
+(** [failed ()] clears the terminal and displays a fail message. *)
 let failed () =
   clear ();
   print_string fail_str
 
-(* handles the logic for handling when a players plays a swap card.*)
+(** [select_swap_player gst] handles the logic for handling when a
+    players plays a swap card. *)
 let rec select_swap_player gst =
   clear ();
   let other_players = all_players_but_one (current_player gst) gst in
@@ -90,13 +100,17 @@ let rec select_swap_player gst =
         failed ();
         select_swap_player gst)
 
+(** [game_loop g recent_cards] runs the game loop for game [g] with
+    recently played cards [recent_cards]. *)
 let rec game_loop g recent_cards =
   let cur_player = current_player g in
   if is_cpu cur_player then cpu_play g cur_player recent_cards
   else player_play g cur_player recent_cards
 
-(** buffers the game and handles changing colors from a wild card for
-    human players (computer already handles changing colors).*)
+(** [format_card gst next_gst recent_cards] buffers the game and handles
+    changing colors from a wild card for human players (computer already
+    handles changing colors) in gamestate [gst] with recently played
+    cards [recent_cards] for next gamestate [next_gst]. *)
 and format_card gst next_gst recent_cards = function
   | None ->
       buffer next_gst recent_cards;
@@ -121,7 +135,9 @@ and format_card gst next_gst recent_cards = function
         buffer next_gst recent_cards;
         game_loop next_gst recent_cards
 
-(** handles logic for human players taking their turn.*)
+(** [player_play g cur_player recent_cards] handles the logic for human
+    players taking their turn in game [g] with current player
+    [cur_player] and recently played cards [recent_cards]. *)
 and player_play g cur_player recent_cards =
   let cur_player_hand = player_hand cur_player in
   print_string ("It is " ^ name cur_player ^ "'s turn.\n");
@@ -141,7 +157,9 @@ and player_play g cur_player recent_cards =
   print_string "> ";
   end_of_game_loop g cur_player cur_player_hand recent_cards
 
-(** handles logic for computer players taking their turn.*)
+(** [cpu_play g cur_player recent_cards] handles the logic for computer
+    players taking their turn in game [g] with current player
+    [cur_player] and recently played cards [recent_cards]. *)
 and cpu_play g cur_player recent_cards =
   let played_action = action g in
   let hand_card = fst played_action in
@@ -160,7 +178,10 @@ and cpu_play g cur_player recent_cards =
       print_string "The computer wins...\n\n";
       exit 0
 
-(** handles game logic after player decides which card to play.*)
+(** [end_of_game_loop g cur_player cur_player_hand recent_cards] handles
+    the game logic in game [g] with recently played cards [recent_cards]
+    after the current player [cur_player] with hand [cur_player_hand]
+    decides which card to play. *)
 and end_of_game_loop g cur_player cur_player_hand recent_cards =
   match check_quit () with
   | None ->
@@ -179,7 +200,7 @@ and end_of_game_loop g cur_player cur_player_hand recent_cards =
       else failed ();
       game_loop g recent_cards
 
-(** continuation of above function*)
+(** [end_of_game_loop_2] continues the logic of the above function. *)
 and end_of_game_loop_2
     g
     cur_player
@@ -201,7 +222,7 @@ and end_of_game_loop_2
   end_of_game_loop_3 g cur_player cur_player_hand index_card is_swap
     play_card recent_cards
 
-(** continuation of above function*)
+(** [end_of_game_loop_3] continues the logic of the above function. *)
 and end_of_game_loop_3
     g
     cur_player
@@ -222,6 +243,7 @@ and end_of_game_loop_3
       print_string ("\n" ^ name winner ^ " wins!\n\n");
       exit 0
 
+(** [play_game players] begins the game loop with players [players]. *)
 let play_game players =
   let start_state = init_state standard_cards players in
   game_loop start_state []
@@ -255,5 +277,5 @@ let main () =
   in
   getPlayers ()
 
-(* Execute the game engine. *)
+(* Executes the game engine. *)
 let () = main ()

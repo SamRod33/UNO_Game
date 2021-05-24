@@ -4,10 +4,10 @@ open Yojson.Basic.Util
 (* Card types *)
 (********************************************************************)
 
-(* number of cards to print per row. *)
+(** [c_per_row] is the number of cards to print per row. *)
 let c_per_row = 7
 
-(* number of lines and columns a card consists of. *)
+(** [card_dim] is the number of lines and columns a card consists of. *)
 let card_dim = (9, 11)
 
 type color =
@@ -35,14 +35,14 @@ type t = {
 }
 
 (********************************************************************)
-(* Creating custom cards *)
+(* Creating cards *)
 (********************************************************************)
 
-(* [j json] is the Yoson Basic representation of type t from the json
-   file [j] *)
+(** [j json] is the Yoson Basic representation of type t from the json
+    file [j] *)
 let j json = Yojson.Basic.from_file json
 
-(* [to_color s] is [s] as a color. *)
+(** [to_color s] is [s] as a color. *)
 let to_color s =
   match String.lowercase_ascii s with
   | "red" -> R
@@ -52,13 +52,13 @@ let to_color s =
   | "any" -> ANY
   | _ -> raise (Invalid_argument s)
 
-(* [make_swap j] is the swap tuple from [j]. *)
+(** [make_swap j] is the swap tuple from [j]. *)
 let make_swap j =
   let swap = j |> member "swap" |> to_bool in
   let swap_p2 = j |> member "swap_p2" |> to_int in
   (swap, swap_p2)
 
-(* [to_actions j] is [j] as an actions list. *)
+(** [to_actions j] is [j] as an actions list. *)
 let to_actions j =
   {
     skip = j |> member "skip" |> to_bool;
@@ -67,7 +67,7 @@ let to_actions j =
     change_color = j |> member "change color" |> to_bool;
   }
 
-(* [to_digit j] is [j] as a digit. *)
+(** [to_digit j] is [j] as a digit. *)
 let to_digit j = try Some (to_int j) with _ -> None
 
 let create j =
@@ -79,6 +79,7 @@ let create j =
     digit = j |> member "digit" |> to_digit;
   }
 
+(** [create_n j] is the list of [j] cards. *)
 let create_n j =
   let num_cards = to_int (member "amount" j) in
   let rec create_n_aux j = function
@@ -101,6 +102,7 @@ let custom_cards =
 
 let full_deck = custom_cards @ standard_cards
 
+(** [facecard_pp] pretty prints the card [card]. *)
 let facecard_pp card =
   j "facecards.json" |> member card |> to_list
   |> List.map (fun s -> to_string s)
@@ -113,6 +115,8 @@ let print_color = function
   | B -> ANSITerminal.blue
   | ANY -> ANSITerminal.white
 
+(** [face_card_digit] is the digit string representation of the given
+    card. *)
 let face_card_digit = function
   | 0 -> facecard_pp "zero"
   | 1 -> facecard_pp "one"
@@ -197,6 +201,8 @@ let rec idx_label start stop acc =
   | _ -> failwith "Impossible pattern match: idx label"
   [@@coverage off]
 
+(** [print_cards_aux n pp_orders] prints [n] number of cards in
+    [pp_orders]. *)
 let rec print_cards_aux n pp_orders =
   match n with
   | 0 -> ()
@@ -221,6 +227,8 @@ let print_cards cards start is_idx =
   print_cards_aux (fst card_dim) pp_orders
   [@@coverage off]
 
+(** [print_per_row acc n cards is_idx] prints [n] cards in each row from
+    the list of cards [cards] if [is_idx] is true. *)
 let rec print_per_row acc n cards is_idx =
   match cards with
   | [] -> print_cards (List.rev acc) n is_idx

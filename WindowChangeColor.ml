@@ -2,27 +2,31 @@ open Graphics
 open Constants
 open WindowGui
 
-(* [outline_width, outline_height] is the dimensions of the outline in
-   change color. *)
+(** [outline_width, outline_height] is the dimensions of the outline in
+    change color. *)
 let outline_width, outline_height = (145, 200)
 
-(* [change_c_txt_pos_x, change_c_txt_pos_y] is the position of the
-   change color prompt, as inspired by the mockup. *)
+(** [change_c_txt_pos_x, change_c_txt_pos_y] is the position of the
+    change color prompt, as inspired by the mockup. *)
 let change_c_txt_pos_x, change_c_txt_pos_y =
   (logo_pos_x - 200, logo_pos_y - 100)
 
-(* [cards_start_pos_x, cards_start_pos_y] is the starting position of
-   the color changing cards, as inspired by the mockup. *)
+(** [cards_start_pos_x, cards_start_pos_y] is the starting position of
+    the color changing cards, as inspired by the mockup. *)
 let cards_start_pos_x, cards_start_pos_y =
   (change_c_txt_pos_x, change_c_txt_pos_y - 300)
 
-(* [outline_pos_x, outline_pos_y] is the starting position of the
-   selection outline. *)
+(** [outline_pos_x, outline_pos_y] is the starting position of the
+    selection outline. *)
 let outline_pos_x, outline_pos_y =
   (ref (cards_start_pos_x - 10), ref (cards_start_pos_y - 10))
 
+(** [card_selected_idx] is the index of the card currently selected in
+    the window. *)
 let card_selected_idx = ref 0
 
+(** [change_color_cards] is the list of cards representing the different
+    colors. *)
 let change_color_cards =
   [ "red_color"; "blue_color"; "green_color"; "yellow_color" ]
 
@@ -42,6 +46,8 @@ let rec draw_cards cards pos =
       draw_change_color_card c pos;
       draw_cards t (c_x + c_space_x, c_y + c_space_y)
 
+(** [draw_change_color_screen] draws the screen for the change color
+    window. *)
 let draw_change_color_screen () =
   set_background _BLACK;
   draw_logo ();
@@ -55,7 +61,7 @@ let move op space color_a color_b =
     !outline_pos_y outline_width outline_height;
   outline_pos_x := op !outline_pos_x space
 
-(* [change_color_phase st] Launches the change color window phase. *)
+(** [change_color_phase st] Launches the change color window phase. *)
 let change_color_phase st =
   if st.key = _QUIT_KEY then exit 0
   else if st.key = _CONFIRM_KEY then raise Exit
@@ -71,6 +77,8 @@ let change_color_phase st =
       move ( - ) (fst card_space) _GOLD _BLACK;
       card_selected_idx := !card_selected_idx - 1)
 
+(** [change_color_win] is the color of the card selected in the change
+    card color window. *)
 let change_color_win () =
   draw_change_color_screen ();
   highlight_selection _GOLD _BLACK 0 !outline_pos_x !outline_pos_y

@@ -1,4 +1,4 @@
-MODULES=card player state main computer constants WindowGui MainFunctions WindowChangeColor WindowIntermission WindowSwapPlayer WindowMain WindowIntro WinSelect
+MODULES=card player state main computer constants testHelper WindowGui MainFunctions WindowChangeColor WindowIntermission WindowSwapPlayer WindowMain WindowIntro WinSelect
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
@@ -8,9 +8,9 @@ CARDTEST=card_test.byte
 PLAYERTEST=player_test.byte
 STATETEST=state_test.byte
 COMPUTERTEST=computer_test.byte
-TESTS=full_test_suite.byte
+TESTS=test.byte
 MAIN=main.byte
-GUI = GUIMain.byte
+GUI=GUIMain.byte
 
 default: build
 
@@ -32,7 +32,7 @@ state-test:
 computer-test:
 	$(OCAMLBUILD) -tag 'debug' $(COMPUTERTEST) && ./$(COMPUTERTEST) -runner sequential
 
-tests:
+test:
 	$(OCAMLBUILD) -tag 'debug' $(TESTS) && ./$(TESTS) -runner sequential
 
 

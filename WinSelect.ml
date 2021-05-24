@@ -4,35 +4,45 @@ open Images
 open Png
 open WindowGui
 
-(* [selections] is the selection list to display for player and computer
-   selections. *)
+(** [selections] is the selection list to display for player and
+    computer selections. *)
 let selections =
   [ "Green-0"; "Blue-1"; "Green-2"; "Red-3"; "Yellow-4"; "Blue-5" ]
 
-(* [max_players] current cap on the number of players that can player. *)
+(** [max_players] current cap on the number of players that can player. *)
 let max_players = 5
 
-(* [select_x, select_y] is the starting position for selections. *)
+(** [select_x, select_y] is the starting position for selections. *)
 let select_x, select_y = (90, 225)
 
+(** [outline_pos_x, outline_pos_y] are the coordinates of the lower left
+    corner of the selection outline. *)
 let outline_pos_x, outline_pos_y =
   (ref (select_x - 10), ref (select_y - 10))
 
+(** [init_outline_x, init_ouline_y] are the coordinates of the lower
+    left corner of the initial selection outline. *)
 let init_outline_x, init_ouline_y = (!outline_pos_x, !outline_pos_y)
 
+(** [outline_width, outline_height] are the dimensions of the selection
+    outline. *)
 let outline_width, outline_height = (130, 180)
 
-(* [p_txt_x, p_txt_y] is the starting position for player select text. *)
+(** [p_txt_x, p_txt_y] is the starting position for player select text. *)
 let p_txt_x, p_txt_y = (select_x, select_y + 145 + 180)
 
-(* [comp_txt_x, comp_txt_y] is the starting position for computer select
-   text. *)
+(** [comp_txt_x, comp_txt_y] is the starting position for computer
+    select text. *)
 let comp_txt_x, comp_txt_y = (select_x + 90, select_y + 145 + 180)
 
+(** [p_select_idx] is the selection index for the human players. *)
 let p_select_idx = ref 0
 
+(** [comp_select_idx] is the selection index for the computer players. *)
 let comp_select_idx = ref 0
 
+(** [draw_change_color_card c pos] draws the image of card [c] and
+    coordinate position [pos]. *)
 let draw_change_color_card c pos =
   let c_x, c_y = pos in
   upload_img _CARD_DIR c c_x c_y
@@ -69,7 +79,8 @@ let draw_selections prompt x y num_select selections =
   draw_cards selections (select_x, select_y);
   upload_img _TEXT_DIR prompt x y
 
-(* TODO: Spec *)
+(** [select st p_selection select_idx] updates the selection index
+    [select_idx] of the cards shown. *)
 let select st p_selection select_idx =
   if st.key = _RIGHT_KEY then
     if
@@ -86,7 +97,9 @@ let select st p_selection select_idx =
       select_idx := !select_idx - 1)
   else if st.key = _CONFIRM_KEY then raise Exit
 
-(* TODO: spec *)
+(** [run_select_win p_selection select_idx x y msg] is the selection
+    index [select_idx] of the cards shown. It also draws the message
+    [msg] at coordinates ([x], [y]). *)
 let run_select_win p_selection select_idx x y msg =
   if p_selection >= 5 then 0
   else (
@@ -105,10 +118,10 @@ let run_select_win p_selection select_idx x y msg =
      with Exit -> ());
     !select_idx)
 
-(** [select_p_win] is the main player select window. *)
+(** [select_p_win ()] is the main player select window. *)
 let select_p_win () = run_select_win 0 p_select_idx p_txt_x p_txt_y
 
-(** [select_p_win] is the main computer select window. *)
+(** [select_p_win p_selection] is the main computer select window. *)
 let select_comp_win p_selection =
   run_select_win p_selection comp_select_idx comp_txt_x comp_txt_y
 
@@ -125,12 +138,15 @@ let select_win () =
     select_comp_win p_selection
       "select_the_number_of_computer_opponents" )
 
-(* ;; open_window; let p_selection = select_p_win ()
-   "select_the_number_of_people_that_want_to_play_the_game" in
-   print_endline (string_of_int p_selection); outline_pos_x :=
-   init_outline_x; outline_pos_y := init_ouline_y; let comp_selection =
-   select_comp_win p_selection "select_the_number_of_computer_opponents"
-   in print_endline (string_of_int comp_selection) *)
-(* let comp_selection = select_comp_win 5 in print_endline
-   (string_of_int comp_selection) *)
-(* select_seq () *)
+(** ;; open_window; let p_selection = select_p_win ()
+    "select_the_number_of_people_that_want_to_play_the_game" in
+    print_endline (string_of_int p_selection); outline_pos_x :=
+    init_outline_x; outline_pos_y := init_ouline_y; let comp_selection =
+    select_comp_win p_selection
+    "select_the_number_of_computer_opponents" in print_endline
+    (string_of_int comp_selection) *)
+
+(** let comp_selection = select_comp_win 5 in print_endline
+    (string_of_int comp_selection) *)
+
+(** select_seq () *)

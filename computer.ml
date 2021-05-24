@@ -2,7 +2,8 @@ open State
 open Player
 open Card
 
-(** [max l a] is the largest integer in list [l]. *)
+(** [max r g b y largest] is the largest integer in of the numbers [r],
+    [g], [b], [y]. *)
 let max r g b y largest =
   let rec max_int (lst : int list) (largest, index) i =
     match lst with
@@ -17,8 +18,8 @@ let max r g b y largest =
   | 3 -> B
   | _ -> Y
 
-(** [most_color h acc] is the color that occurs most in the player's
-    hand [h]. *)
+(** [most_color h] is the color that occurs most in the player's hand
+    [h]. *)
 let most_color h =
   let rec mc h r g b y =
     match h with
@@ -149,6 +150,8 @@ let action_test_cpu g =
   let w_cards = List.map (add_weight g) uw_cards in
   w_cards
 
+(** [computer_swap_id c] is the swap id of the card [c]. *)
 let computer_swap_id c = swap_id_of_card c
 
+(** [computer_color c] is the color of the card c. *)
 let computer_color c = color c

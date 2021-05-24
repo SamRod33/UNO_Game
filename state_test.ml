@@ -6,6 +6,9 @@ open Computer_test
 
 (** Test suite for the State module *)
 
+(** [current_player_test name g player] creates an OUnit test case that
+    checks if the current player id from game [g] matches the id of the
+    player [player]. *)
 let current_player_test name g player =
   name >:: fun _ -> assert_equal (id (current_player g)) (id player)
 
@@ -35,18 +38,28 @@ type test_result =
   | Pass
   | Fail
 
+(** [top_card_test name c g] creates an OUnit test case that checks if
+    the top card from game [g] matches the card [card]. *)
 let top_card_test name c g =
   name >:: fun _ -> assert_equal c (top_card g)
 
+(** [stack_penalty_test name i g] creates an OUnit test case that checks
+    if the stack penalty from game [g] matches the integer [i]. *)
 let stack_penalty_test name i g =
   name >:: fun _ ->
   assert_equal i (stack_penalty g) ~printer:string_of_int
 
+(** [result_of_play g] is [Pass] when the game play is valid and [Fail]
+    if the game results in an illegal move. *)
 let result_of_play g = match g with Illegal -> Fail | _ -> Pass
 
+(** [play_test name c g r] creates an OUnit test case that checks if the
+    result of the play from game [g] matches the result [r]. *)
 let play_test name c g r =
   name >:: fun _ -> assert_equal (result_of_play (play (Some c) g)) r
 
+(** [next_game_state g] creates an OUnit test case that checks if the
+    next gamestate of game [g] is [Legal]. *)
 let next_game_state g =
   match g with Legal g -> g | _ -> failwith "illegal play"
 

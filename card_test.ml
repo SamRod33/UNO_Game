@@ -1,6 +1,6 @@
 open OUnit2
 open Card
-open Test
+open TestHelper
 
 (** [penalty_test name c expected] creates an OUnit test case that
     checks [expected] equals [draw_penalty c]. *)

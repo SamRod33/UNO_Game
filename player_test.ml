@@ -1,6 +1,6 @@
 open OUnit2
 open Player
-open Test
+open TestHelper
 
 (** [remove_raises name p c] creates an OUnit test case that checks if
     [CardNotInHand c] is raised when [p] does not contain [c]. *)
@@ -8,11 +8,15 @@ let remove_raise_test name p c =
   name >:: fun _ ->
   assert_raises (CardNotInHand c) (fun () -> remove_card p c)
 
+(** [player_hand_test name lst exp] creates an OUnit test case that
+    checks if the card list [exp] returned by the player hand function
+    is the same as the given card list [lst]. *)
 let player_hand_test name lst exp =
   name >:: fun _ ->
   assert_equal exp (player_hand lst) ~printer:(pp_list pp_card)
     ~cmp:cmp_set_like_lists
 
+(** [string_of_t x] is the string representation of the abstract type t. *)
 let string_of_t x = "Abstract <T>"
 
 (** [fst_card] is the first card in the standard deck*)

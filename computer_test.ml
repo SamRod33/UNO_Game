@@ -7,15 +7,21 @@ open Yojson.Basic.Util
 
 (** Test suite for the Computer module *)
 
+(** [action_test name g c] is true when the card output by the computer
+    action in game [g] is the same as the card [c], false otherwise. *)
 let action_test name g c =
   name >:: fun _ -> assert_equal c (snd (action g))
 
-let action_draw4_test name g (c : Card.t option) =
+(** [action_test name g c] is true when the card output by the computer
+    action in game [g] is the same as a draw 4 card, false otherwise. *)
+let action_draw4_test name g =
   name >:: fun _ ->
   let dp c = match snd c with None -> -1 | Some c -> draw_penalty c in
   assert_equal 4 (dp (action g))
 
-let action_swap_test name g (c : Card.t option) =
+(** [action_test name g c] is true when the card output by the computer
+    action in game [g] is the same as a swap card [c], false otherwise. *)
+let action_swap_test name g c =
   name >:: fun _ ->
   let swap_bool card =
     match card with
@@ -267,7 +273,7 @@ let computer_suite =
     action_test "nextp -> blue_draw2" nextp_uno (Some blue_draw2);
     action_test "nextp_uno_43 -> blue_draw2" nextp_uno_43
       (Some blue_draw2);
-    action_draw4_test "nextp_4 -> draw4" nextp_uno4 (Some draw4);
+    action_draw4_test "nextp_4 -> draw4" nextp_uno4;
     action_swap_test "swap -> swap" nextp_uno_swap (Some swap);
     action_test "std blue0 2 p6 -> red_draw2, both std" both_std_deck
       (Some red_draw2);

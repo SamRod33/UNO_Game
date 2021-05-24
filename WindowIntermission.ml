@@ -11,10 +11,14 @@ let card_space = (176, snd WindowGui.card_space)
 
 (**********************************************************************)
 (*These functions are here testing and modular development purposes*)
+
+(** [draw_img c pos] is the image [c] drawn at position ([x], [y]). *)
 let draw_img c pos =
   let c_x, c_y = pos in
   upload_img _CARD_DIR c c_x c_y
 
+(** [draw_images cards pos] is the images [cards] drawn starting from
+    position ([x], [y]). *)
 let rec draw_images cards pos =
   let c_x, c_y = pos in
   let c_space_x, c_space_y = card_space in
@@ -27,6 +31,9 @@ let rec draw_images cards pos =
 let dummy_data = [ "Blue-0"; "Green-0"; "Yellow-0"; "Red-0"; "Blue-0" ]
 
 (**********************************************************************)
+
+(** [draw_intermission_window ()] draws the images used in the
+    intermission window. *)
 let draw_intermission_window () =
   set_background _BLACK;
   upload_img _TEXT_DIR "Click any key to continue" 333 686;
@@ -35,7 +42,7 @@ let draw_intermission_window () =
   upload_img _TEXT_DIR "New" 108 301;
   upload_img _TEXT_DIR "Old" 816 301
 
-(* [intermission_phase st g] Launches the intermission window phase. *)
+(** [intermission_phase st g] launches the intermission window phase. *)
 let intermission_phase st g card_list =
   if st.key = _QUIT_KEY then exit 0
   else if st.key = _CONFIRM_KEY then failwith "hi"

@@ -1,32 +1,34 @@
 open Graphics
 open Constants
 
+(** [open_window] opens the window with chosen settings. *)
 let open_window =
   open_graph (":0.0 " ^ _WIDTH ^ "x" ^ _HEIGHT);
   set_window_title "Uno Game by TKYS"
 
+(** [running] is true while the game is running, false otherwise. *)
 let running = true
 
-(* [logo_pos_x, logo_pos_y] is the position of the UNO Logo, as inspired
-   by the mockup. *)
+(** [logo_pos_x, logo_pos_y] is the position of the UNO Logo, as
+    inspired by the mockup. *)
 let logo_pos_x, logo_pos_y = (424, 578)
 
-(* [change_swap_txt_pos_x, change_swap_txt_pos_y] is the position of the
-   change color prompt, as inspired by the mockup. *)
+(** [change_swap_txt_pos_x, change_swap_txt_pos_y] is the position of
+    the change color prompt, as inspired by the mockup. *)
 let change_swap_txt_pos_x, change_swap_txt_pos_y =
   (logo_pos_x, logo_pos_y - 100)
 
-(* [cards_start_pos_x, cards_start_pos_y] is the starting position of
-   the color changing cards, as inspired by the mockup. *)
+(** [cards_start_pos_x, cards_start_pos_y] is the starting position of
+    the color changing cards, as inspired by the mockup. *)
 let cards_swap_start_pos_x, cards_swap_start_pos_y =
   (change_swap_txt_pos_x - 250, change_swap_txt_pos_y - 300)
 
-(* [card_space] is the amount of relative spacing between cards aligned
-   horizontally. *)
+(** [card_space] is the amount of relative spacing between cards aligned
+    horizontally. *)
 let card_space = (150, 0)
 
-(* [swap_h_space] is the amount of spacing between the left edges of two
-   swap info cards aligned horizontally. *)
+(** [swap_h_space] is the amount of spacing between the left edges of
+    two swap info cards aligned horizontally. *)
 let swap_space = (112 + 57, 0)
 
 (** [set_background color] fills the background of the window with
@@ -35,6 +37,8 @@ let set_background color =
   set_color color;
   fill_rect 0 0 (int_of_string _WIDTH) (int_of_string _HEIGHT)
 
+(** [upload_img dir file x y] uploads the given image from directory
+    [dir] awith file name [file] at the coordinates ([x], [y]). *)
 let upload_img dir file x y =
   let img = Png.load_as_rgb24 (dir ^ file ^ ".png") [] in
   let draw = Graphic_image.of_image img in
@@ -70,9 +74,13 @@ let highlight_selection color_on color_off offset x y width height =
   set_color color_on;
   draw_rect (x + offset) y width height
 
+(** [display_player_num p (x, y)] draws the player number [p] at
+    coordinates ([x], [y]). *)
 let display_player_num p (x, y) =
   upload_img _TEXT_DIR (string_of_int p) x y
 
+(** [display_num i (x, y)] draws the number [i] at coordinates ([x],
+    [y]). *)
 let rec display_num i (x, y) =
   if i < 10 then upload_img _TEXT_DIR (string_of_int i) x y
   else if i < 100 then (

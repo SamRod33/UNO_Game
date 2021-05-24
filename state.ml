@@ -2,24 +2,6 @@
 
     @author Samuel Rodriguez, Yohanes Kidane (sar325, ysk27) *)
 
-(* Abstraction Function: TODO
- *
- *  
- * ROUGH DRAFT: 
- *    - t.players is a list [player_1; player_2; ...; player_n] all of type 
- *      Player.t that represents [player_1, player_2, ..., player_n] such that 
- *      turn-order's presedence is in ascending order. Namely, it is player_1's 
- *      current turn.
- *    - I wanna say a state always has a non-empty deck?
- *
- * Representation Invariant: 
- *  
- * ROUGH DRAFT:
- *    - t.stack_penalty must be positive
- *    - I wanna say t.deck cannot be empty in state before 
- *      anything is done to state?
- *)
-
 (** [NoPlayersFound] is an exc that is raised when no players are found
     when searching for the current player. *)
 exception NoPlayersFound
@@ -46,18 +28,13 @@ type result =
   | GameOver of Player.t
   | Illegal
 
-(** [top_card g] is the top card of the played pile.*)
 let top_card g = g.top_card
 
-(** [stack_penalty g] is the current draw penalty from action cards.*)
 let stack_penalty g = g.stack_penalty
 
-(** [current_player g] is the player who's turn is next in game [g].
-    Raises NoPlayersFound if [g.players] is empty.*)
 let current_player g =
   match g.players with [] -> raise NoPlayersFound | h :: t -> h
 
-(** [players g] is the list of players in game [g]. *)
 let players g = g.players
 
 (** [shuffle lst] is the same as [lst] except its elements are in a
@@ -109,8 +86,8 @@ let rec rotate_players = function
   | [] -> raise NoPlayersFound
   | h :: t -> t @ [ h ]
 
-(** applies swap, rotate, and skip effects from card [c] to players,
-    respectively.*)
+(** [swap_rotate_players players c] applies swap, rotate, and skip
+    effects from card [c] to players [players], respectively.*)
 let swap_rotate_players players c =
   let swapped_hands =
     match players with

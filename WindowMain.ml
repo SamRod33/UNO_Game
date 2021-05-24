@@ -4,33 +4,50 @@ open Images
 open Png
 open WindowGui
 
+(** [player_cards] is the list of cards for the players. *)
 let player_cards = Card.standard_cards
 
+(** [outline_width, outline_height] are the dimensions of the selection
+    outline. *)
 let outline_width, outline_height = (130, 180)
 
+(** [selected_spacing] is the spacing between selections. *)
 let selected_spacing = 161
 
+(** [player_num_pos] are the coordinates for the player number position. *)
 let player_num_pos = (223 + 84, 54 + 553)
 
+(** [penalty_num_pos] are the coordinates for the penalty number
+    position. *)
 let penalty_num_pos = (448 + 35, 380)
 
+(** [card_init_pos] are the coordinates for the initial card position. *)
 let card_init_pos = (40, 35)
 
+(** [card_start_pos] are the coordinates for the card starting position. *)
 let card_start_pos = ref card_init_pos
 
+(** [out_init_x, out_init_y] are the coordinates for the outline's
+    initial position. *)
 let out_init_x, out_init_y = (30, 25)
 
+(** [outline_pos_x] is the current position of the lower left x
+    coordinate of the outline. *)
 let outline_pos_x = ref 30
 
+(** [outline_pos_y] is the current position of the lower left y
+    coordinate of the outline. *)
 let outline_pos_y = ref 25
 
+(** [init_idx] is the integer representing the initial index. *)
 let init_idx =
   ((!outline_pos_x - 30) / selected_spacing)
   - ((fst !card_start_pos - fst card_init_pos) / selected_spacing)
 
+(** [card_selected_idx] is the index of the card selected. *)
 let card_selected_idx = ref init_idx
 
-(** [draw_top_card card] draws the top card on the main screen*)
+(** [draw_top_card card] draws the top card on the main screen. *)
 let draw_top_card card =
   match Card.img card with
   | "draw4" | "Wild" -> (
@@ -42,18 +59,24 @@ let draw_top_card card =
       | Card.ANY -> failwith "ANY is invalid in draw_top_card")
   | _ -> upload_img _CARD_DIR (Card.img card) 272 330
 
+(** [draw_card_deck ()] draws the image representing the draw deck. *)
 let draw_card_deck () = upload_img _CARD_DIR "back" 84 330
 
+(** [set_player_hand_background ()] draws the background of the player
+    hand space in the main window. *)
 let set_player_hand_background () =
   set_color _GREEN;
   fill_rect 0 0 (int_of_string _WIDTH) 275
 
+(** [draw_game_frames ()] draws the frames used in the main window. *)
 let draw_game_frames () =
   upload_img _ASSET_DIR "game_keys" 632 553;
   upload_img _ASSET_DIR "player_turn_frame" 84 553;
   upload_img _ASSET_DIR "penalty_frame" 448 330;
   upload_img _ASSET_DIR "player_hand_frame" 624 330
 
+(** [display_hand_amt i (x, y)] is the number [i] drawn using GUI images
+    at position [(x, y)]. *)
 let rec display_hand_amt i (x, y) =
   if i < 10 then upload_img _TEXT_DIR (string_of_int i ^ "_mini") x y
   else if i < 100 then (
@@ -62,12 +85,16 @@ let rec display_hand_amt i (x, y) =
     upload_img _TEXT_DIR (string_of_int fst_dig ^ "_mini") x y;
     display_hand_amt snd_dig (x + 8, y))
 
+(** [draw_one_player_hand_amount c (x, y)] draws the card [c] for the
+    player's hand in the window starting at position [(x, y)]. *)
 let draw_one_player_hand_amount c (x, y) =
   let id, amt = c in
   upload_img _ASSET_DIR ("frame_hand_" ^ string_of_int id) x y;
   display_hand_amt amt (x + 40, y + 65);
   ()
 
+(** [draw_player_hand_amounts l (x, y)] draws the opponent players in
+    game [g] starting at [(x,y)]. Ensures spacing between each card. *)
 let rec draw_player_hand_amounts l (x, y) =
   match l with
   | [] -> ()
@@ -92,8 +119,8 @@ let move op1 op2 limit bound card_end_pos =
     card_selected_idx := op2 !card_selected_idx 1)
   else ()
 
-(* [draw_main_screen] draws all parts of the main screen except player
-   hand cards. *)
+(** [draw_main_screen] draws all parts of the main screen except player
+    hand cards. *)
 let draw_main_screen top p_id penalty other_player_info =
   set_background _BLACK;
   draw_logo ();
@@ -107,6 +134,7 @@ let draw_main_screen top p_id penalty other_player_info =
   highlight_selection _GOLD _GREEN 0 !outline_pos_x !outline_pos_y
     outline_width outline_height
 
+(** [run_main st card_end_pos] runs the main window. *)
 let run_main st card_end_pos =
   if st.key = _QUIT_KEY then exit 0
   else if st.key = _CONFIRM_KEY then raise Exit
