@@ -3,6 +3,7 @@ _doc.public
 _doc.private
 _coverage*
 bisect*
+*.zip
 
 # ocaml
 *.cmo
