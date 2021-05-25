@@ -3,7 +3,7 @@ OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
-MODDOCS = card player state main computer 
+MODDOCS = card player state main computer author
 DOCS=$(MODDOCS:=.mli)
 OCAMLBUILD=ocamlbuild -use-ocamlfind
 CARDTEST=cardTest.byte
@@ -62,7 +62,7 @@ docs-private: build
 	mkdir -p _doc.private
 	ocamlfind ocamldoc -I _build -package yojson,ANSITerminal \
 		-html -stars -d _doc.private \
-		-inv-merge-ml-mli -m A $(DOCS) $(DOCS)
+		-inv-merge-ml-mli -m A $(DOCS)
 
 clean:
 	ocamlbuild -clean
