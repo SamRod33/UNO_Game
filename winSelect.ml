@@ -85,7 +85,7 @@ let select st p_selection select_idx =
   if st.key = _RIGHT_KEY then
     if
       !outline_pos_x
-      >= ((List.length selections - p_selection) * fst card_space) - 50
+      >= ((List.length selections - p_selection) * fst card_space) - 100
     then ()
     else (
       move ( + ) (fst card_space) _GOLD _BLACK;
