@@ -109,12 +109,14 @@ and gui_cpu_play g cur_player recent_cards =
   | GameOver winner -> end_game_win (Player.id winner) ()
 
 (** [main ()] prompts for the game to play, then starts it. *)
-let main () =
+let rec main () =
   intro_win;
   let players_tup = select_win () in
   let players = create_players [] (fst players_tup) (snd players_tup) in
-  let start_state = init_state standard_cards players in
-  gui_game_loop start_state []
+  if fst players_tup + snd players_tup = 0 then main ()
+  else
+    let start_state = init_state standard_cards players in
+    gui_game_loop start_state []
 
 (* Execute the game engine. *)
 let () = main ()
