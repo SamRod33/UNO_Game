@@ -1,13 +1,13 @@
-MODULES=card player state main computer constants testHelper test WindowGui MainFunctions WindowChangeColor WindowIntermission WindowSwapPlayer WindowMain WindowIntro WinSelect WindowHelp WindowEndGame
+MODULES=card player state main computer constants testHelper test windowGui mainFunctions windowChangeColor windowIntermission windowSwapPlayer windowMain windowIntro winSelect windowHelp windowEndGame
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
 MLIS=$(MODULES:=.mli)
 OCAMLBUILD=ocamlbuild -use-ocamlfind
-CARDTEST=card_test.byte
-PLAYERTEST=player_test.byte
-STATETEST=state_test.byte
-COMPUTERTEST=computer_test.byte
+CARDTEST=cardTest.byte
+PLAYERTEST=playerTest.byte
+STATETEST=stateTest.byte
+COMPUTERTEST=computerTest.byte
 TEST=test.byte
 MAIN=main.byte
 GUI=GUIMain.byte
@@ -70,37 +70,33 @@ zip:
 	zip uno-game.zip *.ml* *.json *.sh INSTALL.txt _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	
 
 window:
-	ocamlbuild -package graphics WindowMain.native -use-ocamlfind
+	ocamlbuild -package graphics windowMain.native -use-ocamlfind
 	./WindowMain.native
 
 change-color:
-	ocamlbuild -package graphics WindowChangeColor.native -use-ocamlfind
+	ocamlbuild -package graphics windowChangeColor.native -use-ocamlfind
 	./WindowChangeColor.native
 
 window-swap-player:
-	ocamlbuild -package graphics WindowSwapPlayer.native -use-ocamlfind
+	ocamlbuild -package graphics windowSwapPlayer.native -use-ocamlfind
 	./WindowSwapPlayer.native
 
 intermission:
-	ocamlbuild -package graphics WindowIntermission.native -use-ocamlfind
+	ocamlbuild -package graphics windowIntermission.native -use-ocamlfind
 	./WindowIntermission.native
 
-tise:
-	ocamlbuild -package graphics window_tise_main.native -use-ocamlfind
-	./window_tise_main.native
-
 intro-win:
-		ocamlbuild -package graphics WindowIntro.native -use-ocamlfind
+		ocamlbuild -package graphics windowIntro.native -use-ocamlfind
 	./WindowIntro.native
 
 select-win:
-		ocamlbuild -package graphics WinSelect.native -use-ocamlfind
+		ocamlbuild -package graphics winSelect.native -use-ocamlfind
 	./WinSelect.native
 
 help-win:
-		ocamlbuild -package graphics WindowHelp.native -use-ocamlfind
+		ocamlbuild -package graphics windowHelp.native -use-ocamlfind
 	./WindowHelp.native
 
 end-game:
-		ocamlbuild -package graphics WindowEndGame.native -use-ocamlfind
+		ocamlbuild -package graphics windowEndGame.native -use-ocamlfind
 	./WindowEndGame.native
