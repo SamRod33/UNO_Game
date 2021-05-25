@@ -128,7 +128,7 @@
     },
     {
       "color": "red",
-      "img": "Red-8",
+      "img": "Red-9",
       "actions": {
         "skip": false,
         "reverse": false,
@@ -138,7 +138,7 @@
       },
       "draw penalty": 0,
       "amount": 2,
-      "digit": 8
+      "digit": 9
     },
     {
       "color": "red",
