@@ -69,7 +69,7 @@ clean:
 	rm -rf _coverage bisect*.coverage _doc.public _doc.private uno-game.zip
 
 zip:
-	zip uno-game.zip *.ml* *.json *.sh INSTALL.txt _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	
+	zip uno-game.zip *.ml* *.json *.sh INSTALL.txt _tags .merlin .ocamlformat .ocamlinit LICENSE Makefile	 game_assets/* cards/* text_assets/*
 
 window:
 	ocamlbuild -package graphics windowMain.native -use-ocamlfind
