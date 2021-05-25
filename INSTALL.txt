@@ -24,12 +24,11 @@ Setup Instructions:
 
 Run Instructions:
   Terminal:
-    Make sure VcXsrv or XQuartz is running (If Non-Linux)
     Run make build
     Run make uno
     Follow the instructions in the terminal
   GUI:
-    Make sure VcXsrv or XQuartz is running
+    Make sure VcXsrv or XQuartz is running (If Non-Linux)
     Run make build
     Run make uno-gui
     Follow the instructions in the terminal
