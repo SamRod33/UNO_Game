@@ -38,6 +38,9 @@ and gui_player_play g cur_player recent_cards =
       (id (current_player g))
       (stack_penalty g) other_players_info cur_player_hand
   in
+  gui_player_play_2 g recent_cards old_played_card
+
+and gui_player_play_2 g recent_cards old_played_card =
   let played_card =
     match old_played_card with
     | None -> None
@@ -55,46 +58,52 @@ and gui_player_play g cur_player recent_cards =
           change_current_players_hand (Option.get old_played_card) c g
         else g
   in
+  gui_player_play_3 g recent_cards old_played_card played_card
+
+and gui_player_play_3 g recent_cards old_played_card played_card =
   match play played_card g with
   | Illegal -> gui_game_loop g recent_cards
   | Legal next_g -> (
       let next_p_id = id (current_player next_g) in
       match played_card with
       | Some c ->
-          if color c = ANY then
-            let new_color = color_change () in
-            let new_c = change_color c new_color in
-            let recent_cards =
-              update_five_most_recent_card new_c recent_cards
-            in
-            match
-              play (Some new_c) (change_current_players_hand c new_c g)
-            with
-            | Legal next ->
-                intermit_win next_p_id recent_cards;
-                gui_game_loop next recent_cards
-            | _ -> failwith "Illegal game state.\n"
-          else
-            let recent_cards =
-              update_five_most_recent_card c recent_cards
-            in
-            intermit_win next_p_id recent_cards;
-            gui_game_loop next_g recent_cards
+          gui_player_play_card g recent_cards played_card next_p_id c
+            next_g
       | None ->
           intermit_win next_p_id recent_cards;
           gui_game_loop next_g recent_cards)
   | GameOver winner -> end_game_win (Player.id winner) ()
 
-and gui_cpu_play g cur_player recent_cards =
-  let played_action = action g in
-  let hand_card = fst played_action in
-  let cpu_card = snd played_action in
-  let changed_gst =
-    if Option.is_some cpu_card then
-      change_current_players_hand (Option.get hand_card)
-        (Option.get cpu_card) g
-    else g
-  in
+and gui_player_play_card g recent_cards played_card next_p_id c next_g =
+  if color c = ANY then
+    let new_color = color_change () in
+    let new_c = change_color c new_color in
+    let recent_cards =
+      update_five_most_recent_card new_c recent_cards
+    in
+    colored_card_play g recent_cards next_p_id new_c c
+  else normal_card_play g recent_cards next_p_id c next_g
+
+and normal_card_play g recent_cards next_p_id c next_g =
+  let recent_cards = update_five_most_recent_card c recent_cards in
+  intermit_win next_p_id recent_cards;
+  gui_game_loop next_g recent_cards
+
+and colored_card_play g recent_cards next_p_id new_c c =
+  match play (Some new_c) (change_current_players_hand c new_c g) with
+  | Legal next ->
+      intermit_win next_p_id recent_cards;
+      gui_game_loop next recent_cards
+  | _ -> failwith "Illegal game state.\n"
+
+and gui_cpu_play_help
+    g
+    cur_player
+    recent_cards
+    played_action
+    hand_card
+    cpu_card
+    changed_gst =
   match play cpu_card changed_gst with
   | Legal new_gst ->
       let next_p_id = id (current_player new_gst) in
@@ -108,12 +117,27 @@ and gui_cpu_play g cur_player recent_cards =
   | Illegal -> failwith "The computer made an error!\n\n"
   | GameOver winner -> end_game_win (Player.id winner) ()
 
+and gui_cpu_play g cur_player recent_cards =
+  let played_action = action g in
+  let hand_card = fst played_action in
+  let cpu_card = snd played_action in
+  let changed_gst =
+    if Option.is_some cpu_card then
+      change_current_players_hand (Option.get hand_card)
+        (Option.get cpu_card) g
+    else g
+  in
+  gui_cpu_play_help g cur_player recent_cards played_action hand_card
+    cpu_card changed_gst
+
 (** [main ()] prompts for the game to play, then starts it. *)
 let rec main () =
   intro_win;
   let players_tup = select_win () in
   let players = create_players [] (fst players_tup) (snd players_tup) in
-  if fst players_tup + snd players_tup = 0 then main ()
+  if fst players_tup + snd players_tup < 2 then (
+    intro_win;
+    main ())
   else
     let start_state = init_state standard_cards players in
     gui_game_loop start_state []
