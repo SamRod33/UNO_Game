@@ -33,8 +33,8 @@ val current_player : t -> Player.t
 val players : t -> Player.t list
 
 (** [init_state c p_list] is the initial state of the game with
-    customizable cards [c] and players [p_list] Requires: top_card
-    (init_state c p_list)] cannot be an effect card *)
+    customizable cards [c] and players [p_list] Requires:
+    [top_card(init_state c p_list)] cannot be an effect card *)
 val init_state : Card.t list -> Player.t list -> t
 
 (** [play c g] is the state of the game after the current player plays
