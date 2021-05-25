@@ -1,4 +1,4 @@
-MODULES=card player state main computer constants testHelper WindowGui MainFunctions WindowChangeColor WindowIntermission WindowSwapPlayer WindowMain WindowIntro WinSelect WindowHelp
+MODULES=card player state main computer constants testHelper test WindowGui MainFunctions WindowChangeColor WindowIntermission WindowSwapPlayer WindowMain WindowIntro WinSelect WindowHelp
 OBJECTS=$(MODULES:=.cmo)
 BYTES=$(MODULES:=.byte)
 MLS=$(MODULES:=.ml)
@@ -8,7 +8,7 @@ CARDTEST=card_test.byte
 PLAYERTEST=player_test.byte
 STATETEST=state_test.byte
 COMPUTERTEST=computer_test.byte
-TESTS=test.byte
+TEST=test.byte
 MAIN=main.byte
 GUI=GUIMain.byte
 
@@ -33,7 +33,7 @@ computer-test:
 	$(OCAMLBUILD) -tag 'debug' $(COMPUTERTEST) && ./$(COMPUTERTEST) -runner sequential
 
 test:
-	$(OCAMLBUILD) -tag 'debug' $(TESTS) && ./$(TESTS) -runner sequential
+	$(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
 
 
 uno:
@@ -43,7 +43,7 @@ uno-gui:
 	$(OCAMLBUILD) -tag 'debug' $(GUI) && OCAMLRUNPARAM=b ./$(GUI)
 
 bisect-test:
-	BISECT_COVERAGE=YES $(OCAMLBUILD) -tag 'debug' $(TESTS) && ./$(TESTS) -runner sequential
+	BISECT_COVERAGE=YES $(OCAMLBUILD) -tag 'debug' $(TEST) && ./$(TEST) -runner sequential
 
 bisect: clean bisect-test
 	bisect-ppx-report html
