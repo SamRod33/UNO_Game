@@ -159,7 +159,7 @@ and player_play g cur_player recent_cards =
      Type in the index of the card you wish to play (starting from 0). \
      If you do not have a card to play, type -1.\n";
   print_string "> ";
-  end_of_game_loop g cur_player cur_player_hand recent_cards
+  end_of_game_loop g cur_player_hand recent_cards
 
 (** [cpu_play g cur_player recent_cards] handles the logic for computer
     players taking their turn in game [g] with current player
@@ -186,7 +186,7 @@ and cpu_play g cur_player recent_cards =
     the game logic in game [g] with recently played cards [recent_cards]
     after the current player [cur_player] with hand [cur_player_hand]
     decides which card to play. *)
-and end_of_game_loop g cur_player cur_player_hand recent_cards =
+and end_of_game_loop g cur_player_hand recent_cards =
   match check_quit () with
   | None ->
       failed ();
@@ -199,19 +199,12 @@ and end_of_game_loop g cur_player cur_player_hand recent_cards =
         let is_swap =
           n <> -1 && fst (actions (Option.get index_card)).swap
         in
-        end_of_game_loop_2 g cur_player cur_player_hand index_card
-          is_swap recent_cards
+        end_of_game_loop_2 g index_card is_swap recent_cards
       else failed ();
       game_loop g recent_cards
 
 (** [end_of_game_loop_2] continues the logic of the above function. *)
-and end_of_game_loop_2
-    g
-    cur_player
-    cur_player_hand
-    index_card
-    is_swap
-    recent_cards =
+and end_of_game_loop_2 g index_card is_swap recent_cards =
   let play_card =
     if is_swap then
       Some (set_swap_id (Option.get index_card) (select_swap_player g))
@@ -223,18 +216,10 @@ and end_of_game_loop_2
         (Option.get play_card) g
     else g
   in
-  end_of_game_loop_3 g cur_player cur_player_hand index_card is_swap
-    play_card recent_cards
+  end_of_game_loop_3 g play_card recent_cards
 
 (** [end_of_game_loop_3] continues the logic of the above function. *)
-and end_of_game_loop_3
-    g
-    cur_player
-    cur_player_hand
-    index_card
-    is_swap
-    play_card
-    recent_cards =
+and end_of_game_loop_3 g play_card recent_cards =
   match play play_card g with
   | Illegal ->
       clear ();

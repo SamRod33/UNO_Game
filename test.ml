@@ -10,9 +10,9 @@
     test cases that had an coverage of 87.63% across all ten files
     tested. These files are listed below:
 
-    [card.ml - card_test.ml - computer.ml -
-     computer_test.ml - player.ml - player_test.ml - state.ml -
-     state_test.ml - test.ml - test_helper.ml]
+    [card.ml - card_test.ml - computer.ml - computer_test.ml - player.ml
+    - player_test.ml - state.ml - state_test.ml - test.ml -
+    test_helper.ml]
 
     We manually tested the GUI windows. This was done by looking at the
     output of the screen each time an individual GUI window was run and
@@ -37,7 +37,12 @@
 
     Our testing approach demonstraes correctness of the system because
     we have verified the visuals and logic of the game in most ways that
-    a user could interact with the program. *)
+    a user could interact with the program. While we tested the GUI main
+    manually, it's logic is based on a system
+
+    The main for terminal - that was automatically system. Since both
+    mains share logic, the correctness of the terminal main implies the
+    correctness of the GUI main. *)
 
 include CardTest
 include PlayerTest
