@@ -169,10 +169,21 @@ let penalize g =
       | h :: t -> rotate_players (player' :: t));
   }
 
+(** [new_state_aux g stack_penalty' c players] creates a new gamestate
+    given originla gamestate [g] with a new stack penalty
+    [stack_penalty'], new top card [c], and new players [players']. *)
+let new_state_aux g stack_penalty' c players' =
+  {
+    g with
+    stack_penalty = stack_penalty';
+    top_card = c;
+    players = players';
+  }
+
 (** [play_card c g] is the result of attempting to play card [c] in the
     state [g]. Legal st' where st' is the state after playing the [c],
     Gameover player' if player' has no more cards left, and Illegal
-    otherwise . *)
+    otherwise. *)
 let play_card c g =
   if
     List.mem c (Player.player_hand (current_player g))
@@ -186,13 +197,7 @@ let play_card c g =
         | [] -> raise NoPlayersFound
         | h :: t -> swap_rotate_players (player' :: t) c
       in
-      Legal
-        {
-          g with
-          stack_penalty = stack_penalty';
-          top_card = c;
-          players = players';
-        }
+      Legal (new_state_aux g stack_penalty' c players')
     else GameOver player'
   else Illegal
 

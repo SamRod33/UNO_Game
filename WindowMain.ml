@@ -157,6 +157,13 @@ let run_main st card_end_pos top p_id penalty other_player_info =
     card_selected_idx := -1;
     raise Exit)
 
+(** [initialize_start] sets the inital positions of the card selection
+    object and indexes. *)
+let initialize_start =
+  card_start_pos := card_init_pos;
+  outline_pos_x := out_init_x;
+  outline_pos_y := out_init_y
+
 (** [main_win top p_id penalty other_player_info player_cards] run the
     main window game loop. i.e. show the top card [top], who the current
     player is [p_id], current [penalty], how many cards each player has
@@ -164,9 +171,7 @@ let run_main st card_end_pos top p_id penalty other_player_info =
     of their [player_cards]. This function returns Some Card.t if the
     player selected a card, or None if they wanted to quit the game. *)
 let main_win top p_id penalty other_player_info player_cards =
-  card_start_pos := card_init_pos;
-  outline_pos_x := out_init_x;
-  outline_pos_y := out_init_y;
+  initialize_start;
   let card_end_pos =
     ref
       ((List.length player_cards * (9 + fst card_space))

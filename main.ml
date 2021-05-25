@@ -107,14 +107,19 @@ let rec game_loop g recent_cards =
   if is_cpu cur_player then cpu_play g cur_player recent_cards
   else player_play g cur_player recent_cards
 
+(** [format_card_buffer_aux next_gst recent_cards] is the buffer for
+    when the transition to [next_gst] needs a buffer when there are
+    recently played cards [recent_cards]. *)
+and format_card_buffer_aux next_gst recent_cards =
+  buffer next_gst recent_cards;
+  game_loop next_gst recent_cards
+
 (** [format_card gst next_gst recent_cards] buffers the game and handles
     changing colors from a wild card for human players (computer already
     handles changing colors) in gamestate [gst] with recently played
     cards [recent_cards] for next gamestate [next_gst]. *)
 and format_card gst next_gst recent_cards = function
-  | None ->
-      buffer next_gst recent_cards;
-      game_loop next_gst recent_cards
+  | None -> format_card_buffer_aux next_gst recent_cards
   | Some c ->
       if color c = ANY then
         let new_c = change_color c (select_color ()) in
@@ -132,8 +137,7 @@ and format_card gst next_gst recent_cards = function
         let recent_cards =
           update_five_most_recent_card c recent_cards
         in
-        buffer next_gst recent_cards;
-        game_loop next_gst recent_cards
+        format_card_buffer_aux next_gst recent_cards
 
 (** [player_play g cur_player recent_cards] handles the logic for human
     players taking their turn in game [g] with current player
@@ -248,6 +252,20 @@ let play_game players =
   let start_state = init_state standard_cards players in
   game_loop start_state []
 
+(** [computer_opponents_prompt n restart] is a helper that takes input
+    on computer opponents given some integer [n]. *)
+let computer_opponents_prompt n restart =
+  print_endline
+    "How many computer opponents do you want? (In addition to the \
+     earlier number).\n";
+  print_string "> ";
+  match check_quit () with
+  | None -> restart ()
+  | Some c ->
+      if n + c >= 2 && n > 0 && c >= 0 then
+        c |> create_players [] n |> play_game
+      else restart ()
+
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =
   ANSITerminal.print_string [ ANSITerminal.red ]
@@ -263,17 +281,7 @@ let main () =
     print_string "> ";
     match check_quit () with
     | None -> restart ()
-    | Some n -> (
-        print_endline
-          "How many computer opponents do you want? (In addition to \
-           the earlier number).\n";
-        print_string "> ";
-        match check_quit () with
-        | None -> restart ()
-        | Some c ->
-            if n + c >= 2 && n > 0 && c >= 0 then
-              c |> create_players [] n |> play_game
-            else restart ())
+    | Some n -> computer_opponents_prompt n restart
   in
   getPlayers ()
 
