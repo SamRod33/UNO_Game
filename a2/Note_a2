@@ -1,4 +1,0 @@
-I unzipped a2 and deleted the files we didn't need 
-so we could have all the hidden file insfrastructure.
-It fixed my open Yojson.Basic.Util error in card.ml
--Tise

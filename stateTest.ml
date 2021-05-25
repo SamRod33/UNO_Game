@@ -2,7 +2,7 @@ open OUnit2
 open Card
 open Player
 open State
-open Computer_test
+open ComputerTest
 
 (** Test suite for the State module *)
 
