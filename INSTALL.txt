@@ -5,8 +5,10 @@ Setup Instructions:
       $ sudo apt install ocaml-tools
       $ opam install opam-depext
       $ opam depext conf-pkg-config
-      $ opam install graphics imagelib camlimages ounit2 yojson ANSITerminal bisect_ppx
+      $ opam install graphics imagelib ounit2 yojson ANSITerminal bisect_ppx
       $ sudo apt install -y xserver-xorg-core
+      $ sudo apt-get install libpng-dev
+      $ opam install camlimages
       $ cd ~
       $ ls -a                (look for .bashrc or .bashprofile)
       $ echo 'export DISPLAY=:0.0' >> .bashrc
